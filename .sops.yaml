@@ -1,0 +1,11 @@
+---
+creation_rules:
+  - path_regex: clusterconfig/.*
+    key_groups:
+      - age: 
+         - age14m72xs0zma6ppacs6ad9z387svfn2qkkwcrtjv83ruglee0qve8qy9qs70
+
+  - path_regex: kubeconfig.yaml
+    key_groups:
+      - age: 
+         - age14m72xs0zma6ppacs6ad9z387svfn2qkkwcrtjv83ruglee0qve8qy9qs70

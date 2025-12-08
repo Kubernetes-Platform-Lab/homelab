@@ -1,0 +1,33 @@
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: single-node-k0s
+spec:
+  hosts:
+    - ssh:
+        address: 10.10.0.10
+        user: valdi
+        port: 22
+        keyPath: ~/.ssh/id_ed25519
+      role: single
+      privateAddress: 10.10.0.10
+      noTaints: true
+  k0s:
+    config:
+      apiVersion: k0s.k0sproject.io/v1beta1
+      kind: ClusterConfig
+      metadata:
+        name: k0s-cluster
+      spec:
+        api:
+          nodeIP: "10.10.0.10"
+        network:
+          provider: calico
+          calico:
+            mode: vxlan
+            mtu: 1450
+        workerProfiles:
+           - name: default
+             values:
+                  node-ip: "10.10.0.10"
+                  address: "0.0.0.0"
