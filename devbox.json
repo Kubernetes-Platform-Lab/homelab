@@ -6,9 +6,19 @@
     "sops@latest"
   ],
   "shell": {
-    "init_hook": ["echo 'Welcome to devbox!' > /dev/null"],
+    "env": {
+      "SOPS_AGE_KEY_FILE": "~/.config/sops/age/keys.txt"
+    },
+    "init_hook": [
+      "mkdir -p /dev/shm/pxeboot",
+      "sops -d ./kubeconfig.yaml > /dev/shm/pxeboot/kubeconfig.yaml",
+      "export KUBECONFIG=/dev/shm/pxeboot/kubeconfig.yaml"
+    ],
     "scripts": {
-      "test": ["echo \"Error: no test specified\" && exit 1"]
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
     }
   }
 }
+
