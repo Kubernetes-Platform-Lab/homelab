@@ -6,11 +6,9 @@
     "sops@latest"
   ],
   "shell": {
-    "env": {
-      "SOPS_AGE_KEY_FILE": "~/.config/sops/age/keys.txt"
-    },
     "init_hook": [
       "mkdir -p /dev/shm/pxeboot",
+      "export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt",
       "sops -d ./kubeconfig.yaml > /dev/shm/pxeboot/kubeconfig.yaml",
       "export KUBECONFIG=/dev/shm/pxeboot/kubeconfig.yaml"
     ],
@@ -21,4 +19,8 @@
     }
   }
 }
+
+
+
+
 
