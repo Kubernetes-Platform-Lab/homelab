@@ -23,23 +23,36 @@
   <on_crash>restart</on_crash>
   <devices>
     <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
-    
+
+<!-- CD-ROM iso for installation (AMD64) -->
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/var/lib/libvirt/images/metal-amd64.iso'/>
+      <target dev='sda' bus='scsi'/>
+      <readonly/>
+      <boot order='1'/>
+      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+    </disk>
+
     <!-- qcow2 disk image for storage -->
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' cache='writethrough'/>
       <source file='/var/lib/libvirt/images/talos-1.qcow2'/>
       <target dev='vda' bus='virtio'/>
-      <boot order='2'/>
+      <boot order='3'/>
     </disk>
     
-    <!-- Network Interface 1: PXE Boot on br-int (untagged) -->
+    <!-- Network Interface 0: PXE Boot on br-int (untagged) -->
     <interface type='bridge'>
       <source bridge='br-int'/>
       <virtualport type='openvswitch'/>
       <model type='virtio'/>
-      <mac address='52:54:00:12:30:10'/>
-      <boot order='1'/>
+      <mac address='00:d8:61:ed:89:7a'/>
+      <boot order='2'/>
     </interface>
+    
+    <!-- SCSI Controller for CD-ROM -->
+    <controller type='scsi' index='0' model='virtio-scsi'/>
     
     <!-- Network Interface 2: VLAN 20 on br-int -->
     <interface type='bridge'>
@@ -49,7 +62,7 @@
         <tag id='20'/>
       </vlan>
       <model type='virtio'/>
-      <mac address='52:54:00:12:30:20'/>
+      <mac address='52:54:00:12:34:20'/>
     </interface>
     
     <!-- Network Interface 3: VLAN 30 on br-int -->
@@ -60,7 +73,7 @@
         <tag id='30'/>
       </vlan>
       <model type='virtio'/>
-      <mac address='52:54:00:12:30:30'/>
+      <mac address='52:54:00:12:34:30'/>
     </interface>
     
     <!-- Network Interface 4: VLAN 40 on br-int -->
@@ -71,7 +84,7 @@
         <tag id='40'/>
       </vlan>
       <model type='virtio'/>
-      <mac address='52:54:00:12:30:40'/>
+      <mac address='52:54:00:12:34:40'/>
     </interface>
     
     <!-- Serial console for remote access -->

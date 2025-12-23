@@ -54,6 +54,7 @@
     <!-- SCSI Controller for CD-ROM -->
     <controller type='scsi' index='0' model='virtio-scsi'/>
     
+    
     <!-- Network Interface 3: VLAN 30 on br-int -->
     <interface type='bridge'>
       <source bridge='br-int'/>

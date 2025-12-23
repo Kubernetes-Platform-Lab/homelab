@@ -41,34 +41,46 @@
     '';
   };
 
+  # Create the virtual VRF device
+  systemd.network.netdevs."vrf-blue" = {
+    netdevConfig = {
+      Name = "vrf-blue";
+      Kind = "vrf";
+    };
+    vrfConfig.Table = 100;
+  };
+
+  # Configure networkd for pxe-net (Primary Gateway)
+  systemd.network.networks."30-pxe-net" = {
+    matchConfig.Name = "pxe-net";
+    networkConfig = {
+      DHCP = "yes";
+      # VRF = "vrf-blue"; # Uncomment to enable VRF for this interface
+    };
+    dhcpV4Config.RouteMetric = 1024; # Primary
+  };
+
+  # Configure networkd for mgmt20 (Secondary Gateway)
+  systemd.network.networks."40-mgmt20" = {
+    matchConfig.Name = "mgmt20";
+    networkConfig = {
+      Address = "10.20.0.31/16";
+    };
+    routes = [{
+      Gateway = "10.20.0.1";
+      Metric = 2048; # Secondary
+    }];
+  };
+
   networking = {
     # Use networkd for network management
     useNetworkd = true;
     useDHCP = false;
-    
-    # 1. Create the VRF device
-    vrfs.vrf-blue = {
-    table = 100; # The routing table ID for this VRF
-       };
-    
+
     # Interface configuration
     interfaces = {
       # Physical interface - no IP
       enp9s0f0.useDHCP = false;
-
-      # PXE interface - internal OVS port (untagged traffic)
-      pxe-net = {
-        useDHCP = true;
-      };
-
-      # Management interface - VLAN 20 tagged (OVS internal port)
-      mgmt20 = {
-        useDHCP = false;
-        ipv4.addresses = [{
-          address = "10.20.0.31";
-          prefixLength = 16;
-        }];
-      };
     };
   };
 }
