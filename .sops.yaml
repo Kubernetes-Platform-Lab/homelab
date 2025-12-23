@@ -1,0 +1,6 @@
+creation_rules:
+  - path_regex: secrets/.*$
+    key_groups:
+      - age:
+          - age1pa4xsnmrlmxrghp8a3vg7qepqk2hzuqjtvc2dhv7ld9n38eknfuq9mj0v2
+          - age1t3u05mvpzaq5pyjqlrwqlat8xwe4kr7xx4pv9wgz2k5a42tw24wq22kn9e

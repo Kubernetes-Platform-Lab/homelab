@@ -1,0 +1,84 @@
+<domain type='kvm'>
+  <name>talos-1</name>
+  <memory unit='GiB'>4</memory>
+  <currentMemory unit='GiB'>4</currentMemory>
+  <vcpu placement='static'>4</vcpu>
+  <os>
+    <type arch='x86_64' machine='q35'>hvm</type>
+    <boot dev='network'/>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode='host-passthrough'>
+    <topology sockets='1' cores='4' threads='1'/>
+  </cpu>
+  <clock offset='utc'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <devices>
+    <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
+    
+    <!-- Raw block device for optimal performance -->
+    <disk type='block' device='disk'>
+      <driver name='qemu' type='raw' cache='none' io='native'/>
+      <source dev='/dev/vda'/>
+      <target dev='vda' bus='virtio'/>
+      <boot order='2'/>
+    </disk>
+    
+    <!-- Network Interface 1: PXE Boot on br10 (untagged) -->
+    <interface type='bridge'>
+      <source bridge='br10'/>
+      <model type='virtio'/>
+      <mac address='52:54:00:12:34:10'/>
+      <boot order='1'/>
+    </interface>
+    
+    <!-- Network Interface 2: VLAN 20 on br20 -->
+    <interface type='bridge'>
+      <source bridge='br20'/>
+      <model type='virtio'/>
+      <mac address='52:54:00:12:34:20'/>
+    </interface>
+    
+    <!-- Network Interface 3: VLAN 30 on br30 -->
+    <interface type='bridge'>
+      <source bridge='br30'/>
+      <model type='virtio'/>
+      <mac address='52:54:00:12:34:30'/>
+    </interface>
+    
+    <!-- Network Interface 4: VLAN 40 on br40 -->
+    <interface type='bridge'>
+      <source bridge='br40'/>
+      <model type='virtio'/>
+      <mac address='52:54:00:12:34:40'/>
+    </interface>
+    
+    <!-- Serial console for remote access -->
+    <serial type='pty'>
+      <target type='isa-serial' port='0'>
+        <model name='isa-serial'/>
+      </target>
+    </serial>
+    <console type='pty'>
+      <target type='serial' port='0'/>
+    </console>
+    
+    <!-- Graphics (for virt-manager GUI) -->
+    <graphics type='vnc' port='-1' autoport='yes' listen='127.0.0.1'>
+      <listen type='address' address='127.0.0.1'/>
+    </graphics>
+    <video>
+      <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1' primary='yes'/>
+    </video>
+  </devices>
+</domain>
