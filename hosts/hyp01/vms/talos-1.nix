@@ -16,7 +16,7 @@
 
       # 2. Create qcow2 image if it doesn't exist
       if [ ! -f /var/lib/libvirt/images/talos-1.qcow2 ]; then
-        echo "Creating disk image /var/lib/libvirt/images/talos-1.qcow2 (20G)..."
+        echo "Creating disk image /var/lib/libvirt/images/talos-1.qcow2 (20G)...|||||"
         ${pkgs.qemu_kvm}/bin/qemu-img create -f qcow2 /var/lib/libvirt/images/talos-1.qcow2 20G
         chmod 600 /var/lib/libvirt/images/talos-1.qcow2
       fi

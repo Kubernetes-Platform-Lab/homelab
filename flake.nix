@@ -56,7 +56,7 @@
         # Fast connection for remote deployment
         fastConnection = false;
         autoRollback = true;
-        magicRollback = false;
+        magicRollback = true;
         confirmTimeout = 30;
       };
     };
