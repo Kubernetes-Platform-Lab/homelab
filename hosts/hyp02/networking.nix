@@ -28,8 +28,8 @@
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-br br-int
       
       # Add physical port and bring it up
-      ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int enp9s0f0
-      ${pkgs.iproute2}/bin/ip link set enp9s0f0 up
+      ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int enp8s0f0
+      ${pkgs.iproute2}/bin/ip link set enp8s0f0 up
       
       # Create internal ports and bring them up
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int pxe-net -- set interface pxe-net type=internal
