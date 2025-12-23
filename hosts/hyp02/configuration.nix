@@ -17,7 +17,7 @@
   ];
 
   # Hostname
-  networking.hostName = "hyp01";
+  networking.hostName = "hyp02";
 
   # Boot loader configuration (example - adjust for your hardware)
   boot.loader = {
