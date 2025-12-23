@@ -80,7 +80,7 @@
     # Interface configuration
     interfaces = {
       # Physical interface - no IP
-      enp9s0f0.useDHCP = false;
+      enp8s0f0.useDHCP = false;
     };
   };
 }

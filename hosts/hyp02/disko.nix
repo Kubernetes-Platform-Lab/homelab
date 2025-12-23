@@ -9,7 +9,7 @@
       # Main system disk
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-PCIE_NVME_256G_S320000302798";  # IMPORTANT: Adjust to your actual disk device
+        device = "/dev/disk/by-id/nvme-Fanxiang_S500Pro_256GB_FXS500Pro252210543";  # IMPORTANT: Adjust to your actual disk device
         content = {
           type = "gpt";
           partitions = {
