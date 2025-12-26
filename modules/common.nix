@@ -2,7 +2,7 @@
 
 {
   # Common configuration shared across all hypervisors
-  
+
   # NixOS version
   system.stateVersion = "25.11";
 
@@ -14,7 +14,14 @@
       PasswordAuthentication = true; # Temporarily enable for recovery
     };
   };
+  # Cockpit enable
 
+  services.cockpit = {
+    allowed-origins = [ http://10.10.0.*:9090 ];
+    settings = {
+      AllowUnencrypted = true;
+    };
+  };
   # Common system packages for hypervisor management
   environment.systemPackages = with pkgs; [
     vim
@@ -39,7 +46,7 @@
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
       trusted-users = [ "root" "@wheel" "admin" ];
-      
+
       # Placeholder for future Private Binary Cache (GitOps)
       # substituters = [
       #   "https://cache.nixos.org"
@@ -62,15 +69,17 @@
     defaultSopsFile = ../secrets/secrets.yaml;
     # Decrypt using the host's SSH key
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    
+
     # Secrets to decrypt on the target system
     secrets = {
       "passwords/root_password" = {
         neededForUsers = true;
       };
-      "api_keys/cachix_token" = {};
     };
   };
+
+  # Ensure passwords from secrets are strictly enforced
+  users.mutableUsers = false;
 
   # User configuration
   users.users = {
@@ -79,7 +88,7 @@
       hashedPasswordFile = config.sops.secrets."passwords/root_password".path;
       # hashedPassword = "$6$a9dc8NDYWXIdX0X6$tpzvYa/OeiKOYGQB5wxOBTLqSR6VBRnaEtBb8tX.w0GYjtB7uZ0/t2vnLXPQayHIFPHLl/0GtDR05HM1CFsOJ.";
     };
-    
+
     admin = {
       isNormalUser = true;
       extraGroups = [ "wheel" "libvirtd" ]; # Enable sudo

@@ -50,6 +50,15 @@
           ./hosts/hyp03/disko.nix
         ];
       };
+      hyp04 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          sops-nix.nixosModules.sops
+          ./hosts/hyp04/configuration.nix
+          ./hosts/hyp04/disko.nix
+        ];
+      };
     };
 
     # deploy-rs configuration
@@ -108,6 +117,29 @@
           sshUser = "root";
           path = deploy-rs.lib.x86_64-linux.activate.nixos
             self.nixosConfigurations.hyp03;
+
+          user = "root";
+
+          # SSH options
+          sshOpts = [
+            "-o" "StrictHostKeyChecking=accept-new"
+          ];
+        };
+
+        # Fast connection for remote deployment
+        fastConnection = false;
+        autoRollback = true;
+        magicRollback = true;
+        confirmTimeout = 30;
+      };
+      hyp04 = {
+        hostname = "10.20.0.33";  # Management IP (VLAN 20)
+        # For initial deployment, override with: --hostname YOUR_CURRENT_IP
+
+        profiles.system = {
+          sshUser = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos
+            self.nixosConfigurations.hyp04;
 
           user = "root";
 
