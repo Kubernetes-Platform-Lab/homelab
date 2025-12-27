@@ -3,7 +3,7 @@
 {
   # Disko configuration for hyp01 hypervisor
   # This defines the disk partitioning scheme for automated installation
-  
+
   disko.devices = {
     disk = {
       # Main system disk
@@ -24,7 +24,7 @@
                 mountOptions = [ "defaults" "umask=0077" ];
               };
             };
-            
+
             # Root partition
             root = {
               size = "100%";
@@ -38,27 +38,27 @@
           };
         };
       };
-      
+
       #Optional: Separate disk for VM storage
       #Uncomment and adjust if you have a dedicated disk for VMs
-       vm-storage = {
-         type = "disk";
-         device = "/dev/sda";  # Raw block device for VM images
-         content = {
-           type = "gpt";
-           partitions = {
-             vms = {
-               size = "100%";
-               content = {
-                 type = "filesystem";
-                 format = "xfs";
-                 mountpoint = "/var/lib/libvirt";
-                 mountOptions = [ "defaults" "noatime" ];
-               };
-             };
-           };
-         };
-       };
+      # vm-storage = {
+      #   type = "disk";
+      #   device = "/dev/sda";  # Raw block device for VM images
+      #   content = {
+      #     type = "gpt";
+      #     partitions = {
+      #       vms = {
+      #         size = "100%";
+      #         content = {
+      #           type = "filesystem";
+      #           format = "xfs";
+      #           mountpoint = "/var/lib/libvirt";
+      #           mountOptions = [ "defaults" "noatime" ];
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
     };
   };
 }

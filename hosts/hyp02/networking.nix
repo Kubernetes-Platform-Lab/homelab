@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   # Enable Open vSwitch
   virtualisation.vswitch.enable = true;
@@ -26,15 +26,15 @@
 
       # Ensure bridge exists
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-br br-int
-      
+
       # Add physical port and bring it up
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int enp8s0f0
       ${pkgs.iproute2}/bin/ip link set enp8s0f0 up
-      
+
       # Create internal ports and bring them up
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int pxe-net -- set interface pxe-net type=internal
       ${pkgs.iproute2}/bin/ip link set pxe-net up
-      
+
       # Create mgmt port with correct tag syntax and bring it up
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int mgmt20 tag=20 -- set interface mgmt20 type=internal
       ${pkgs.iproute2}/bin/ip link set mgmt20 up
@@ -83,4 +83,6 @@
       enp8s0f0.useDHCP = false;
     };
   };
+  systemd.services.systemd-networkd-wait-online.enable =
+    lib.mkForce false;
 }

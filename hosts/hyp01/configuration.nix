@@ -4,16 +4,20 @@
   imports = [
     # Hardware configuration - generate with: nixos-generate-config
     ./hardware-configuration.nix
-    
+
     # Host-specific network configuration
     ./networking.nix
-    
+    ./hosts.nix
+
     # VM configurations
     ./vms/talos-1.nix
-    
+
     # Shared modules
     ../../modules/common.nix
     ../../modules/libvirt.nix
+
+    # Host-specific certificates for cockpit
+    ./cockpit.nix
   ];
 
   # Hostname

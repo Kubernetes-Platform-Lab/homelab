@@ -2,7 +2,8 @@ creation_rules:
   - path_regex: secrets/.*$
     key_groups:
       - age:
-          - age1pa4xsnmrlmxrghp8a3vg7qepqk2hzuqjtvc2dhv7ld9n38eknfuq9mj0v2
+          - age1y5pghlnfjzrv87y5fvwakdhr9ppzp3m3085j78rkmvg0rjx7ppqqpk08kg # ebi@akna.nix
+          - age1kjjfufqaax3wsrp24zk2armnmretqfq5t38my80y0v5dgnhywsfsx2yyq2 # jaku@protonmail.com
           - age1t3u05mvpzaq5pyjqlrwqlat8xwe4kr7xx4pv9wgz2k5a42tw24wq22kn9e # hyp01
           - age129wu2mg6p0ekyvsaqd5lc7y2tddr7w4e5s6wldv9rv242fl96a7sxf5j3k # hyp02
           - age1cx9da79z3np73md0whu0h8k4jkjfecmamljjxfn89xk838tf35xsfte8lu # hyp03

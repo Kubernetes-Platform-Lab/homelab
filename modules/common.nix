@@ -14,14 +14,7 @@
       PasswordAuthentication = true; # Temporarily enable for recovery
     };
   };
-  # Cockpit enable
 
-  services.cockpit = {
-    allowed-origins = [ http://10.10.0.*:9090 ];
-    settings = {
-      AllowUnencrypted = true;
-    };
-  };
   # Common system packages for hypervisor management
   environment.systemPackages = with pkgs; [
     vim
@@ -39,6 +32,7 @@
     enable = true;
     allowedTCPPorts = [ 22 ];  # SSH
   };
+
 
   # Nix settings for flakes
   nix = {
@@ -94,6 +88,7 @@
       extraGroups = [ "wheel" "libvirtd" ]; # Enable sudo
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMiQXrspaQ0JaKc9lYKryyCr4+uuf56WlOZ4k8cVXLcf wkubica@polcom"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPxfYstlayeYX72SPy+lL/wSrpgQzw6j0MTJYoUlDwZj ebi@akna.nix"
       ];
       # Use the same password from sops for sudo
       hashedPasswordFile = config.sops.secrets."passwords/root_password".path;

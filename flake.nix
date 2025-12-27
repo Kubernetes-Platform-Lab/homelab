@@ -27,7 +27,7 @@
         system = "x86_64-linux";
         modules = [
           disko.nixosModules.disko
-          sops-nix.nixosModules.sops
+          sops-nix.nixosModules.default
           ./hosts/hyp01/configuration.nix
           ./hosts/hyp01/disko.nix
         ];
