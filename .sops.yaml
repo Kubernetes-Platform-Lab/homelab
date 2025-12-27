@@ -2,7 +2,8 @@
 creation_rules:
   - path_regex: kubeconfig.yaml
     key_groups:
-      - age: 
-         - age14m72xs0zma6ppacs6ad9z387svfn2qkkwcrtjv83ruglee0qve8qy9qs70
-         - age1v9t5ck7n02jpjzxlcyj5whugmqf0xm0wak2dzjsxh4z4gphcayssd53vdy
-         - age1kjjfufqaax3wsrp24zk2armnmretqfq5t38my80y0v5dgnhywsfsx2yyq2
+      - age:
+          - age1y5pghlnfjzrv87y5fvwakdhr9ppzp3m3085j78rkmvg0rjx7ppqqpk08kg #ebi@akna.nix
+          - age14m72xs0zma6ppacs6ad9z387svfn2qkkwcrtjv83ruglee0qve8qy9qs70
+          - age1v9t5ck7n02jpjzxlcyj5whugmqf0xm0wak2dzjsxh4z4gphcayssd53vdy
+          - age1kjjfufqaax3wsrp24zk2armnmretqfq5t38my80y0v5dgnhywsfsx2yyq2
