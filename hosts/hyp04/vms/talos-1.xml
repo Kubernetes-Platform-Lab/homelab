@@ -30,7 +30,7 @@
       <source file='/var/lib/libvirt/images/metal-amd64.iso'/>
       <target dev='sda' bus='scsi'/>
       <readonly/>
-      <boot order='1'/>
+      <boot order='2'/>
       <address type='drive' controller='0' bus='0' target='0' unit='0'/>
     </disk>
 
@@ -39,17 +39,8 @@
       <driver name='qemu' type='qcow2' cache='writethrough'/>
       <source file='/var/lib/libvirt/images/talos-1.qcow2'/>
       <target dev='vda' bus='virtio'/>
-      <boot order='3'/>
+      <boot order='1'/>
     </disk>
-
-    <!-- Network Interface 0: PXE Boot on br-int (untagged) -->
-    <interface type='bridge'>
-      <source bridge='br-int'/>
-      <virtualport type='openvswitch'/>
-      <model type='virtio'/>
-      <mac address='44:d8:61:ed:89:7a'/>
-      <boot order='2'/>
-    </interface>
 
     <!-- SCSI Controller for CD-ROM -->
     <controller type='scsi' index='0' model='virtio-scsi'/>
