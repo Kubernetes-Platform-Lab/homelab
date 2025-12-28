@@ -83,35 +83,45 @@ nodes:
         addresses:
           - 10.40.0.32/16
         mtu: 1500
-#controlPlane:
-#  patches:
-#    - |-
-#      machine:
-#        kubelet:
-#          extraArgs:
-#            feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-#            rotate-server-certificates: "true"
-#    - "@./extraKernelArgs-patch.yaml"
-#worker:
-#  ingressFirewall:
-#    defaultAction: block
-#    rules:
-#      - name: apid-ingress
-#        portSelector:
-#          ports:
-#            - 50000
-#          protocol: tcp
-#        ingress:
-#          - subnet: 10.96.0.0/12
-#  patches:
-#    - |-
-#      machine:
-#        kubelet:
-#          extraArgs:
-#            feature-gates: GracefulNodeShutdown=false,MixedProtocolLBService=false
-#            rotate-server-certificates: "true"
-#schematic:
-#  customization:
-#    systemExtensions:
-#      officialExtensions:
-#        - siderolabs/amd-ucode
+  - hostname: w-node04
+    ipAddress: 10.30.0.33
+    controlPlane: false
+    installDisk: /dev/vda
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 44:54:00:12:34:30
+        addresses:
+          - 10.30.0.33/16
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.30.0.1
+      - deviceSelector:
+          hardwareAddr: 44:54:00:12:34:40
+        addresses:
+          - 10.40.0.33/16
+        mtu: 1500
+controlPlane:
+  patches:
+    - |-
+      - op: add
+        path: /cluster/proxy/disabled
+        value: true
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/qemu-guest-agent
+worker:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/qemu-guest-agent

@@ -2,9 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
   "packages": [
     "talhelper@3.0.42",
-    "talosctl@latest",
+    "talosctl@1.10.6",
     "just@latest",
-    "kubectl@latest"
+    "kubectl@latest",
+    "k9s@latest",
+    "kubernetes-helm@latest"
   ],
   "shell": {
     "init_hook": [
