@@ -1,0 +1,127 @@
+# Talhelper - confoguration file
+---
+clusterName: ${ClusterName}
+talosVersion: v1.11.0
+kubernetesVersion: v1.32.0
+endpoint: https://10.30.0.30:6443
+domain: ${domain}
+allowSchedulingOnMasters: true
+additionalMachineCertSans:
+  - 10.30.0.200
+  - k8s.akna.lan
+additionalApiServerCertSans:
+  - ${ClusterName}.local
+clusterPodNets:
+  - 10.244.0.0/16
+clusterSvcNets:
+  - 10.96.0.0/12
+cniConfig:
+  name: none
+patches:
+  - "@./patches/machine/enable-discovery-patch.yaml"
+nodes:
+  - hostname: cp-node01
+    ipAddress: 10.30.0.30
+    controlPlane: true
+    installDisk: /dev/vda
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 52:54:00:12:34:30
+        addresses:
+          - 10.30.0.30/16
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.30.0.1
+      - deviceSelector:
+          hardwareAddr: 52:54:00:12:34:40
+        addresses:
+          - 10.40.0.30/16
+        mtu: 1500
+  - hostname: cp-node02
+    ipAddress: 10.30.0.31
+    controlPlane: true
+    installDisk: /dev/vda
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 06:54:00:12:34:30
+        addresses:
+          - 10.30.0.31/16
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.30.0.1
+      - deviceSelector:
+          hardwareAddr: 06:54:00:12:34:40
+        addresses:
+          - 10.40.0.31/16
+        mtu: 1500
+  - hostname: cp-node03
+    ipAddress: 10.30.0.32
+    controlPlane: true
+    installDisk: /dev/vda
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 32:54:00:12:34:30
+        addresses:
+          - 10.30.0.32/16
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.30.0.1
+      - deviceSelector:
+          hardwareAddr: 32:54:00:12:34:40
+        addresses:
+          - 10.40.0.32/16
+        mtu: 1500
+  - hostname: w-node04
+    ipAddress: 10.30.0.33
+    controlPlane: false
+    installDisk: /dev/vda
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 44:54:00:12:34:30
+        addresses:
+          - 10.30.0.33/16
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.30.0.1
+      - deviceSelector:
+          hardwareAddr: 44:54:00:12:34:40
+        addresses:
+          - 10.40.0.33/16
+        mtu: 1500
+controlPlane:
+  patches:
+    - |-
+      - op: add
+        path: /cluster/proxy/disabled
+        value: true
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/qemu-guest-agent
+worker:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/qemu-guest-agent
