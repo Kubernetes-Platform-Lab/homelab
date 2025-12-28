@@ -13,4 +13,4 @@ encrypt:
 
 decrypt:
     find clusterconfig-enc  -type f  \( -name "*.yaml" -o -name "talosconfig" -o -name "kubeconfig" \)  -exec sh -c 'mkdir -p /dev/shm/clusterconfig;  sops -d "$1" > /dev/shm/clusterconfig/$(basename "$1")' _ {} \;
-    ln -s /dev/shm/clusterconfig ./clusterconfig;
+    ln -s /dev/shm/clusterconfig ./clusterconfig ;
