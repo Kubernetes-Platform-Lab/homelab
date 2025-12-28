@@ -14,6 +14,9 @@
     # Shared modules
     ../../modules/common.nix
     ../../modules/libvirt.nix
+
+    ./cockpit.nix
+
   ];
 
   # Hostname

@@ -65,6 +65,8 @@
     matchConfig.Name = "mgmt20";
     networkConfig = {
       Address = "10.20.0.32/16";
+      DNS = [ "10.20.0.2" "1.1.1.1" ];
+      Domains = [ "akna.lan" ];
     };
     routes = [{
       Gateway = "10.20.0.1";
