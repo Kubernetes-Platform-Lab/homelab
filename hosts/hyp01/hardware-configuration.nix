@@ -19,9 +19,6 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  #hardware.enableRedistributableFirmware = true;
-  #hardware.firmware = [ pkgs.linux-firmware ];
-
   # AMD CPU microcode
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
