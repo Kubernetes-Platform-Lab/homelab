@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.15.1/.schema/devbox.schema.json",
-  "packages": ["k9s@0.50.16", "kubectl@latest", "sops@latest"],
+  "packages": ["k9s@0.50.16", "kubectl@latest", "sops@latest", "just@latest"],
   "shell": {
     "init_hook": ["export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt"],
     "scripts": {
