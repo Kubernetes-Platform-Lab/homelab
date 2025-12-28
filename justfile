@@ -1,7 +1,7 @@
 default:
-	echo "just genconfig   - generowanie konfigów dla talos nodów" ;
-	echo "just encrypt     - szyfrowanie" ;
-	echo "just decrypt     - odszyfrowanie" ;
+	echo "just genconfig;
+	echo "just encrypt;
+	echo "just decrypt;
 
 generate: genconfig encrypt
 

@@ -1,7 +1,6 @@
-10.10.0.54 odroid_h4
-10.10.0.53 Ibm_03
+# Homelab Kubernetes Cluster
 
-Install cillium
+## Cilium installation
 
 ```
 helm repo add cilium https://helm.cilium.io/
