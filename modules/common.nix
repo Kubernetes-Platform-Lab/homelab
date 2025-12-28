@@ -44,11 +44,11 @@
       # Placeholder for future Private Binary Cache (GitOps)
       # substituters = [
       #   "https://cache.nixos.org"
-      #   "https://your-private-cache.example.com/main"
+      #   "https://private-cach.com/main"
       # ];
       # trusted-public-keys = [
       #   "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      #   "main:your-signing-key-goes-here"
+      #   "main:cusom-keys"
       # ];
     };
     gc = {
@@ -80,7 +80,6 @@
     root = {
       # Keep root password for physical console access
       hashedPasswordFile = config.sops.secrets."passwords/root_password".path;
-      # hashedPassword = "$6$a9dc8NDYWXIdX0X6$tpzvYa/OeiKOYGQB5wxOBTLqSR6VBRnaEtBb8tX.w0GYjtB7uZ0/t2vnLXPQayHIFPHLl/0GtDR05HM1CFsOJ.";
     };
 
     admin = {
@@ -92,7 +91,6 @@
       ];
       # Use the same password from sops for sudo
       hashedPasswordFile = config.sops.secrets."passwords/root_password".path;
-      # hashedPassword = "$6$a9dc8NDYWXIdX0X6$tpzvYa/OeiKOYGQB5wxOBTLqSR6VBRnaEtBb8tX.w0GYjtB7uZ0/t2vnLXPQayHIFPHLl/0GtDR05HM1CFsOJ.";
     };
   };
 
