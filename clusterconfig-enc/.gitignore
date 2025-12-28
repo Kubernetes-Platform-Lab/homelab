@@ -1,7 +1,1 @@
-akna-cluster-cp-node01.yaml
-akna-cluster-cp-node02.yaml
-akna-cluster-cp-node03.yaml
-talosconfig
-kubeconfig
-/dev/shm/
-/cluster/
+/dev/shm/*
