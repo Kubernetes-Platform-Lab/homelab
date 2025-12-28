@@ -87,7 +87,6 @@
       isNormalUser = true;
       extraGroups = [ "wheel" "libvirtd" ]; # Enable sudo
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMiQXrspaQ0JaKc9lYKryyCr4+uuf56WlOZ4k8cVXLcf wkubica@polcom"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPxfYstlayeYX72SPy+lL/wSrpgQzw6j0MTJYoUlDwZj ebi@akna.nix"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIF3jIpOKqVJTQwNAA8P63ObqL88e9Pby7hhBvONtjg jakub.kubica@protonmail.com"
       ];
