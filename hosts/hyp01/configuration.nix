@@ -23,6 +23,10 @@
   # Hostname
   networking.hostName = "hyp01";
 
+  services.udev.extraRules = ''
+    KERNEL=="sda", GROUP="kvm", MODE="0660"
+  '';
+
   # Boot loader configuration (example - adjust for your hardware)
   boot.loader = {
     systemd-boot.enable = true;

@@ -22,7 +22,7 @@
   # Cockpit enable
   services.cockpit = {
     enable = true;
-    allowed-origins = [ https://10.20.0.*:9090 https://hyp02.akna.lan:9090 ];
+    allowed-origins = [ https://10.20.0.*:9090 https://hyp04.akna.lan:9090 ];
     settings = {
       cockpit = {
         AllowUnencrypted = "false";

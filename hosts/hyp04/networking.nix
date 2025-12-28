@@ -51,14 +51,14 @@
   };
 
   # Configure networkd for pxe-net (Primary Gateway)
-  systemd.network.networks."30-pxe-net" = {
-    matchConfig.Name = "pxe-net";
-    networkConfig = {
-      DHCP = "yes";
-      # VRF = "vrf-blue"; # Uncomment to enable VRF for this interface
-    };
-    dhcpV4Config.RouteMetric = 1024; # Primary
-  };
+  #systemd.network.networks."30-pxe-net" = {
+  #  matchConfig.Name = "pxe-net";
+  #  networkConfig = {
+  #    DHCP = "yes";
+  #    # VRF = "vrf-blue"; # Uncomment to enable VRF for this interface
+  #  };
+  #  dhcpV4Config.RouteMetric = 1024; # Primary
+  #};
 
   # Configure networkd for mgmt20 (Secondary Gateway)
   systemd.network.networks."40-mgmt20" = {
@@ -68,7 +68,7 @@
     };
     routes = [{
       Gateway = "10.20.0.1";
-      Metric = 2048; # Secondary
+      Metric = 1024; # Secondary
     }];
   };
 

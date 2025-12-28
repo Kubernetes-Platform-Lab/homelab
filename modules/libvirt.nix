@@ -2,13 +2,14 @@
 
 {
   # Shared libvirt/virtualization configuration
-  
+
   virtualisation.libvirtd = {
     enable = true;
     extraConfig = ''
       unix_sock_group = "libvirtd"
       unix_sock_rw_perms = "0770"
       auth_unix_rw = "none"
+      autostart = 1
     '';
     qemu = {
       package = pkgs.qemu_kvm;
