@@ -9,19 +9,22 @@
       # Main system disk
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-Fanxiang_S500Pro_256GB_FXS500Pro252210543";  # IMPORTANT: Adjust to your actual disk device
+        device = "/dev/disk/by-id/nvme-Fanxiang_S500Pro_256GB_FXS500Pro252210543"; # IMPORTANT: Adjust to your actual disk device
         content = {
           type = "gpt";
           partitions = {
             # EFI boot partition
             boot = {
               size = "512M";
-              type = "EF00";  # EFI System Partition
+              type = "EF00"; # EFI System Partition
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "defaults" "umask=0077" ];
+                mountOptions = [
+                  "defaults"
+                  "umask=0077"
+                ];
               };
             };
 
@@ -32,7 +35,10 @@
                 type = "filesystem";
                 format = "xfs";
                 mountpoint = "/";
-                mountOptions = [ "defaults" "noatime" ];
+                mountOptions = [
+                  "defaults"
+                  "noatime"
+                ];
               };
             };
           };

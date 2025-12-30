@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Ensure directory exists
@@ -22,7 +27,10 @@
   # Cockpit enable
   services.cockpit = {
     enable = true;
-    allowed-origins = [ https://10.20.0.*:9090 https://hyp01.akna.lan:9090 ];
+    allowed-origins = [
+      "https://10.20.0.*:9090"
+      "https://hyp01.akna.lan:9090"
+    ];
     settings = {
       cockpit = {
         AllowUnencrypted = "false";

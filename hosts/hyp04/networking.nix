@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   # Enable Open vSwitch
   virtualisation.vswitch.enable = true;
@@ -6,10 +11,22 @@
   # Initialize Open vSwitch bridge via systemd
   systemd.services.ovs-init = {
     description = "Open vSwitch bridge initialization";
-    after = [ "ovsdb.service" "ovs-vswitchd.service" ];
-    requires = [ "ovsdb.service" "ovs-vswitchd.service" ];
-    before = [ "network.target" "systemd-networkd.service" ];
-    wantedBy = [ "network-pre.target" "multi-user.service" ];
+    after = [
+      "ovsdb.service"
+      "ovs-vswitchd.service"
+    ];
+    requires = [
+      "ovsdb.service"
+      "ovs-vswitchd.service"
+    ];
+    before = [
+      "network.target"
+      "systemd-networkd.service"
+    ];
+    wantedBy = [
+      "network-pre.target"
+      "multi-user.service"
+    ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -65,13 +82,18 @@
     matchConfig.Name = "mgmt20";
     networkConfig = {
       Address = "10.20.0.33/16";
-      DNS = [ "10.20.0.2" "1.1.1.1" ];
+      DNS = [
+        "10.20.0.2"
+        "1.1.1.1"
+      ];
       Domains = [ "akna.lan" ];
     };
-    routes = [{
-      Gateway = "10.20.0.1";
-      Metric = 1024; # Secondary
-    }];
+    routes = [
+      {
+        Gateway = "10.20.0.1";
+        Metric = 1024; # Secondary
+      }
+    ];
   };
 
   networking = {
@@ -85,6 +107,5 @@
       enp2s0.useDHCP = false;
     };
   };
-  systemd.services.systemd-networkd-wait-online.enable =
-    lib.mkForce false;
+  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 }

@@ -221,6 +221,54 @@
         }
       }
     },
+    "nixfmt@1.1.0": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#nixfmt",
+      "source": "devbox-search",
+      "version": "1.1.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/gwm41cy59il5wjgh4j5gsrj9adqifv7f-nixfmt-1.1.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/gwm41cy59il5wjgh4j5gsrj9adqifv7f-nixfmt-1.1.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/8i2bgxqpamx48g48lprqrw4wgdc41cf9-nixfmt-1.1.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/8i2bgxqpamx48g48lprqrw4wgdc41cf9-nixfmt-1.1.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/jcdh58bsrl5hcggrpp7n0bcf34j4qzkk-nixfmt-1.1.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/jcdh58bsrl5hcggrpp7n0bcf34j4qzkk-nixfmt-1.1.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/szjqgwcv0c593fvrjgdw4zszd5fx4p0m-nixfmt-1.1.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/szjqgwcv0c593fvrjgdw4zszd5fx4p0m-nixfmt-1.1.0"
+        }
+      }
+    },
     "sops@latest": {
       "last_modified": "2025-11-23T21:50:36Z",
       "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#sops",
