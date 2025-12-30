@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Common configuration shared across all hypervisors
@@ -30,16 +35,22 @@
   # Basic firewall configuration
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 ];  # SSH
+    allowedTCPPorts = [ 22 ]; # SSH
   };
-
 
   # Nix settings for flakes
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
-      trusted-users = [ "root" "@wheel" "admin" ];
+      trusted-users = [
+        "root"
+        "@wheel"
+        "admin"
+      ];
 
       # Placeholder for future Private Binary Cache (GitOps)
       # substituters = [
@@ -84,7 +95,10 @@
 
     admin = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "libvirtd" ]; # Enable sudo
+      extraGroups = [
+        "wheel"
+        "libvirtd"
+      ]; # Enable sudo
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPxfYstlayeYX72SPy+lL/wSrpgQzw6j0MTJYoUlDwZj ebi@akna.nix"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIF3jIpOKqVJTQwNAA8P63ObqL88e9Pby7hhBvONtjg jakub.kubica@protonmail.com"
