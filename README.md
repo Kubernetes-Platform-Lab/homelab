@@ -19,5 +19,10 @@ $ helm install \
     --set=bpf.masquerade=true \
     --set=k8sServiceHost=localhost \
     --set=k8sServicePort=7445
+    --set=l2announcements.enabled=true \
+    --set=externalIPs.enabled=true \
+    --set=nodePort.enabled=true \
+    --set=hostServices.enabled=true
 ```
-***
+
+---

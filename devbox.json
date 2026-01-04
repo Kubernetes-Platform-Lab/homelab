@@ -6,7 +6,9 @@
     "just@latest",
     "kubectl@latest",
     "k9s@latest",
-    "kubernetes-helm@latest"
+    "kubernetes-helm@latest",
+    "yq-go@latest",
+    "cilium-cli@latest"
   ],
   "shell": {
     "init_hook": [

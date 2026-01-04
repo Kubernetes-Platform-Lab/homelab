@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: netshoot1
+  labels:
+    app: netshoot1
 spec:
   containers:
     - name: netshoot
