@@ -1,0 +1,77 @@
+# ------------------------------------------------------------
+# 0. LB IP Pool
+# ------------------------------------------------------------
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: lb-pool
+spec:
+  blocks:
+    - start: 10.40.0.150
+      stop: 10.40.0.160
+  serviceSelector:
+    matchLabels:
+      advertise: lb # Link this pool to services with this label
+
+---
+# ------------------------------------------------------------
+# 1. WHAT is advertised: ONLY LoadBalancer Services
+# ------------------------------------------------------------
+
+apiVersion: cilium.io/v2
+kind: CiliumBGPAdvertisement
+metadata:
+  name: lb-services
+  labels:
+    advertise: lb
+spec:
+  advertisements:
+    - advertisementType: Service
+      service:
+        addresses:
+          - LoadBalancerIP
+      selector:
+        matchLabels:
+          advertise: lb # Selects services with this label to advertise
+---
+# ------------------------------------------------------------
+# 2. HOW it is advertised (policy / families)
+# ------------------------------------------------------------
+apiVersion: cilium.io/v2
+kind: CiliumBGPPeerConfig
+metadata:
+  name: lb-only
+spec:
+  families:
+    - afi: ipv4
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: lb
+  gracefulRestart:
+    enabled: false # DISABLED to rule out session transition issues
+  timers:
+    keepAliveTimeSeconds: 5 # FASTER detection
+    holdTimeSeconds: 15 # FASTER timeout
+
+---
+# ------------------------------------------------------------
+# 3. WHO peers with whom (eBGP + ECMP)
+# ------------------------------------------------------------
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
+metadata:
+  name: bgp-ecmp-lb
+spec:
+  nodeSelector:
+    matchLabels:
+      bgp: "true"
+  bgpInstances:
+    - name: ebgp
+      localASN: 65000
+      peers:
+        - name: tor01
+          peerAddress: 10.40.0.1
+          peerASN: 65001
+          peerConfigRef:
+            name: lb-only
