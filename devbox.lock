@@ -1,6 +1,54 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "fluxcd@latest": {
+      "last_modified": "2025-12-03T03:51:48Z",
+      "resolved": "github:NixOS/nixpkgs/cadcc8de247676e4751c9d4a935acb2c0b059113#fluxcd",
+      "source": "devbox-search",
+      "version": "2.7.5",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/fpbq0wq1anzw05syjp8g89kvki6a7w7f-fluxcd-2.7.5",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/fpbq0wq1anzw05syjp8g89kvki6a7w7f-fluxcd-2.7.5"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/b5chqp1b7v3dalrf2y9mp022xjl4mya6-fluxcd-2.7.5",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/b5chqp1b7v3dalrf2y9mp022xjl4mya6-fluxcd-2.7.5"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/78kbb0rlxbfsp1glzp7c78qczcy1wgcm-fluxcd-2.7.5",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/78kbb0rlxbfsp1glzp7c78qczcy1wgcm-fluxcd-2.7.5"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ymnq3v3pgca5cwhcdk2r990i9n2j6hhq-fluxcd-2.7.5",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/ymnq3v3pgca5cwhcdk2r990i9n2j6hhq-fluxcd-2.7.5"
+        }
+      }
+    },
     "github:NixOS/nixpkgs/nixpkgs-unstable": {
       "last_modified": "2025-12-27T03:48:10Z",
       "resolved": "github:NixOS/nixpkgs/4eec65df50d796a8fd9c146a09b5007916ce376b?lastModified=1766807290&narHash=sha256-7sgUQMKMDvpeu9cwE7mWJfP9N3wJduunmJ%2Fs8LOd9nk%3D"

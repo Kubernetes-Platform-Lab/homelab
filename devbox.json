@@ -3,7 +3,8 @@
   "packages": [
     "kubectl@latest",
     "just@latest",
-    "kubernetes-helm@latest"
+    "kubernetes-helm@latest",
+    "fluxcd@latest"
   ],
   "shell": {
     "init_hook": [
