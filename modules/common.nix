@@ -69,6 +69,12 @@
     };
   };
 
+  # Kernel tuning for BGP stability
+    boot.kernel.sysctl = {
+      "net.core.wmem_max" = 16777216;
+      "net.core.rmem_max" = 16777216;
+    };
+
   # sops-nix configuration
   sops = {
     defaultSopsFile = ../secrets/secrets.yaml;
