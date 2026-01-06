@@ -3,6 +3,10 @@ ipam:
 
 gatewayAPI:
   enabled: true
+  service:
+    annotations: {}
+    labels:
+      advertise: lb
 
 envoy:
   enabled: true
