@@ -1,0 +1,6 @@
+installCRDs: true
+prometheus:
+  enabled: false
+webhook:
+  timeoutSeconds: 30
+replicaCount: 1
