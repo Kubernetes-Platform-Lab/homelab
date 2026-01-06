@@ -31,6 +31,8 @@ in
       # 3. Always redefine to apply XML changes safely
         ${pkgs.libvirt}/bin/virsh destroy talos-1 || true
         ${pkgs.libvirt}/bin/virsh undefine talos-1 || true
+        sleep 5
+        echo "undefined"
 
       # 4. Define the VM from XML
         ${pkgs.libvirt}/bin/virsh define /etc/libvirt/qemu/talos-1.xml
