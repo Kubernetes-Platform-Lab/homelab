@@ -7,4 +7,4 @@ metadata:
 spec:
   interval: 1m0s
   type: oci
-  url: oci://quay.io/jetstack
+  url: oci://quay.io/jetstack/charts
