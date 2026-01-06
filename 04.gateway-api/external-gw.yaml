@@ -5,3 +5,11 @@ metadata:
   namespace: gateway-api
 spec:
   gatewayClassName: cilium
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: domena1-tls

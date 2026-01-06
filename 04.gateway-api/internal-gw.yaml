@@ -5,3 +5,7 @@ metadata:
   namespace: gateway-api
 spec:
   gatewayClassName: cilium
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
