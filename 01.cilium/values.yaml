@@ -1,6 +1,12 @@
 ipam:
   mode: kubernetes
 
+gatewayAPI:
+  enabled: true
+
+envoy:
+  enabled: true
+
 kubeProxyReplacement: true
 
 bgpControlPlane:
