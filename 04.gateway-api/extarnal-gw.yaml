@@ -1,0 +1,5 @@
+kind: Gateway
+metadata:
+  name: external-gateway
+spec:
+  gatewayClassName: cilium

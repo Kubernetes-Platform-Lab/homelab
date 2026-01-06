@@ -1,0 +1,5 @@
+kind: Gateway
+metadata:
+  name: internal-gateway
+spec:
+  gatewayClassName: cilium
