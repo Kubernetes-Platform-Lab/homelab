@@ -1,3 +1,14 @@
+#Gateway-internal-pool
+#
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: int-gw-pool
+spec:
+  blocks:
+    - start: 10.40.0.180
+      stop: 10.40.0.181
+---
 # ------------------------------------------------------------
 # 0. LB IP Pool
 # ------------------------------------------------------------
@@ -9,9 +20,9 @@ spec:
   blocks:
     - start: 10.40.0.150
       stop: 10.40.0.160
-  serviceSelector:
-    matchLabels:
-      advertise: lb # Link this pool to services with this label
+  #serviceSelector:
+  #  matchLabels:
+  #    advertise: lb # Link this pool to services with this label
 
 ---
 # ------------------------------------------------------------
@@ -30,9 +41,9 @@ spec:
       service:
         addresses:
           - LoadBalancerIP
-      selector:
-        matchLabels:
-          advertise: lb # Selects services with this label to advertise
+      #selector:
+      #  matchLabels:
+      #    advertise: lb # Selects services with this label to advertise
 ---
 # ------------------------------------------------------------
 # 2. HOW it is advertised (policy / families)
@@ -45,9 +56,9 @@ spec:
   families:
     - afi: ipv4
       safi: unicast
-      advertisements:
-        matchLabels:
-          advertise: lb
+      #advertisements:
+      #  matchLabels:
+      #    advertise: lb
   gracefulRestart:
     enabled: false # DISABLED to rule out session transition issues
   timers:

@@ -4,9 +4,8 @@ ipam:
 gatewayAPI:
   enabled: true
   service:
-    annotations: {}
-    labels:
-      advertise: lb
+    annotations:
+      cilium.io/address-pool: int-gw-pool
 
 envoy:
   enabled: true
