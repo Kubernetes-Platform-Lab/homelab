@@ -3,14 +3,13 @@
 clusterName: ${ClusterName}
 talosVersion: v1.11.0
 kubernetesVersion: v1.32.0
-endpoint: https://10.30.0.31:6443
-domain: ${domain}
+endpoint: https://10.30.0.200:6443
 allowSchedulingOnMasters: true
 additionalMachineCertSans:
   - 10.30.0.200
-  - k8s.akna.lan
+  - ${ClusterName}
 additionalApiServerCertSans:
-  - ${ClusterName}.local
+  - ${ClusterName}
 clusterPodNets:
   - 10.244.0.0/16
 clusterSvcNets:
