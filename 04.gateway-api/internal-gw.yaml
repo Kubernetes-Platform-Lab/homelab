@@ -1,5 +1,6 @@
 kind: Gateway
 metadata:
   name: internal-gateway
+  namespace: gateway-api
 spec:
   gatewayClassName: cilium
