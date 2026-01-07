@@ -4,20 +4,24 @@ metadata:
   name: internal-gateway
   namespace: gateway-api
 spec:
-  addresses:
-    - type: IPAddress
-      value: 10.40.0.180
+  #addresses:
+  #  - type: IPAddress
+  #    value: 10.40.0.180
   gatewayClassName: cilium
   listeners:
     - name: http
       protocol: HTTP
       port: 80
+      hostnames:
+        - "*"
       allowedRoutes:
         namespaces:
           from: All
     - name: https
       protocol: HTTPS
       port: 443
+      hostnames:
+        - "*"
       allowedRoutes:
         namespaces:
           from: All
