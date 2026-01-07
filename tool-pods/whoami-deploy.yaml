@@ -15,8 +15,8 @@ spec:
         app: whoami
     spec:
       containers:
-      - image: traefik/whoami
-        name: whoami
+        - image: traefik/whoami
+          name: whoami
 ---
 apiVersion: v1
 kind: Service
@@ -28,9 +28,9 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 80
+    - port: 80
+      protocol: TCP
+      targetPort: 80
   selector:
     app: whoami
 status:
