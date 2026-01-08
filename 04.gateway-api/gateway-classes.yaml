@@ -4,4 +4,4 @@ kind: GatewayClass
 metadata:
   name: cilium
 spec:
-  controllerName: io.cilium/gateway-controller
+  controllerName: io.cilium/bgp-control-plane
