@@ -18,6 +18,8 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443
+      tls:
+        mode: Passthrough
       allowedRoutes:
         namespaces:
           from: All
