@@ -16,7 +16,7 @@ spec:
   chart:
     spec:
       chart: sealed-secrets
-      version: 2.5.19
+      version: 2.18.0
       #version: "5.38.1" # latest stable as of Jan 2026
       sourceRef:
         kind: HelmRepository
