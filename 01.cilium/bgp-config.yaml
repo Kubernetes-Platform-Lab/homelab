@@ -41,6 +41,8 @@ spec:
       service:
         addresses:
           - LoadBalancerIP
+      matchExpressions:
+        - { key: bgp, operator: NotIn, values: ["no-advertise"] }
       #selector:
       #  matchLabels:
       #    advertise: lb # Selects services with this label to advertise
@@ -56,9 +58,9 @@ spec:
   families:
     - afi: ipv4
       safi: unicast
-      #advertisements:
-      #  matchLabels:
-      #    advertise: lb
+      advertisements:
+        matchLabels:
+          advertise: lb
   gracefulRestart:
     enabled: false # DISABLED to rule out session transition issues
   timers:
