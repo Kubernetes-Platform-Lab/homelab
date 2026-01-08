@@ -12,16 +12,12 @@ spec:
     - name: http
       protocol: HTTP
       port: 80
-      hostnames:
-        - "*"
       allowedRoutes:
         namespaces:
           from: All
     - name: https
       protocol: HTTPS
       port: 443
-      hostnames:
-        - "*"
       allowedRoutes:
         namespaces:
           from: All
