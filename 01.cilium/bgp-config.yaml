@@ -41,8 +41,9 @@ spec:
       service:
         addresses:
           - LoadBalancerIP
-      matchExpressions:
-        - { key: bgp, operator: NotIn, values: ["no-advertise"] }
+      selector:
+        matchExpressions:
+          - { key: bgp, operator: NotIn, values: ["no-advertise"] }
       #selector:
       #  matchLabels:
       #    advertise: lb # Selects services with this label to advertise

@@ -1,0 +1,8 @@
+server:
+  service:
+    type: ClusterIP
+controller:
+  extraArgs: ["--loglevel=info"]
+configs:
+  cm:
+    application.instanceLabelKey: argocd.argoproj.io/instance
