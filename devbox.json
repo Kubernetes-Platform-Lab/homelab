@@ -7,13 +7,10 @@
     "kubectl@latest",
     "k9s@latest",
     "kubernetes-helm@latest",
-<<<<<<< Updated upstream
     "yq-go@latest",
     "cilium-cli@latest",
-    "fluxcd@latest"
-=======
+    "fluxcd@latest",
     "sops@latest"
->>>>>>> Stashed changes
   ],
   "shell": {
     "init_hook": [
