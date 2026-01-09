@@ -21,3 +21,6 @@ spec:
         kind: HelmRepository
         name: democratic-csi
         namespace: flux-system
+  values:
+    csiDrive:
+      name: d-csi
