@@ -17,21 +17,3 @@ spec:
       containers:
         - image: traefik/whoami
           name: whoami
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: whoami
-    advertise: lb
-  name: whoami
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 80
-      protocol: TCP
-      targetPort: 80
-  selector:
-    app: whoami
-status:
-  loadBalancer: {}

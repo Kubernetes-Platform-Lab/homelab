@@ -8,7 +8,8 @@
     "k9s@latest",
     "kubernetes-helm@latest",
     "yq-go@latest",
-    "cilium-cli@latest"
+    "cilium-cli@latest",
+    "fluxcd@latest"
   ],
   "shell": {
     "init_hook": [
