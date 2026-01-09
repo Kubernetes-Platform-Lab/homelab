@@ -268,6 +268,54 @@
           "store_path": "/nix/store/b7g7s0jpfs93g7s1b556166mcswbkmcx-kubernetes-helm-3.19.1"
         }
       }
+    },
+    "kubeseal@latest": {
+      "last_modified": "2026-01-02T14:39:32Z",
+      "resolved": "github:NixOS/nixpkgs/16c7794d0a28b5a37904d55bcca36003b9109aaa#kubeseal",
+      "source": "devbox-search",
+      "version": "0.34.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5kxvr6wfaa4cjh5zsiyafq592ca9msy7-kubeseal-0.34.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/5kxvr6wfaa4cjh5zsiyafq592ca9msy7-kubeseal-0.34.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/bx90ac2h71nk1jm8q3yhw4jqrcz6l8di-kubeseal-0.34.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/bx90ac2h71nk1jm8q3yhw4jqrcz6l8di-kubeseal-0.34.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/x1d8ni0w8pwvfl8p0s8zw1vj521r2jlc-kubeseal-0.34.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/x1d8ni0w8pwvfl8p0s8zw1vj521r2jlc-kubeseal-0.34.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/v3a5sw3m9fb4spds2mn1xq17jkcpkqvd-kubeseal-0.34.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/v3a5sw3m9fb4spds2mn1xq17jkcpkqvd-kubeseal-0.34.0"
+        }
+      }
     }
   }
 }
