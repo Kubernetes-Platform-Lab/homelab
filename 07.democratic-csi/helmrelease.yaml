@@ -24,3 +24,6 @@ spec:
   values:
     csiDriver:
       name: "org.democratic-csi.nfs"
+    driver:
+      config:
+        driver: freenas-nfs
