@@ -21,5 +21,6 @@ spec:
         kind: HelmRepository
         name: democratic-csi
         namespace: flux-system
-  valuesFiles:
-    - values.yaml
+  values:
+    csiDriver:
+      name: "org.democratic-csi.nfs"
