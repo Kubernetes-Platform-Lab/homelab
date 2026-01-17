@@ -1,7 +1,7 @@
 <domain type='kvm'>
   <name>talos-1</name>
-  <memory unit='GiB'>2</memory>
-  <currentMemory unit='GiB'>2</currentMemory>
+  <memory unit='GiB'>6</memory>
+  <currentMemory unit='GiB'>6</currentMemory>
   <vcpu placement='static'>2</vcpu>
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>
