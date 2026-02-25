@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": [
+    "talhelper@3.0.42",
+    "talosctl@1.10.6",
+    "just@latest",
+    "kubectl@latest",
+    "k9s@latest",
+    "kubernetes-helm@latest",
+    "yq-go@latest",
+    "cilium-cli@latest",
+    "fluxcd@latest",
+    "sops@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "export TALOSCONFIG=./clusterconfig/talosconfig",
+      "export KUBECONFIG=./clusterconfig/kubeconfig"
+    ],
+    "scripts": {
+      "test": ["echo \"Kubernetes tool shell\" && exit 0"]
+    }
+  }
+}
