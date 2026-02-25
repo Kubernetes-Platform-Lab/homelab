@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matchbox
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matchbox
+  template:
+    metadata:
+      labels:
+        app: matchbox
+    spec:
+      hostNetwork: true
+      restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: matchbox
+          image: quay.io/poseidon/matchbox:v0.11.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - "-address=0.0.0.0:8080"
+            - "-rpc-address=0.0.0.0:8081"
+            - "-log-level=debug"
+          volumeMounts:
+            - name: matchbox-data
+              mountPath: /var/lib/matchbox
+            - name: matchbox-config
+              mountPath: /etc/matchbox
+              readOnly: true
+      volumes:
+        - name: matchbox-data
+          hostPath:
+            path: /var/lib/matchbox
+            type: Directory
+        - name: matchbox-config
+          hostPath:
+            path: /etc/matchbox
+            type: Directory
+

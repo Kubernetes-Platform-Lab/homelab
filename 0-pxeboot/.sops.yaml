@@ -1,0 +1,7 @@
+---
+creation_rules:
+  - path_regex: kubeconfig.yaml
+    key_groups:
+      - age:
+          - age1y5pghlnfjzrv87y5fvwakdhr9ppzp3m3085j78rkmvg0rjx7ppqqpk08kg # ebi@akna.nix
+          - age1kjjfufqaax3wsrp24zk2armnmretqfq5t38my80y0v5dgnhywsfsx2yyq2 # jaku@protonmail.com
