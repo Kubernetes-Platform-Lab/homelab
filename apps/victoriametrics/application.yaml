@@ -12,7 +12,8 @@ spec:
     repoURL: https://victoriametrics.github.io/helm-charts
     targetRevision: 0.42.0
     helm:
-      releaseName: victoriametrics
+      releaseName: vm-stack
+      createNamespace: true
       valuesObject:
         vmagent:
           enabled: true
