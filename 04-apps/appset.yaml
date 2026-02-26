@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: homepage
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: prod
+            name: homepage-prod
+            namespace: homepage
+            server: https://kubernetes.default.svc
+            version: 1.8.0
+
+  template:
+    metadata:
+      name: "{{name}}"
+      labels:
+        app: homepage
+        env: "{{env}}"
+    spec:
+      project: default
+      sources:
+        - repoURL: https://unknowniq.github.io/helm-charts/
+          chart: homepage
+          targetRevision: "{{version}}"
+          helm:
+            releaseName: homepage
+            valuesObject:
+              replicaCount: 1
+              config:
+                bookmarks:
+                  - DEV:
+                      - Harbor:
+                          - href: https://onet.pl
+      destination:
+        server: "{{server}}"
+        namespace: "{{namespace}}"
