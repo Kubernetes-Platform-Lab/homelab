@@ -1,0 +1,247 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudnativepg-dashboard
+  namespace: grafana
+  labels:
+    grafana_dashboard: "1"
+data:
+  cloudnativepg.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 1,
+      "id": null,
+      "links": [
+        {
+          "asDropdown": false,
+          "icon": "external link",
+          "includeVars": false,
+          "keepTime": false,
+          "tags": ["cloudnativepg"],
+          "targetBlank": false,
+          "title": "Related Dashboards",
+          "tooltip": "",
+          "type": "dashboards",
+          "url": ""
+        }
+      ],
+      "liveNow": false,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {"h": 7, "w": 3, "x": 0, "y": 0},
+          "id": 676,
+          "options": {
+            "alertInstanceLabelFilter": "{namespace=~\"$namespace\",pod=~\"$instances\"}",
+            "alertName": "",
+            "dashboardAlerts": false,
+            "folder": "",
+            "groupBy": [],
+            "groupMode": "default",
+            "maxItems": 20,
+            "sortOrder": 1,
+            "stateFilter": {"error": true, "firing": true, "noData": false, "normal": true, "pending": true},
+            "viewMode": "list"
+          },
+          "title": "Alerts",
+          "type": "alertlist"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "prometheus"},
+          "gridPos": {"h": 1, "w": 4, "x": 3, "y": 0},
+          "id": 586,
+          "options": {"code": {"language": "plaintext", "showLineNumbers": false, "showMiniMap": false}, "content": "", "mode": "markdown"},
+          "pluginVersion": "10.3.3",
+          "title": "Health",
+          "type": "text"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "prometheus"},
+          "gridPos": {"h": 2, "w": 2, "x": 3, "y": 1},
+          "id": 585,
+          "fieldConfig": {
+            "defaults": {
+              "color": {"mode": "thresholds"},
+              "mappings": [
+                {"options": {"0": {"color": "green", "index": 1, "text": "None"}, "-1": {"color": "red", "index": 0, "text": "None"}}, {"options": {"from": 2, "result": {"color": "orange", "index": 2, "text": "Degraded"}}, "type": "range"}],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
+              "unitScale": true
+            },
+            "overrides": []
+          },
+          "options": {"colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showPercentChange": false, "textMode": "auto", "wideLayout": true},
+          "pluginVersion": "10.3.3",
+          "targets": [
+            {
+              "datasource": {"type": "prometheus", "uid": "prometheus"},
+              "editorMode": "code",
+              "expr": "(max(cnpg_pg_replication_streaming_replicas{namespace=~\"$namespace\", pod=~\"$instances\"}) - sum(cnpg_pg_replication_is_wal_receiver_up{namespace=~\"$namespace\", pod=~\"$instances\"})) + (clamp_max(max(cnpg_pg_replication_streaming_replicas{namespace=~\"$namespace\", pod=~\"$instances\"}), 1) - 1)",
+              "legendFormat": "Replication",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "type": "stat"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "prometheus"},
+          "gridPos": {"h": 2, "w": 1, "x": 5, "y": 1},
+          "id": 590,
+          "fieldConfig": {
+            "defaults": {
+              "color": {"mode": "thresholds"},
+              "mappings": [
+                {"options": {"match": "null", "result": {"color": "text", "index": 0, "text": "No data"}}},
+                {"options": {"from": 0, "result": {"color": "green", "index": 1, "text": "Healthy"}}, "to": 0.1},
+                {"options": {"from": 0.1, "result": {"color": "yellow", "index": 2, "text": "Sub-second"}}, "to": 1},
+                {"options": {"from": 1, "result": {"color": "orange", "index": 3, "text": "Delayed"}}, "to": 5},
+                {"options": {"from": 5, "result": {"color": "red", "index": 4, "text": "High"}}, "to": 4294967295}
+              ],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
+              "unitScale": true
+            },
+            "overrides": []
+          },
+          "options": {"colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showPercentChange": false, "textMode": "value_and_name", "wideLayout": true},
+          "pluginVersion": "10.3.3",
+          "targets": [
+            {
+              "datasource": {"type": "prometheus", "uid": "prometheus"},
+              "editorMode": "code",
+              "expr": "max(cnpg_pg_replication_lag{namespace=~\"$namespace\",pod=~\"$instances\"}) + max(cnpg_pg_stat_replication_write_lag_seconds{namespace=~\"$namespace\",pod=~\"$instances\"}) + max(cnpg_pg_stat_replication_flush_lag_seconds{namespace=~\"$namespace\",pod=~\"$instances\"}) + max(cnpg_pg_stat_replication_replay_lag_seconds{namespace=~\"$namespace\",pod=~\"$instances\"})",
+              "legendFormat": "Lag",
+              "range": true,
+              "refId": "LAG"
+            }
+          ],
+          "type": "stat"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "prometheus"},
+          "gridPos": {"h": 2, "w": 1, "x": 6, "y": 1},
+          "id": 613,
+          "fieldConfig": {
+            "defaults": {
+              "color": {"mode": "thresholds"},
+              "mappings": [
+                {"options": {"match": "null", "result": {"color": "text", "index": 0, "text": "No data"}}},
+                {"options": {"from": 0, "result": {"color": "green", "index": 1, "text": "Healthy"}}, "to": 0.8},
+                {"options": {"from": 0.8, "result": {"color": "orange", "index": 2, "text": "Warning"}}, "to": 0.9},
+                {"options": {"from": 0.9, "result": {"color": "red", "index": 3, "text": "Critical"}}, "to": 0.98},
+                {"options": {"from": 0.98, "result": {"color": "red", "index": 4, "text": "Data Loss"}}, "to": 1},
+                {"options": {"from": 1, "result": {"color": "red", "index": 5, "text": "Full"}}, "to": 4294967295}
+              ],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
+              "unitScale": true
+            },
+            "overrides": []
+          },
+          "options": {"colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showPercentChange": false, "textMode": "value_and_name", "wideLayout": true},
+          "pluginVersion": "10.3.3",
+          "targets": [
+            {
+              "datasource": {"type": "prometheus", "uid": "prometheus"},
+              "editorMode": "code",
+              "expr": "max((max by(persistentvolumeclaim) (1 - kubelet_volume_stats_available_bytes{namespace=\"$namespace\", persistentvolumeclaim=~\"$instances\"} / kubelet_volume_stats_capacity_bytes{namespace=\"$namespace\", persistentvolumeclaim=~\"$instances\"}))) OR (max by(persistentvolumeclaim) (kubelet_volume_stats_inodes_used{namespace=\"$namespace\", persistentvolumeclaim=~\"$instances\"} / kubelet_volume_stats_inodes{namespace=\"$namespace\", persistentvolumeclaim=~\"$instances\"})))",
+              "legendFormat": "Storage",
+              "range": true,
+              "refId": "STORAGE"
+            }
+          ],
+          "type": "stat"
+        }
+      ],
+      "refresh": "30s",
+      "revision": 1,
+      "schemaVersion": 39,
+      "tags": ["cloudnativepg"],
+      "templating": {
+        "list": [
+          {
+            "current": {"selected": false, "text": "prometheus", "value": "prometheus"},
+            "hide": 0,
+            "includeAll": false,
+            "label": "Datasource",
+            "multi": false,
+            "name": "DS_PROMETHEUS",
+            "options": [],
+            "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "type": "datasource"
+          },
+          {
+            "current": {},
+            "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+            "definition": "cnpg_collector_up",
+            "description": "Namespace where the database cluster is located",
+            "hide": 0,
+            "includeAll": false,
+            "label": "Database Namespace",
+            "multi": false,
+            "name": "namespace",
+            "options": [],
+            "query": {"query": "cnpg_collector_up", "refId": "StandardVariableQuery"},
+            "refresh": 2,
+            "regex": "/namespace=\"(?<text>[^\"]+)/g",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          },
+          {
+            "allValue": "$cluster-([1-9][0-9]*)",
+            "current": {},
+            "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+            "definition": "cnpg_collector_up{namespace=~\"$namespace\",pod=~\"$cluster-([1-9][0-9]*)$\"}",
+            "description": "Database cluster instances",
+            "hide": 0,
+            "includeAll": true,
+            "label": "Instances",
+            "multi": true,
+            "name": "instances",
+            "options": [],
+            "query": {"qryType": 4, "query": "cnpg_collector_up{namespace=~\"$namespace\",pod=~\"$cluster-([1-9][0-9]*)$\"}", "refId": "PrometheusVariableQueryEditor-VariableQuery"},
+            "refresh": 2,
+            "regex": "/pod=\"(?<text>[^\"]+)/g",
+            "skipUrlSync": false,
+            "sort": 1,
+            "type": "query"
+          }
+        ]
+      },
+      "time": {"from": "now-7d", "to": "now"},
+      "timepicker": {"nowDelay": ""},
+      "timezone": "",
+      "title": "CloudNativePG",
+      "uid": "cloudnative-pg",
+      "version": 1,
+      "weekStart": "",
+      "gnetId": 20417
+    }

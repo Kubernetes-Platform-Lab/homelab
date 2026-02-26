@@ -1,0 +1,14 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMNodeScrape
+metadata:
+  name: kubernetes-nodes
+  namespace: victoriametrics
+spec:
+  scheme: https
+  tlsConfig:
+    caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    insecureSkipVerify: true
+  bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+  relabelingConfigs:
+    - action: labelmap
+      regex: __meta_kubernetes_node_label_(.+)
