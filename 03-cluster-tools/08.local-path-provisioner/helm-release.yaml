@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: local-path-provisioner
         namespace: flux-system
-      version: 0.0.31
+      version: 0.0.35
   install:
     createNamespace: true
   interval: 1m0s
