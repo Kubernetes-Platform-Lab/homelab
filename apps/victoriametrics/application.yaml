@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoriametrics
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: victoria-metrics-k8s-stack
+    repoURL: https://victoriametrics.github.io/helm-charts
+    targetRevision: 0.42.0
+    helm:
+      releaseName: victoriametrics
+      valuesObject:
+        vmagent:
+          enabled: true
+          extraArgs:
+            - -promscrape.config=/etc/vmagent/config/prometheus.yml
+            - -enableCustomConfigScrape=true
+          configMaps:
+            prometheus.yml: |
+              scrape_configs: []
+        vmoperator:
+          enabled: true
+          crds:
+            enabled: true
+        vmsingle:
+          enabled: true
+        grafana:
+          enabled: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: victoriametrics
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
