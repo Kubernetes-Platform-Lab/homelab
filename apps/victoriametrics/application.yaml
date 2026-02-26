@@ -13,7 +13,6 @@ spec:
     targetRevision: 0.42.0
     helm:
       releaseName: vm-stack
-      createNamespace: true
       valuesObject:
         vmagent:
           enabled: true
@@ -35,6 +34,8 @@ spec:
     server: https://kubernetes.default.svc
     namespace: victoriametrics
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true

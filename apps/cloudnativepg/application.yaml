@@ -26,6 +26,8 @@ spec:
     server: https://kubernetes.default.svc
     namespace: cloudnativepg
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
