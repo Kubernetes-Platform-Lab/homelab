@@ -8,4 +8,5 @@ resources:
 - external-secrets-kustomization.yaml
 - gapi-flux-kustomization.yaml
 - local-path-provisioner-kustomization.yaml
+- longhorn-kustomization.yaml
 - sealed-kustomization.yaml

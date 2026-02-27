@@ -1,0 +1,34 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: longhorn
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: flux-system
+      version: 1.7.0
+  install:
+    createNamespace: true
+  interval: 1m0s
+  releaseName: longhorn
+  targetNamespace: longhorn-system
+  values:
+    longhornUI:
+      replicas: 1
+    persistence:
+      defaultClass: false
+    defaultDataPath: /var/lib/longhorn/replicas
+    csi:
+      attacherImage:
+      provisionerImage:
+      driverRegistrarImage:
+      snapshotterImage:
+      resizerImage:
+      defenderImage:
