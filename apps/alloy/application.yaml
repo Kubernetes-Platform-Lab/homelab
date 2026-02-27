@@ -19,7 +19,9 @@ spec:
         alloy:
           configMap:
             content: |
-              logging.level = "info"
+              logging {
+                level = "info"
+              }
               
               // Kubernetes metrics
               prometheus.scrape "kubernetes" {
@@ -43,22 +45,6 @@ spec:
                 }
               }
               
-              // Kubernetes cluster traces
-              otelcol.receiver.kubernetes "cluster" {
-              }
-              
-              // Forward cluster traces to Tempo
-              otelcol.exporter.otlp "tempo" {
-                client {
-                  endpoint = "tempo.tempo.svc:4317"
-                  tls {
-                    insecure = true
-                  }
-                }
-              }
-              
-              otelcol.receiver.kubernetes "cluster" -> otelcol.exporter.otlp.tempo
-              
               // Receive OTLP traces from Beyla and forward to Tempo
               otelcol.receiver.otlp "beyla" {
                 grpc {
@@ -66,6 +52,15 @@ spec:
                 }
                 http {
                   listen_addr = "0.0.0.0:4318"
+                }
+              }
+              
+              otelcol.exporter.otlp "tempo" {
+                client {
+                  endpoint = "tempo.tempo.svc:4317"
+                  tls {
+                    insecure = true
+                  }
                 }
               }
               
