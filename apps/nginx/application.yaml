@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://gitlab.com/homelab-dev/2-Apps.git
     targetRevision: HEAD
-    path: apps/nginx
+    path: apps/nginx/deployment.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: nginx
