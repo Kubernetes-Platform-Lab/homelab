@@ -18,13 +18,7 @@ spec:
         nodeExporter:
           full: false
         vmagent:
-          enabled: true
-          extraArgs:
-            - -promscrape.config=/etc/vmagent/config/prometheus.yml
-            - -enableCustomConfigScrape=true
-          configMaps:
-            prometheus.yml: |
-              scrape_configs: []
+          enabled: false
         vmoperator:
           enabled: true
           crds:

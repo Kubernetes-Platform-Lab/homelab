@@ -1,0 +1,88 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alloy
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: alloy
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 1.5.0
+    helm:
+      releaseName: alloy
+      valuesObject:
+        configMap:
+          create: true
+        alloy:
+          configMap:
+            content: |
+              logging.level = "info"
+              
+              // Kubernetes metrics
+              prometheus.scrape "kubernetes" {
+                targets = prometheus.exporter.kubernetes["default"].targets
+                forward_to = [prometheus.remote_write.vm.receiver]
+              }
+              
+              prometheus.exporter.kubernetes "default" {
+              }
+              
+              // Beyla metrics
+              prometheus.scrape "beyla" {
+                targets = [{"__address__" = "beyla.beyla.svc:9090"}]
+                forward_to = [prometheus.remote_write.vm.receiver]
+              }
+              
+              // Send metrics to VictoriaMetrics
+              prometheus.remote_write "vm" {
+                endpoint {
+                  url = "http://vm-stack-vminsert.victoriametrics.svc:8428/api/v1/write"
+                }
+              }
+              
+              // Kubernetes cluster traces
+              otelcol.receiver.kubernetes "cluster" {
+              }
+              
+              // Forward cluster traces to Tempo
+              otelcol.exporter.otlp "tempo" {
+                client {
+                  endpoint = "tempo.tempo.svc:4317"
+                  tls {
+                    insecure = true
+                  }
+                }
+              }
+              
+              otelcol.receiver.kubernetes "cluster" -> otelcol.exporter.otlp.tempo
+              
+              // Receive OTLP traces from Beyla and forward to Tempo
+              otelcol.receiver.otlp "beyla" {
+                grpc {
+                  listen_addr = "0.0.0.0:4317"
+                }
+                http {
+                  listen_addr = "0.0.0.0:4318"
+                }
+              }
+              
+              otelcol.receiver.otlp.beyla -> otelcol.exporter.otlp.tempo
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: alloy
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

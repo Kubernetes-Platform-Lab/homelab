@@ -11,9 +11,19 @@ data:
       - name: VictoriaMetrics
         type: prometheus
         access: proxy
-        url: http://victoriametrics:8428
+        url: http://vm-stack-vminsert.victoriametrics.svc:8428
         isDefault: true
         editable: true
         jsonData:
           httpMethod: POST
           timeInterval: 15s
+      - name: Tempo
+        type: tempo
+        access: proxy
+        url: http://tempo.tempo.svc:3100
+        editable: true
+        jsonData:
+          httpMethod: GET
+          tracesToLogs: {}
+          serviceMap:
+            datasourceUid: 'VictoriaMetrics'

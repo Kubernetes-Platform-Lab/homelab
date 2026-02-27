@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: tempo
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 1.9.0
+    helm:
+      releaseName: tempo
+      valuesObject:
+        replicas: 1
+        persistence:
+          enabled: true
+          size: 10Gi
+        tempo:
+          receivers:
+            jaeger:
+              protocols:
+                thrift_http:
+                  endpoint: "0.0.0.0:14268"
+                grpc:
+                  endpoint: "0.0.0.0:14250"
+                thrift_binary:
+                  endpoint: "0.0.0.0:6832"
+                thrift_compact:
+                  endpoint: "0.0.0.0:6831"
+            zipkin:
+            otlp:
+              protocols:
+                http:
+                  endpoint: "0.0.0.0:4318"
+                grpc:
+                  endpoint: "0.0.0.0:4317"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 250m
+            memory: 512Mi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tempo
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
