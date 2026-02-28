@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: my-cluster
+  name: test-cluster
   namespace: default
   annotations:
     prometheus.io/scrape: "true"
@@ -9,39 +9,6 @@ metadata:
     prometheus.io/path: "/metrics"
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
 
   storage:
-    size: 10Gi
-    storageClass: standard
-
-  resources:
-    requests:
-      memory: "128Mi"
-      cpu: "100m"
-    limits:
-      memory: "512Mi"
-      cpu: "500m"
-
-  bootstrap:
-    initdb:
-      database: app
-      owner: app
-      secret:
-        name: my-cluster-app-secret
-
-  postgresql:
-    parameters:
-      max_connections: "100"
-      shared_buffers: "128MB"
-
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: my-cluster-app-secret
-  namespace: default
-type: Opaque
-stringData:
-  username: app
-  password: changeme
+    size: 1Gi
