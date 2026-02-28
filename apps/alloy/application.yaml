@@ -22,39 +22,39 @@ spec:
               logging {
                 level = "info"
               }
-              
+
               // Kubernetes metrics
               prometheus.scrape "kubernetes" {
                 targets = prometheus.exporter.kubernetes["default"].targets
                 forward_to = [prometheus.remote_write.vm.receiver]
               }
-              
+
               prometheus.exporter.kubernetes "default" {
               }
-              
+
               // Beyla metrics
               prometheus.scrape "beyla" {
                 targets = [{"__address__" = "beyla.beyla.svc:9090"}]
                 forward_to = [prometheus.remote_write.vm.receiver]
               }
-              
+
               // Send metrics to VictoriaMetrics
               prometheus.remote_write "vm" {
                 endpoint {
                   url = "http://vm-stack-vminsert.victoriametrics.svc:8428/api/v1/write"
                 }
               }
-              
-              // Receive OTLP traces from Beyla and forward to Tempo
-              otelcol.receiver.otlp "beyla" {
-                grpc {
-                  listen_addr = "0.0.0.0:4317"
-                }
-                http {
-                  listen_addr = "0.0.0.0:4318"
-                }
-              }
-              
+              #
+             # // Receive OTLP traces from Beyla and forward to Tempo
+             # otelcol.receiver.otlp "beyla" {
+             #   grpc {
+             #     listen_addr = "0.0.0.0:4317"
+             #   }
+             #   http {
+             #     listen_addr = "0.0.0.0:4318"
+             #   }
+             # }
+
               otelcol.exporter.otlp "tempo" {
                 client {
                   endpoint = "tempo.tempo.svc:4317"
@@ -63,7 +63,7 @@ spec:
                   }
                 }
               }
-              
+
               otelcol.receiver.otlp.beyla -> otelcol.exporter.otlp.tempo
         resources:
           limits:
