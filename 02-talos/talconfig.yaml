@@ -1,7 +1,7 @@
 # Talhelper - confoguration file
 ---
 clusterName: ${ClusterName}
-talosVersion: v1.11.0
+talosVersion: v1.12.4
 kubernetesVersion: v1.32.0
 endpoint: https://10.30.0.200:6443
 allowSchedulingOnMasters: true
@@ -18,6 +18,7 @@ cniConfig:
   name: none
 patches:
   - "@./patches/machine/enable-discovery-patch.yaml"
+  - "@./patches/machine/kernel-modules.yaml"
 nodes:
   - hostname: cp-node01
     ipAddress: 10.30.0.29
@@ -25,6 +26,22 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: disk.bus_path == "/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5"
+          maxSize: 500GiB
+        filesystem:
+          type: xfs
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/qemu-guest-agent
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+            - siderolabs/amd-ucode
     nameservers:
       - 1.1.1.1
       - 8.8.8.8
@@ -50,6 +67,22 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: disk.bus_path == "/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5"
+          maxSize: 500GiB
+        filesystem:
+          type: xfs
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/qemu-guest-agent
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+            - siderolabs/amd-ucode
     nameservers:
       - 1.1.1.1
       - 8.8.8.8
@@ -75,6 +108,22 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: disk.bus_path == "/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5"
+          maxSize: 128GiB
+        filesystem:
+          type: xfs
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/qemu-guest-agent
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+            - siderolabs/intel-ucode
     nameservers:
       - 1.1.1.1
       - 8.8.8.8
@@ -100,6 +149,22 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: disk.bus_path == "/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5"
+          maxSize: 128GiB
+        filesystem:
+          type: xfs
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/qemu-guest-agent
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+            - siderolabs/intel-ucode
     nameservers:
       - 1.1.1.1
       - 8.8.8.8
@@ -119,22 +184,4 @@ nodes:
         mtu: 1500
 controlPlane:
   patches:
-    - |-
-      - op: add
-        path: /cluster/proxy/disabled
-        value: true
-  schematic:
-    customization:
-      extraKernelArgs:
-        - net.ifnames=0
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/qemu-guest-agent
-worker:
-  schematic:
-    customization:
-      extraKernelArgs:
-        - net.ifnames=0
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/qemu-guest-agent
+    - "@./patches/machine/cluster-proxy-disabled.yaml"

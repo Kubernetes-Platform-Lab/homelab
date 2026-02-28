@@ -23,8 +23,8 @@ spec:
     longhornUI:
       replicas: 1
     persistence:
-      defaultClass: false
-    defaultDataPath: /var/lib/longhorn/replicas
+      defaultClass: true
+    defaultDataPath: /var/mnt/longhorn
     csi:
       attacherImage:
       provisionerImage:

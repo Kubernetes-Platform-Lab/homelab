@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
   "packages": [
-    "talhelper@3.0.42",
-    "talosctl@1.10.6",
+    "talhelper@3.1.5",
+    "talosctl@1.11.6",
     "just@latest",
     "kubectl@latest",
     "k9s@latest",

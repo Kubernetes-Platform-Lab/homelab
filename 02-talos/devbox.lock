@@ -413,99 +413,99 @@
         }
       }
     },
-    "talhelper@3.0.42": {
-      "last_modified": "2025-12-21T10:48:17Z",
-      "resolved": "github:NixOS/nixpkgs/306ea70f9eb0fb4e040f8540e2deab32ed7e2055#talhelper",
+    "talhelper@3.1.5": {
+      "last_modified": "2026-02-23T15:40:43Z",
+      "resolved": "github:NixOS/nixpkgs/80d901ec0377e19ac3f7bb8c035201e2e098cc97#talhelper",
       "source": "devbox-search",
-      "version": "3.0.42",
+      "version": "3.1.5",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/g5605ig4ggnqfaw201mhnp4gq26gq71i-talhelper-3.0.42",
+              "path": "/nix/store/i50sx4v6qvniv6m6kzqbwbq45qil6lza-talhelper-3.1.5",
               "default": true
             }
           ],
-          "store_path": "/nix/store/g5605ig4ggnqfaw201mhnp4gq26gq71i-talhelper-3.0.42"
+          "store_path": "/nix/store/i50sx4v6qvniv6m6kzqbwbq45qil6lza-talhelper-3.1.5"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/9ny68an0s6wlz6x3s2dpnnf87vlzcfw4-talhelper-3.0.42",
+              "path": "/nix/store/29nygy6glsgm4ffvx72v2rc0q69654x5-talhelper-3.1.5",
               "default": true
             }
           ],
-          "store_path": "/nix/store/9ny68an0s6wlz6x3s2dpnnf87vlzcfw4-talhelper-3.0.42"
+          "store_path": "/nix/store/29nygy6glsgm4ffvx72v2rc0q69654x5-talhelper-3.1.5"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/mzyphilbkhzxql56a0wwl9g3x6mvawl8-talhelper-3.0.42",
+              "path": "/nix/store/p6mq1jlqh6ghj0l0hyv7xz876f060j86-talhelper-3.1.5",
               "default": true
             }
           ],
-          "store_path": "/nix/store/mzyphilbkhzxql56a0wwl9g3x6mvawl8-talhelper-3.0.42"
+          "store_path": "/nix/store/p6mq1jlqh6ghj0l0hyv7xz876f060j86-talhelper-3.1.5"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/ycg0piqg73vgysc1rkllnhrgad1j6g4w-talhelper-3.0.42",
+              "path": "/nix/store/yfj5ks9lpvlishvzqy0xxgdfaizrfxgm-talhelper-3.1.5",
               "default": true
             }
           ],
-          "store_path": "/nix/store/ycg0piqg73vgysc1rkllnhrgad1j6g4w-talhelper-3.0.42"
+          "store_path": "/nix/store/yfj5ks9lpvlishvzqy0xxgdfaizrfxgm-talhelper-3.1.5"
         }
       }
     },
-    "talosctl@1.10.6": {
-      "last_modified": "2025-08-01T06:30:45Z",
-      "resolved": "github:NixOS/nixpkgs/a7822a17050fedda63794775b9090880c8214290#talosctl",
+    "talosctl@1.11.6": {
+      "last_modified": "2025-12-21T10:48:17Z",
+      "resolved": "github:NixOS/nixpkgs/306ea70f9eb0fb4e040f8540e2deab32ed7e2055#talosctl",
       "source": "devbox-search",
-      "version": "1.10.6",
+      "version": "1.11.6",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/1madm8r2hwq0zwlf8liwxsspf8kh7cga-talosctl-1.10.6",
+              "path": "/nix/store/fa6qn4fkzm9ks716aldk4bqiym254gsn-talosctl-1.11.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/1madm8r2hwq0zwlf8liwxsspf8kh7cga-talosctl-1.10.6"
+          "store_path": "/nix/store/fa6qn4fkzm9ks716aldk4bqiym254gsn-talosctl-1.11.6"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/gxqi8zq1ff72n75dw7lb6j033yq4y3b5-talosctl-1.10.6",
+              "path": "/nix/store/aaqjkmnvb3py1qclmkh4sszj988fhj1y-talosctl-1.11.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/gxqi8zq1ff72n75dw7lb6j033yq4y3b5-talosctl-1.10.6"
+          "store_path": "/nix/store/aaqjkmnvb3py1qclmkh4sszj988fhj1y-talosctl-1.11.6"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/n6jgcrfhgl7aapfjl5j7r9axiq9mkj73-talosctl-1.10.6",
+              "path": "/nix/store/0cli85l4pb3928il5dm3a3kn2f019g79-talosctl-1.11.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/n6jgcrfhgl7aapfjl5j7r9axiq9mkj73-talosctl-1.10.6"
+          "store_path": "/nix/store/0cli85l4pb3928il5dm3a3kn2f019g79-talosctl-1.11.6"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/phk7qg6c9sl3qv8qwb5xwdc8x21m32ba-talosctl-1.10.6",
+              "path": "/nix/store/qfkxsg1mxv1s284yjb8xgiw4pqz5mhwp-talosctl-1.11.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/phk7qg6c9sl3qv8qwb5xwdc8x21m32ba-talosctl-1.10.6"
+          "store_path": "/nix/store/qfkxsg1mxv1s284yjb8xgiw4pqz5mhwp-talosctl-1.11.6"
         }
       }
     },
