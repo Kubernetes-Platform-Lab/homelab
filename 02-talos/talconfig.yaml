@@ -2,7 +2,7 @@
 ---
 clusterName: ${ClusterName}
 talosVersion: v1.12.4
-kubernetesVersion: v1.32.0
+kubernetesVersion: v1.34.0
 endpoint: https://10.30.0.200:6443
 allowSchedulingOnMasters: true
 additionalMachineCertSans:
@@ -30,7 +30,7 @@ nodes:
       - name: longhorn
         provisioning:
           diskSelector:
-            match: disk.bus_path == "/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5"
+            match: disk.bus_path == '/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5'
           maxSize: 500GiB
         filesystem:
           type: xfs
@@ -71,7 +71,7 @@ nodes:
       - name: longhorn
         provisioning:
           diskSelector:
-            match: disk.bus_path == "/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5"
+            match: disk.bus_path == '/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5'
           maxSize: 500GiB
         filesystem:
           type: xfs
@@ -112,7 +112,7 @@ nodes:
       - name: longhorn
         provisioning:
           diskSelector:
-            match: disk.bus_path == "/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5"
+            match: disk.bus_path == '/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5'
           maxSize: 128GiB
         filesystem:
           type: xfs
@@ -153,7 +153,7 @@ nodes:
       - name: longhorn
         provisioning:
           diskSelector:
-            match: disk.bus_path == "/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5"
+            match: disk.bus_path == '/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5'
           maxSize: 128GiB
         filesystem:
           type: xfs
