@@ -24,20 +24,20 @@ spec:
               }
               sources = [
                  {
-                   name = "cloudnativepg"
-                   type = "postgres"
-                   namespace = "default"
-                   selector = { "cnpg.io/cluster" = "test-cluster" }
-                   port = 9187
-                   metrics_path = "/metrics"
+                   name = "cloudnativepg",
+                   type = "postgres",
+                   namespace = "default",
+                   selector = { "cnpg.io/cluster" = "test-cluster" },
+                   port = 9187,
+                   metrics_path = "/metrics",
                    scrape_interval = "30s"
                  }
                ]
 
                exporters = [
                  {
-                   name = "victoriametrics"
-                   type = "prometheus_remote_write"
+                   name = "victoriametrics",
+                   type = "prometheus_remote_write",
                    url = "http://vmsingle-vm.victoriametrics.svc.cluster.local:8429/api/v1/write"
                  }
                ]
