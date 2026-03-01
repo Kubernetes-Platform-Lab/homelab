@@ -23,8 +23,7 @@ spec:
                 level = "debug"
               }
 
-              # CNPG scrape
-              # scrape {
+               scrape {
                      job_name = "cloudnativepg"
                      namespace = "default"
                      selector {
