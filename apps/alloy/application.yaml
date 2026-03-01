@@ -23,6 +23,18 @@ spec:
                 level = "debug"
                 format = "logfmt"
               }
+              prometheus.scrape "cloudnative-pg" {
+                targets = [
+                  {
+                    __address__      = "cloudnativepg-cloudnative-pg:8080",
+                    __metrics_path__ = "/metrics",
+                  },
+                ]
+
+                forward_to = [prometheus.remote_write.default.receiver]
+              }
+
+
 
               prometheus.scrape "cloudnativepg" {
               kubernetes_pod {
