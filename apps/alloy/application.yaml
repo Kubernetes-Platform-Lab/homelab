@@ -24,11 +24,15 @@ spec:
                 format = "logfmt"
               }
 
-              prometheus.scrape "example" {
-                // Collect metrics from the default listen address.
-              targets = [{
-                __address__ = "127.0.0.1:12345",
-                 }]
+              prometheus.scrape "cloudnativepg" {
+              kubernetes_pod {
+              namespace = "cloudnativepg"
+              label_selector = {
+                    "app.kubernetes.io/name" = "cloudnative-pg"
+              }
+                port = 8080
+                path = "/metrics"
+              }
 
               forward_to = [prometheus.remote_write.default.receiver]
               }
