@@ -21,26 +21,22 @@ spec:
             content: |
               logging {
                 level = "debug"
+                format = "logfmt"
               }
-              sources = [
-                 {
-                   name = "cloudnativepg",
-                   type = "postgres",
-                   namespace = "default",
-                   selector = { "cnpg.io/cluster" = "test-cluster" },
-                   port = 9187,
-                   metrics_path = "/metrics",
-                   scrape_interval = "30s"
-                 }
-               ]
 
-               exporters = [
-                 {
-                   name = "victoriametrics",
-                   type = "prometheus_remote_write",
-                   url = "http://vmsingle-vm.victoriametrics.svc.cluster.local:8429/api/v1/write"
-                 }
-               ]
+              prometheus.exporter.self "default" {
+              }
+
+              prometheus.scrape "metamonitoring" {
+                targets    = prometheus.exporter.self.default.targets
+                forward_to = [prometheus.remote_write.default.receiver]
+              }
+
+              prometheus.remote_write "default" {
+                endpoint {
+                  url = "http://vmsingle-vm.victoriametrics.svc.cluster.local:8429/api/v1/write"
+                }
+              }
 
         resources:
           limits:
