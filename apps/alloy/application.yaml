@@ -23,6 +23,22 @@ spec:
                 level = "info"
               }
 
+              # CNPG scrape
+              # scrape {
+                     job_name = "cloudnativepg"
+                     namespace = "default"
+                     selector {
+                                matchLabels = { "cnpg.io/cluster" = "test-cluster" }
+                              }
+                      metrics_path = "/metrics"
+                      port = 9187
+                      scrape_interval = "30s"
+                      }
+
+              remote_write {
+                url = "http://vmsingle-vm.victoriametrics.svc.cluster.local:8429/api/v1/write"
+              }
+
         resources:
           limits:
             cpu: 500m
