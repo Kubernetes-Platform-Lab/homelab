@@ -32,6 +32,17 @@ spec:
                 forward_to = [prometheus.remote_write.default.receiver]
               }
 
+              prometheus.scrape "example" {
+                // Collect metrics from the default listen address.
+              targets = [
+                 {
+                __address__ = "127.0.0.1:12345",
+                 }
+              ]
+
+              forward_to = [prometheus.remote_write.default.receiver]
+              }
+
               prometheus.remote_write "default" {
                 endpoint {
                   url = "http://vmsingle-vm.victoriametrics.svc.cluster.local:8429/api/v1/write"
