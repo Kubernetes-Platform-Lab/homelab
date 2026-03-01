@@ -20,7 +20,7 @@ spec:
           configMap:
             content: |
               logging {
-                level = "info"
+                level = "debug"
               }
 
               # CNPG scrape
