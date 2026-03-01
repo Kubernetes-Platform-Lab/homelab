@@ -24,21 +24,11 @@ spec:
                 format = "logfmt"
               }
 
-              prometheus.exporter.self "default" {
-              }
-
-              prometheus.scrape "metamonitoring" {
-                targets    = prometheus.exporter.self.default.targets
-                forward_to = [prometheus.remote_write.default.receiver]
-              }
-
               prometheus.scrape "example" {
                 // Collect metrics from the default listen address.
-              targets = [
-                 {
+              targets = [{
                 __address__ = "127.0.0.1:12345",
-                 }
-              ]
+                 }]
 
               forward_to = [prometheus.remote_write.default.receiver]
               }
