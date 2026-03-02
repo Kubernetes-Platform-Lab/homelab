@@ -35,6 +35,19 @@ spec:
                 forward_to = [prometheus.remote_write.default.receiver]
               }
 
+              discovery.kubernetes "pods" {
+              role = "pod"
+
+              selectors {
+               role  = "pod"
+               }
+              }
+
+              prometheus.scrape "pods" {
+              targets    = discovery.kubernetes.pods.targets
+              forward_to = [prometheus.remote_write.default.receiver]
+              }
+
               prometheus.remote_write "default" {
                 endpoint {
                   url = "http://vmsingle-vm.victoriametrics.svc.cluster.local:8429/api/v1/write"
