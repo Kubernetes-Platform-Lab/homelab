@@ -38,8 +38,7 @@ spec:
               discovery.kubernetes "pods" {
               role = "pod"
 
-               role  = "pod"
-               selectors {
+                 selectors {
                  role = "pod"
                  label = "app.kubernetes.io/name=prometheus-node-exporter"
                }
