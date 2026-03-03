@@ -52,6 +52,7 @@ spec:
               discovery.kubernetes "kube_state_metrics" {
                 role = "pod"
                 selectors {
+                  role = "pod"
                   label = "app.kubernetes.io/name=kube-state-metrics"
                 }
               }
