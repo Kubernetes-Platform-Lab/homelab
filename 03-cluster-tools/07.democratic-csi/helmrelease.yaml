@@ -22,8 +22,27 @@ spec:
         name: democratic-csi
         namespace: flux-system
   values:
-    csiDriver:
-      name: "org.democratic-csi.nfs"
-    driver:
-      config:
-        driver: freenas-nfs
+    controller:
+      driver:
+        image:
+          registry: ghcr.io/democratic-csi/democratic-csi
+          tag: latest
+        config:
+          driver: zfs-generic-iscsi
+          existingConfigSecret: democratic-csi-config
+      storageClasses:
+        - name: zfs-iscsi-filesystem
+          defaultClass: false
+          allowVolumeExpansion: true
+          volumeMode: Filesystem
+          fsType: ext4
+        - name: zfs-iscsi-block
+          defaultClass: false
+          allowVolumeExpansion: true
+          volumeMode: Block
+
+    node:
+      driver:
+        image:
+          registry: ghcr.io/democratic-csi/democratic-csi
+          tag: latest
