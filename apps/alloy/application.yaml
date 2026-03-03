@@ -27,6 +27,7 @@ spec:
 
               discovery.kubernetes "cloudnative_pg" {
               role = "pod"
+              namespaces = [""]
                  selectors {
                  role = "pod"
                  label = "app.kubernetes.io/name=cloudnative-pg"
