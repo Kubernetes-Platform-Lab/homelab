@@ -1,0 +1,1 @@
+cat ./tool-pods/config.yaml | kubectl create secret generic test --dry-run=client --from-file=KEY=/dev/stdin -o json | kubeseal --controller-name sealed-secrets --controller-namespace secrets --scope cluster-wide > mysealedsecret.json

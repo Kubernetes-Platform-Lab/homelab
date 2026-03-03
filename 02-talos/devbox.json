@@ -10,7 +10,8 @@
     "yq-go@latest",
     "cilium-cli@latest",
     "fluxcd@latest",
-    "sops@latest"
+    "sops@latest",
+    "kubeseal@latest"
   ],
   "shell": {
     "init_hook": [

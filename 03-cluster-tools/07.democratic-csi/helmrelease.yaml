@@ -28,7 +28,34 @@ spec:
         tag: latest
       config:
         driver: zfs-generic-iscsi
-        existingConfigSecret: democratic-csi-config
+        sshConnection:
+          host: 10.20.0.11
+          port: 22
+          username: root
+          # Use SSH key authentication - generate one for this purpose
+          privateKey: |
+            -----BEGIN OPENSSH PRIVATE KEY-----
+            b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+            QyNTUxOQAAACCBXsoUiG1Rmpj8vzG0A8dhsLVpjOjYo86BR3/H6cTwDAAAAJhmFK0rZhSt
+            KwAAAAtzc2gtZWQyNTUxOQAAACCBXsoUiG1Rmpj8vzG0A8dhsLVpjOjYo86BR3/H6cTwDA
+            AAAEA3SS+pEeCqYFim3edk8RLbnhOMOe6gryIhsyc3kadpSYFeyhSIbVGamPy/MbQDx2Gw
+            tWmM6NijzoFHf8fpxPAMAAAAEXpmcy1nZW5lcmljLWlzY3NpAQIDBA==
+            -----END OPENSSH PRIVATE KEY-----
+        zfs:
+          datasetParentName: truenas-pool-1/z1
+          detachedSnapshotsDatasetParentName: truenas-pool-1/s1
+          # Optional: compression for zvols
+          #zvolCompression: "lz4"
+        iscsi:
+          shareStrategy: "targetCli"
+          shareStrategyTargetCli:
+            basename: "iqn.2026-01.com.nas.proxmox:k8s"
+            tpg:
+              attributes:
+                authentication: 0
+                generate_node_acls: 1
+                demo_mode_write_protect: 0
+          targetPortal: "10.20.0.11:3260"
     storageClasses:
       - name: zfs-iscsi-filesystem
         defaultClass: false

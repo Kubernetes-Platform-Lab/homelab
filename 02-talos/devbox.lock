@@ -365,6 +365,54 @@
         }
       }
     },
+    "kubeseal@latest": {
+      "last_modified": "2026-02-23T15:40:43Z",
+      "resolved": "github:NixOS/nixpkgs/80d901ec0377e19ac3f7bb8c035201e2e098cc97#kubeseal",
+      "source": "devbox-search",
+      "version": "0.34.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/37ypxaz6gnv2cqhh389g7hmhks127p9j-kubeseal-0.34.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/37ypxaz6gnv2cqhh389g7hmhks127p9j-kubeseal-0.34.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5q2lxhvqd6vnd92l7g092yn60xgb7swj-kubeseal-0.34.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/5q2lxhvqd6vnd92l7g092yn60xgb7swj-kubeseal-0.34.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/lfiqz18hz807il7z2s8jrgiscmbbrl83-kubeseal-0.34.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/lfiqz18hz807il7z2s8jrgiscmbbrl83-kubeseal-0.34.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/k9g7crk5g0k9jj4qvzgwzx4l7fcs07bm-kubeseal-0.34.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/k9g7crk5g0k9jj4qvzgwzx4l7fcs07bm-kubeseal-0.34.0"
+        }
+      }
+    },
     "sops@latest": {
       "last_modified": "2025-11-23T21:50:36Z",
       "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#sops",
