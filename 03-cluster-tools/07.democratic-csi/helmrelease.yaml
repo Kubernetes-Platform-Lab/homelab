@@ -40,7 +40,8 @@ spec:
           defaultClass: false
           allowVolumeExpansion: true
           volumeMode: Block
-
+    csiDriver:
+      name: "org.democratic-csi.iscsi"
     node:
       driver:
         image:
