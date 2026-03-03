@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: grafana-dashboard-vm
-  labels:
-    grafana_dashboard: "0"
-data:
-  victoria-metrics.json: |
