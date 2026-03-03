@@ -29,11 +29,10 @@ spec:
           enabled: false
   destination:
     server: https://kubernetes.default.svc
-    namespace: victoriametrics
+    namespace: monitoring
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
