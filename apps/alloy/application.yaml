@@ -49,6 +49,18 @@ spec:
               forward_to = [prometheus.remote_write.default.receiver]
               }
 
+              discovery.kubernetes "kube_state_metrics" {
+                role = "pod"
+                selectors {
+                  label = "app.kubernetes.io/name=kube-state-metrics"
+                }
+              }
+
+              prometheus.scrape "kube_state_metrics" {
+                targets    = discovery.kubernetes.kube_state_metrics.targets
+                forward_to = [prometheus.remote_write.default.receiver]
+              }
+
               prometheus.remote_write "default" {
                 endpoint {
                   url = "http://vmsingle-vm.victoriametrics.svc.cluster.local:8429/api/v1/write"
