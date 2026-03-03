@@ -24,20 +24,22 @@ spec:
                 format = "logfmt"
               }
 
-              prometheus.scrape "cloudnative" {
-                targets = [
-                  {
-                    __address__      = "cloudnativepg-cloudnative-pg:8080",
-                    __metrics_path__ = "/metrics",
-                  },
-                ]
 
-                forward_to = [prometheus.remote_write.default.receiver]
+              discovery.kubernetes "cloudnative_pg" {
+              role = "pod"
+                 selectors {
+                 role = "pod"
+                 label = "app.kubernetes.io/name="cloudnative-pg"
+               }
+              }
+
+              prometheus.scrape "cloudnative_pg" {
+              targets    = discovery.kubernetes.cloudnative_pg.targets
+              forward_to = [prometheus.remote_write.default.receiver]
               }
 
               discovery.kubernetes "pods" {
               role = "pod"
-
                  selectors {
                  role = "pod"
                  label = "app.kubernetes.io/name=prometheus-node-exporter"
@@ -51,7 +53,7 @@ spec:
 
               discovery.kubernetes "kube_state_metrics" {
                 role = "pod"
-                selectors {
+                  selectors {
                   role = "pod"
                   label = "app.kubernetes.io/name=kube-state-metrics"
                 }
