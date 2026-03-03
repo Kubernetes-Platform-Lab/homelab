@@ -9,8 +9,5 @@ metadata:
     prometheus.io/path: "/metrics"
 spec:
   instances: 3
-  metrics:
-    enabled: true
-    port: 8080
   storage:
     size: 1Gi
