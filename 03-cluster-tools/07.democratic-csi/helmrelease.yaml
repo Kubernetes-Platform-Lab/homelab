@@ -48,17 +48,6 @@ spec:
                 generate_node_acls: 1
                 demo_mode_write_protect: 0
           targetPortal: "10.20.0.11:3260"
-    storageClasses:
-      - name: zfs-iscsi-filesystem
-        defaultClass: false
-        allowVolumeExpansion: true
-        volumeMode: Filesystem
-        fsType: ext4
-        reclaimPolicy: Retain 
-      - name: zfs-iscsi-block
-        defaultClass: false
-        allowVolumeExpansion: true
-        volumeMode: Block
     csiDriver:
       name: "org.democratic-csi.iscsi"
     node:

@@ -3,5 +3,7 @@ kind: Kustomization
 resources:
   - helmrepo.yaml
   - helmrelease.yaml
+  - zfs-iscsi-blk-sc.yaml
+  - zfs-iscsi-fs-sc.yaml
   - democratic-csi-config.json
   - zfs-connection-ssh-key.json
