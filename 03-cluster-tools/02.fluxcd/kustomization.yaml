@@ -11,3 +11,4 @@ resources:
   - longhorn-kustomization.yaml
   - sealed-kustomization.yaml
   - kube-state-metrics.yaml
+  - democratic-csi-kustomization.yaml
