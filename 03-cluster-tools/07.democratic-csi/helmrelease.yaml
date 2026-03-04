@@ -23,31 +23,10 @@ spec:
         namespace: flux-system
   values:
     driver:
-      existingConfigSecret: zfs-connection-ssh-key
+      existingConfigSecret: driver-config-file
       image:
         registry: ghcr.io/democratic-csi/democratic-csi
         tag: latest
-      config:
-        driver: zfs-generic-iscsi
-        sshConnection:
-          host: 10.20.0.11
-          port: 22
-          username: root
-        zfs:
-          datasetParentName: truenas-pool-1/z1
-          detachedSnapshotsDatasetParentName: truenas-pool-1/s1
-          # Optional: compression for zvols
-          #zvolCompression: "lz4"
-        iscsi:
-          shareStrategy: "targetCli"
-          shareStrategyTargetCli:
-            basename: "iqn.2026-01.com.nas.proxmox:k8s"
-            tpg:
-              attributes:
-                authentication: 0
-                generate_node_acls: 1
-                demo_mode_write_protect: 0
-          targetPortal: "10.20.0.11:3260"
     csiDriver:
       name: "org.democratic-csi.iscsi"
     node:
