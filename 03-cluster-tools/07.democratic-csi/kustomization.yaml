@@ -4,3 +4,4 @@ resources:
   - helmrepo.yaml
   - helmrelease.yaml
   - democratic-csi-config.json
+  - zfs-connection-ssh-key.json
