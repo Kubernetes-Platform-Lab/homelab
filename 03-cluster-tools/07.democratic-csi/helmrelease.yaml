@@ -54,7 +54,7 @@ spec:
         allowVolumeExpansion: true
         volumeMode: Filesystem
         fsType: ext4
-        reclaimPolicy: retain 
+        reclaimPolicy: Retain 
       - name: zfs-iscsi-block
         defaultClass: false
         allowVolumeExpansion: true
