@@ -23,6 +23,8 @@ spec:
         namespace: flux-system
   values:
     driver:
+      config:
+        driver: zfs-generic-iscsi
       existingConfigSecret: driver-config-file
       image:
         registry: ghcr.io/democratic-csi/democratic-csi
