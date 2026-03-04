@@ -4,7 +4,6 @@ resources:
   - argocd-kustomization.yaml
   - cert-manager-kustomization.yaml
   - cert-mamager-crds.yaml
-  - csi-kustomization.yaml
   - external-secrets-kustomization.yaml
   - gapi-flux-kustomization.yaml
   - local-path-provisioner-kustomization.yaml
