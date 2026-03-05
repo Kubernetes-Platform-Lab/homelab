@@ -21,3 +21,4 @@ spec:
         kind: HelmRepository
         name: external-secrets
         namespace: flux-system
+      bitwarden-sdk-server.enabled: true
