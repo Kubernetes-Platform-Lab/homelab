@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: spire
@@ -24,17 +24,17 @@ spec:
         namespaces:
           create: true
         ingressControllerType: ""
-        clusterName: example-cluster
-        trustDomain: example.org
+        clusterName: spife-cluster
+        trustDomain: akna.lan
         caSubject:
           country: ARPA
-          organization: Example
-          commonName: example.org
+          organization: AknaLab
+          commonName: akna.lan
     server:
-      replicas: 2
+      replicas: 1
       logLevel: DEBUG
     agent:
-      replicas: 2
+      replicas: 1
       logLevel: DEBUG
     database:
       type: postgres
