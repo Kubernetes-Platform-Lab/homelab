@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: akna-lan
+  namespace: gateway-api
+spec:
+  secretName: akna-one-pl-tls
+  issuerRef:
+    name: letsencrypt-desec
+    kind: ClusterIssuer
+  dnsNames:
+    - "*.akna..one.pl"

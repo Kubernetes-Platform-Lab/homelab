@@ -6,3 +6,4 @@ resources:
   - gateway-classes.yaml
   - internal-gw.yaml
   - external-gw.yaml
+  - certificate.yaml

@@ -18,13 +18,13 @@ spec:
         namespaces:
           from: All
     - name: https
+      hostname: "*.akna.one.pl"
       protocol: HTTPS
       port: 443
       allowedRoutes:
         namespaces:
           from: All
-          hostname: "*.akna.lan"
       tls:
         mode: Terminate
         certificateRefs:
-          - name: akna-lan-tls
+          - name: akna-one-pl-tls
