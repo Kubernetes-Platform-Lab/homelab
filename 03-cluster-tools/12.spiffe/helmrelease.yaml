@@ -27,7 +27,7 @@ spec:
         clusterName: spife-cluster
         trustDomain: akna.lan
         caSubject:
-          country: ARPA
+          country: PL
           organization: AknaLab
           commonName: akna.lan
     server:
