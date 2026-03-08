@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: spire-crds
+  namespace: spire-mgmt
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: spire-crds
+      version: "*"
+      sourceRef:
+        kind: HelmRepository
+        name: spire-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
