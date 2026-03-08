@@ -6,3 +6,4 @@ resources:
   - namespace.yaml
   - cluster-issuer.yaml
   - desec-api-token.yaml
+  - rbac-desec.yaml
