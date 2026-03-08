@@ -24,7 +24,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: akna-one-pl-tls
+      #tls:
+      #  mode: Terminate
+      #  certificateRefs:
+      #    - name: akna-one-pl-tls
