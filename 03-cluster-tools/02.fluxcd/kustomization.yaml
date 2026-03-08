@@ -11,3 +11,4 @@ resources:
   - sealed-kustomization.yaml
   - kube-state-metrics.yaml
   - democratic-csi-kustomization.yaml
+  - spiffy.yaml
