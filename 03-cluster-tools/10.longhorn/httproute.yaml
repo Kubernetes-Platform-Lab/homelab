@@ -10,7 +10,7 @@ spec:
     - name: internal-gateway
       namespace: gateway-api
   hostnames:
-    - longhorn.akna.lan
+    - longhorn.akna.one.pl
   rules:
     - matches:
         - path:
