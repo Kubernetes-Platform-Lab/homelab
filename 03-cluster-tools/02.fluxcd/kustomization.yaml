@@ -12,3 +12,4 @@ resources:
   - kube-state-metrics.yaml
   - democratic-csi-kustomization.yaml
   - spiffe.yaml
+  - external-dns.yaml
