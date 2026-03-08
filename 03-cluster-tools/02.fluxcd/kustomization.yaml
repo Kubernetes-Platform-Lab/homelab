@@ -13,3 +13,4 @@ resources:
   - democratic-csi-kustomization.yaml
   - spiffe.yaml
   - external-dns.yaml
+  - cilium.yaml
