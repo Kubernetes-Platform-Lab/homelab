@@ -3,6 +3,8 @@ kind: Gateway
 metadata:
   name: internal-gateway
   namespace: gateway-api
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-desec
 spec:
   addresses:
     - type: IPAddress
@@ -21,3 +23,8 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+          hostname: "*.akna.lan"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: akna-lan-tls
