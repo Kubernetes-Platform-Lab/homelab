@@ -93,7 +93,7 @@ subjects:
   - apiGroup: ""
     kind: ServiceAccount
     name: desec-webhook
-    namespace: default
+    namespace: cert-manager
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -110,7 +110,7 @@ subjects:
   - apiGroup: ""
     kind: ServiceAccount
     name: desec-webhook
-    namespace: default
+    namespace: cert-manager
 ---
 apiVersion: v1
 kind: Service
@@ -195,7 +195,7 @@ spec:
   versionPriority: 15
   service:
     name: desec-webhook
-    namespace: default
+    namespace: cert-manager
   version: v1alpha1
 ---
 # Generate a CA Certificate used to sign certificates for the webhook
@@ -203,7 +203,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: desec-webhook-ca
-  namespace: "cert-manager"
+  namespace: cert-manager
   labels:
     app: desec-webhook
 spec:
@@ -219,7 +219,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: desec-webhook-webhook-tls
-  namespace: "cert-manager"
+  namespace: cert-manager
   labels:
     app: desec-webhook
 spec:
@@ -238,7 +238,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: desec-webhook-selfsign
-  namespace: "cert-manager"
+  namespace: cert-manager
   labels:
     app: desec-webhook
 spec:
@@ -249,7 +249,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: desec-webhook-ca
-  namespace: "cert-manager"
+  namespace: cert-manager
   labels:
     app: desec-webhook
 spec:
