@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: desec-webhook
+  namespace: cert-manager
   labels:
     app: desec-webhook
 ---
@@ -115,6 +116,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: desec-webhook
+  namespace: cert-manager
   labels:
     app: desec-webhook
 spec:
@@ -131,6 +133,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: desec-webhook
+  namespace: cert-manager
   labels:
     app: desec-webhook
 spec:
