@@ -17,7 +17,7 @@ spec:
     createNamespace: true
   values:
     sources:
-      - httproute
+      - gateway-httproute
     provider:
       name: webhook
       webhook:
