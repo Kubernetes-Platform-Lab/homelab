@@ -11,9 +11,10 @@ spec:
     solvers:
       - dns01:
           webhook:
-            groupName: acme.desec.io
+            groupName: acme.ukmetrics.ca
             solverName: desec
             config:
               apiTokenSecretRef:
                 name: desec-api-token
                 key: token
+# https://github.com/kmorning/cert-manager-webhook-desec/tree/master/examples
