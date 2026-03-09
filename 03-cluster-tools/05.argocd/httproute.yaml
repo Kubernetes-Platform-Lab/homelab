@@ -10,7 +10,7 @@ spec:
     - name: internal-gateway
       namespace: gateway-api
   hostnames:
-    - argocd.akna.lan
+    - argocd.akna.one.pl
   rules:
     - matches:
         - path:

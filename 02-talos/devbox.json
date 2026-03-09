@@ -11,7 +11,8 @@
     "cilium-cli@latest",
     "fluxcd@latest",
     "sops@latest",
-    "kubeseal@latest"
+    "kubeseal@latest",
+    "dig@latest"
   ],
   "shell": {
     "init_hook": [
