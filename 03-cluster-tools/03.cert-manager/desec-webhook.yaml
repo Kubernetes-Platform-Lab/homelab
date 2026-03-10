@@ -286,3 +286,32 @@ subjects:
   - kind: ServiceAccount
     name: desec-webhook
     namespace: cert-manager
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cert-manager-desec-solver
+rules:
+  - apiGroups:
+      - desec.acme.ukmetrics.ca
+    resources:
+      - desec
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cert-manager-desec-solver
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cert-manager-desec-solver
+subjects:
+  - kind: ServiceAccount
+    name: cert-manager
+    namespace: cert-manager
