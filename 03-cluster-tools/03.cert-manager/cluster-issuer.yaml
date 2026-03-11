@@ -10,6 +10,5 @@ spec:
             host: https://auth.acme-dns.io
             accountSecretRef:
               name: acme-dns
-              namespace: cert-mamager
               key: acmedns.json
 #https://cert-manager.io/docs/configuration/acme/dns01/acme-dns/
