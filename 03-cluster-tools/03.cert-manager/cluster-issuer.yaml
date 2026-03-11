@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-desec
+  name: desec-issuer
 spec:
   acme:
     solvers:
@@ -10,5 +10,6 @@ spec:
             host: auth.acme-dns.io
             apiTokenSecretRef:
               name: acme-dns
+              namespace: cert-mamager
               key: acmedns.json
 #https://cert-manager.io/docs/configuration/acme/dns01/acme-dns/
