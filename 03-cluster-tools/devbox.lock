@@ -316,6 +316,54 @@
           "store_path": "/nix/store/v3a5sw3m9fb4spds2mn1xq17jkcpkqvd-kubeseal-0.34.0"
         }
       }
+    },
+    "whois@latest": {
+      "last_modified": "2026-02-27T06:27:13Z",
+      "resolved": "github:NixOS/nixpkgs/c0f3d81a7ddbc2b1332be0d8481a672b4f6004d6#whois",
+      "source": "devbox-search",
+      "version": "5.6.6",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/9lnz5hjw1m0y4na6w9c2nlq8q57d6gxa-whois-5.6.6",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/9lnz5hjw1m0y4na6w9c2nlq8q57d6gxa-whois-5.6.6"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/gr01d00bm95zijyqaw79prfbk575bldl-whois-5.6.6",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/gr01d00bm95zijyqaw79prfbk575bldl-whois-5.6.6"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/k62z7gak5mcfsvpywny24m2sqqggr729-whois-5.6.6",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/k62z7gak5mcfsvpywny24m2sqqggr729-whois-5.6.6"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/05795wm97rwxh3acsisjxc2lxxm8m7j5-whois-5.6.6",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/05795wm97rwxh3acsisjxc2lxxm8m7j5-whois-5.6.6"
+        }
+      }
     }
   }
 }

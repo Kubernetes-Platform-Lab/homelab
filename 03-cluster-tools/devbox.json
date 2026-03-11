@@ -5,7 +5,8 @@
     "just@latest",
     "kubernetes-helm@latest",
     "fluxcd@latest",
-    "kubeseal@latest"
+    "kubeseal@latest",
+    "whois@latest"
   ],
   "shell": {
     "init_hook": [
