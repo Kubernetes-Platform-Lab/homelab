@@ -4,17 +4,11 @@ metadata:
   name: letsencrypt-desec
 spec:
   acme:
-    email: fajrovulpo@gmail.com
-    server: https://acme-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-key
     solvers:
       - dns01:
-          webhook:
-            groupName: desec.acme.ukmetrics.ca
-            solverName: desec
-            config:
-              apiTokenSecretRef:
-                name: desec-api-token
-                key: token
-# https://github.com/kmorning/cert-manager-webhook-desec/tree/master/examples
+          acmeDNS:
+            host: auth.acme-dns.io
+            apiTokenSecretRef:
+              name: acme-dns
+              key: acmedns.json
+#https://cert-manager.io/docs/configuration/acme/dns01/acme-dns/

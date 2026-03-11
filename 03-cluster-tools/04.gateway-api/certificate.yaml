@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: akna-one-pl-tls
   issuerRef:
-    name: letsencrypt-desec
+    name: desec-issuer
     kind: ClusterIssuer
   dnsNames:
     - "*.akna.one.pl"
