@@ -4,6 +4,10 @@ metadata:
   name: desec-issuer
 spec:
   acme:
+    email: fajrovulpo@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: desec-issuer-account-key
     solvers:
       - dns01:
           acmeDNS:
