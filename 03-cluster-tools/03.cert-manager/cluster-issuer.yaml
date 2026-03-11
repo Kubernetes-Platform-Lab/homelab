@@ -7,8 +7,8 @@ spec:
     solvers:
       - dns01:
           acmeDNS:
-            host: auth.acme-dns.io
-            apiTokenSecretRef:
+            host: https://auth.acme-dns.io
+            accountSecretRef:
               name: acme-dns
               namespace: cert-mamager
               key: acmedns.json
