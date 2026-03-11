@@ -10,3 +10,4 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - "*.akna.one.pl"
+    - garfana.akna.one.pl
