@@ -11,7 +11,7 @@ data:
       - name: VictoriaMetrics
         type: prometheus
         access: proxy
-        url: http://vmsingle-vm.victoriametrics.svc:8429
+        url: http://vmsingle-vm.monitoring.svc:8429
         isDefault: true
         editable: true
         jsonData:
