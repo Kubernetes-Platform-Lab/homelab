@@ -1,8 +1,8 @@
 <domain type='kvm'>
   <name>talos-1</name>
-  <memory unit='GiB'>6</memory>
-  <currentMemory unit='GiB'>2</currentMemory>
-  <vcpu placement='static'>2</vcpu>
+  <memory unit='GiB'>12</memory>
+  <currentMemory unit='GiB'>12</currentMemory>
+  <vcpu placement='static'>4</vcpu>
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>
   </os>
@@ -11,7 +11,7 @@
     <apic />
   </features>
   <cpu mode='host-passthrough'>
-    <topology sockets='1' cores='2' threads='1' />
+    <topology sockets='1' cores='4' threads='1' />
   </cpu>
   <clock offset='utc'>
     <timer name='rtc' tickpolicy='catchup' />
