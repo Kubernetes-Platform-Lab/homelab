@@ -5,4 +5,5 @@ resources:
   - helmrelease.yaml
   - zfs-iscsi-blk-sc.yaml
   - zfs-iscsi-fs-sc.yaml
+  - namespace.yaml
   - driver-config-file.json
