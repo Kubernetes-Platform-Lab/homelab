@@ -36,3 +36,5 @@ spec:
         image:
           registry: ghcr.io/democratic-csi/democratic-csi
           tag: latest
+        iscsiDirHostPath: /usr/local/etc/iscsi
+        iscsiDirHostPathType: ""
