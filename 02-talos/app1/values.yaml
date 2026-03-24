@@ -6,24 +6,23 @@
 replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
-nginx:
-  name: jaku-nginx
+kuard:
+  name: jaku-kuard
   image:
-    repository: nginx
+    repository: dlneintr/kuard
     # This sets the pull policy for images.
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
 
-netshoot:
-  name: jaku-netshoot
+podinfo:
+  name: jaku-podinfo
   image:
-    repository: nicolaka/netshoot
+    repository: stefanprodan/podinfo
     # This sets the pull policy for images.
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
-
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []

@@ -33,27 +33,28 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ .Values.netshoot.name }}
+        - name: {{ .Values.kuard.name }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.netshoot.image.repository }}:{{ .Values.netshoot.image.tag | default .Chart.AppVersion }}"
-          command: 
-            - sleep
-            - infinity
-          imagePullPolicy: {{ .Values.netshoot.image.pullPolicy }}
-        - name: {{ .Values.nginx.name }}
+          image: "{{ .Values.kuard.image.repository }}:{{ .Values.kuard.image.tag | default .Chart.AppVersion }}"
+          #command: 
+          #  - sleep
+          #  - infinity
+          imagePullPolicy: {{ .Values.kuard.image.pullPolicy }}
+        - name: {{ .Values.podinfo.name }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
+          image: "{{ .Values.podinfo.image.repository }}:{{ .Values.podinfo.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.podinfo.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- /*
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -62,6 +63,7 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          */}}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

@@ -1,0 +1,135 @@
+---
+# Source: diagnostic-app/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app1-diagnostic-app
+  labels:
+    helm.sh/chart: diagnostic-app-0.1.0
+    app.kubernetes.io/name: diagnostic-app
+    app.kubernetes.io/instance: app1
+    app.kubernetes.io/version: "latest"
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken: true
+---
+# Source: diagnostic-app/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1-diagnostic-app
+  labels:
+    helm.sh/chart: diagnostic-app-0.1.0
+    app.kubernetes.io/name: diagnostic-app
+    app.kubernetes.io/instance: app1
+    app.kubernetes.io/version: "latest"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: diagnostic-app
+    app.kubernetes.io/instance: app1
+---
+# Source: diagnostic-app/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: diagnostic-data
+  labels:
+    helm.sh/chart: diagnostic-app-0.1.0
+    app.kubernetes.io/name: diagnostic-app
+    app.kubernetes.io/instance: app1
+    app.kubernetes.io/version: "latest"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+# Source: diagnostic-app/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-diagnostic-app
+  labels:
+    helm.sh/chart: diagnostic-app-0.1.0
+    app.kubernetes.io/name: diagnostic-app
+    app.kubernetes.io/instance: app1
+    app.kubernetes.io/version: "latest"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: diagnostic-app
+      app.kubernetes.io/instance: app1
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: diagnostic-app-0.1.0
+        app.kubernetes.io/name: diagnostic-app
+        app.kubernetes.io/instance: app1
+        app.kubernetes.io/version: "latest"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: app1-diagnostic-app
+      initContainers:
+        - name: init-diagnostic
+          image: busybox:latest
+          command:
+            - sh
+            - -c
+            - "echo init complete > /data/diagnostic.txt"
+          volumeMounts:
+            - name: diagnostic-data
+              mountPath: /data
+      containers:
+        - name: jaku-kuard
+          image: "dlneintr/kuard:latest"
+          #command: 
+          #  - sleep
+          #  - infinity
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: diagnostic-data
+              mountPath: /data
+        - name: jaku-podinfo
+          image: "stefanprodan/podinfo:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: diagnostic-data
+              mountPath: /data
+      volumes:
+        - name: diagnostic-data
+          emptyDir: {}
+---
+# Source: diagnostic-app/templates/tests/test-connection.yaml
+#
+#apiVersion: v1
+#kind: Pod
+#metadata:
+#  name: "app1-diagnostic-app-test-connection"
+#  labels:
+#    helm.sh/chart: diagnostic-app-0.1.0
+#    app.kubernetes.io/name: diagnostic-app
+#    app.kubernetes.io/instance: app1
+#    app.kubernetes.io/version: "latest"
+#    app.kubernetes.io/managed-by: Helm
+#  annotations:
+#    "helm.sh/hook": test spec:
+#  containers:
+#    - name: wget
+#      image: busybox
+#      command: ['wget']
+#      args: ['app1-diagnostic-app:80']
+#  restartPolicy: Never

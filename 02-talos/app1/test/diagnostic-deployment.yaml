@@ -1,0 +1,87 @@
+---
+# Source: diagnostic-app/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-diagnostic-app
+  labels:
+    helm.sh/chart: diagnostic-app-0.1.0
+    app.kubernetes.io/name: diagnostic-app
+    app.kubernetes.io/instance: app1
+    app.kubernetes.io/version: "latest"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: diagnostic-app
+      app.kubernetes.io/instance: app1
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: diagnostic-app-0.1.0
+        app.kubernetes.io/name: diagnostic-app
+        app.kubernetes.io/instance: app1
+        app.kubernetes.io/version: "latest"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: app1-diagnostic-app
+      initContainers:
+        - name: init-diagnostic
+          image: busybox:latest
+          command:
+            - sh
+            - -c
+            - "echo init complete > /data/diagnostic.txt && chown -R 1100:1100 /data/"
+          volumeMounts:
+            - name: diagnostic-data-longhorn
+              mountPath: /data
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
+      containers:
+        - name: jaku-kuard
+          image: "dlneintr/kuard:latest"
+          #command: 
+          #  - sleep
+          #  - infinity
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: diagnostic-data-longhorn
+              mountPath: /data
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+        - name: jaku-podinfo
+          image: "stefanprodan/podinfo:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: diagnostic-data-longhorn
+              mountPath: /data
+          securityContext:
+            runAsUser: 1100
+            runAsGroup: 1100
+        - name: jaku-netshoot
+          image: "nicolaka/netshoot:latest"
+          command:
+            - python3
+            - -m
+            - http.server
+            - "8181"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8181
+              protocol: TCP
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+      volumes:
+        - name: diagnostic-data-longhorn
+          persistentVolumeClaim:
+            claimName: diagnostic-data-longhorn
