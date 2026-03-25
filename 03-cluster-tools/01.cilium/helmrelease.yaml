@@ -13,24 +13,6 @@ spec:
         kind: HelmRepository
         name: cilium
         namespace: flux-system
-<<<<<<< HEAD
-  hubble:
-    enabled: true
-    metrics:
-      enabled:
-        - dns
-        - drop
-        - tcp
-        - flow
-        - icmp
-        - http
-    relay:
-      enabled: true
-    ui:
-      enabled: true
-=======
-
->>>>>>> 1b5b8fb (add hubble - cilium monitoring)
   install:
     remediation:
       retries: 3
