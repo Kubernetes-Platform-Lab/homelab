@@ -1,9 +1,9 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: zfs-iscsi-filesystem-02
+  name: zfs-iscsi-filesystem
   annotations:
-    storageclass.kubernetes.io/is-default-class: "false"
+    storageclass.kubernetes.io/is-default-class: "true"
   labels:
     app.kubernetes.io/instance: democratic-csi
     app.kubernetes.io/name: democratic-csi
