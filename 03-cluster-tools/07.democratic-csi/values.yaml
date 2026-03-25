@@ -22,7 +22,7 @@ storageClasses:
 
 driver:
   config:
-    driver: freenas-nfs
+    driver: zfs-generic-iscsi
     instance_id:
     httpConnection:
       protocol: http
