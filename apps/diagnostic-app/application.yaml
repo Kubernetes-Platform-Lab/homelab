@@ -8,10 +8,10 @@ metadata:
 spec:
   project: default
   source:
-    chart: diagnostic-app
+    #chart: diagnostic-appk
     repoURL: https://gitlab.com/homelab-dev/2-Apps.git
-    path: sources/charts
-    targetRevision: 0.1.0
+    path: sources/charts/diagnostic-app
+    targetRevision: HEAD
     resources:
       limits:
         cpu: 500m
