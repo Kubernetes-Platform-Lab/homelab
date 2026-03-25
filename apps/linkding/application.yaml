@@ -23,7 +23,7 @@ spec:
           enabled: true
           volumes:
             - name: "data"
-              storageClassName: "zfs-iscsi-filesystem" # leave empty if you want to use default
+              storageClassName: "longhorn" # leave empty if you want to use default
               size: "5Gi"
               containerMount: "/etc/linkding/data"
   destination:
