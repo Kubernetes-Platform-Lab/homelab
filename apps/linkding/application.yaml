@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://rubxkube.github.io/charts/
-    chart: rubxkube/linkding
+    chart: linkding
     targetRevision: 1.1.20
     helm:
       releaseName: linkding
