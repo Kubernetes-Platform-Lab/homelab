@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: linkding
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://rubxkube.github.io/charts/
+    chart: rubxkube/linkding
+    targetRevision: 1.1.20
+    helm:
+      releaseName: linkding
+      valuesObject:
+        variables:
+          nonSecret:
+            USER_UID: "1000"
+            USER_GID: "1000"
+            TZ: Europe/Warsaw
+        persistence:
+          enabled: true
+          volumes:
+            - name: "data"
+              storageClassName: "zfs-iscsi-filesystem" # leave empty if you want to use default
+              size: "5Gi"
+              containerMount: "/etc/linkding/data"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: linkding
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
