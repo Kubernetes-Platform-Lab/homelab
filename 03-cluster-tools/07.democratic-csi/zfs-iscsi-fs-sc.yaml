@@ -9,4 +9,5 @@ metadata:
     app.kubernetes.io/name: democratic-csi
 provisioner: org.democratic-csi.iscsi
 reclaimPolicy: Retain
+volumeBindingMode: Immediate
 allowVolumeExpansion: true
