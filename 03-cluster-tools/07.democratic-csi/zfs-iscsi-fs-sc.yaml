@@ -11,3 +11,5 @@ provisioner: org.democratic-csi.iscsi
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
 allowVolumeExpansion: true
+parameters:
+  fsType: ext4
