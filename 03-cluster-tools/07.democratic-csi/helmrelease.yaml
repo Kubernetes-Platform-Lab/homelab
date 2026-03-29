@@ -32,9 +32,15 @@ spec:
     csiDriver:
       name: "org.democratic-csi.iscsi"
     node:
+      hostPID: true
       driver:
         image:
           registry: ghcr.io/democratic-csi/democratic-csi
           tag: latest
+        extraEnv:
+          - name: ISCSIADM_HOST_STRATEGY
+            value: nsenter
+          - name: ISCSIADM_HOST_PATH
+            value: /usr/local/sbin/iscsiadm
         iscsiDirHostPath: /var/iscsi
         iscsiDirHostPathType: ""
