@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: democratic-csi
 provisioner: org.democratic-csi.iscsi
 reclaimPolicy: Retain
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: Immediate
 allowVolumeExpansion: true
 parameters:
   fsType: ext4
