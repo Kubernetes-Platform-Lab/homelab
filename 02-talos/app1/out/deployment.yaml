@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-data
+  labels:
+    app: podinfo
+spec:
+  storageClassName: zfs-iscsi-filesystem-02
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podinfo
+  labels:
+    app: podinfo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: podinfo
+  template:
+    metadata:
+      labels:
+        app: podinfo
+    spec:
+      containers:
+        - name: podinfo
+          image: ghcr.io/stefanprodan/podinfo:6.8.0
+          ports:
+            - containerPort: 9898
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - name: shared-data
+              mountPath: /data
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+        - name: netshoot
+          image: nicolaka/netshoot:latest
+          command: ["sleep", "infinity"]
+          volumeMounts:
+            - name: shared-data
+              mountPath: /data
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+      volumes:
+        - name: shared-data
+          persistentVolumeClaim:
+            claimName: shared-data
