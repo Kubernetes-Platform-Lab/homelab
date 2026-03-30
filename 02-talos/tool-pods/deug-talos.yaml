@@ -15,9 +15,14 @@ spec:
       volumeMounts:
         - name: dev-mount
           mountPath: /dev
+        - name: host-mount
+          mountPath: /host
   volumes:
     - name: dev-mount
       hostPath:
         path: /dev
+    - name: host-mount
+      hostPath:
+        path: /
   nodeSelector:
     kubernetes.io/hostname: cd-node02
