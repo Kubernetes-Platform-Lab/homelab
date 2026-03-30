@@ -7,10 +7,17 @@ resources:
   - external-secrets-kustomization.yaml
   - gapi-flux-kustomization.yaml
   - local-path-provisioner-kustomization.yaml
-  - longhorn-kustomization.yaml
+  - piraeus-kustomization.yaml
   - sealed-kustomization.yaml
   - kube-state-metrics.yaml
   - democratic-csi-kustomization.yaml
   - spiffe.yaml
   - external-dns.yaml
   - cilium.yaml
+  - openebs-kustomization.yaml
+  - rustfs-kustomization.yaml
+  - garage-kustomization.yaml
+  - velero-kustomization.yaml
+  - kuma-mesh-kustomization.yaml
+  - kyverno-kustomization.yaml
+  - csi-secrets-kustomization.yaml

@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: piraeus-operator
+  namespace: piraeus-datastore
+spec:
+  interval: 5m
+
+  install:
+    createNamespace: true
+
+  upgrade:
+    remediation:
+      retries: 3
+
+  chart:
+    spec:
+      chart: piraeus
+      version: "2.10.3"
+      sourceRef:
+        kind: HelmRepository
+        name: piraeus-operator
+        namespace: flux-system
+  values:
+    installCRDs: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: linstor-cluster
+  namespace: piraeus-datastore
+spec:
+  interval: 5m
+
+  chart:
+    spec:
+      chart: linstor-cluster
+      version: "1.1.1"
+      sourceRef:
+        kind: HelmRepository
+        name: piraeus-operator
+        namespace: flux-system
+  dependsOn:
+    - name: piraeus-operator
+  values:
+    operator:
+      enabled: false
