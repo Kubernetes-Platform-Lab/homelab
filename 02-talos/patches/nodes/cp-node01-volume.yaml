@@ -1,0 +1,7 @@
+apiVersion: v1alpha1
+kind: RawVolumeConfig
+name: openebs
+provisioning:
+  diskSelector:
+    match: disk.bus_path == '/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5'
+  maxSize: 500GiB

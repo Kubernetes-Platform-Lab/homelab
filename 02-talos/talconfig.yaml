@@ -62,7 +62,7 @@ nodes:
       bgp: "true"
     installDisk: /dev/vda
     patches:
-      -
+      - "@./patches/nodes/cp-node02-volume.yaml"
     schematic:
       customization:
         systemExtensions:
@@ -96,14 +96,8 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: disk.bus_path == '/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5'
-          maxSize: 128GiB
-        filesystem:
-          type: xfs
+    patches:
+      - "@./patches/nodes/cp-node03-volume.yaml"
     schematic:
       customization:
         systemExtensions:
@@ -137,14 +131,8 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: disk.bus_path == '/pci0000:00/0000:00:02.6/0000:07:00.0/virtio5'
-          maxSize: 128GiB
-        filesystem:
-          type: xfs
+    patches:
+      - "@./patches/nodes/w-node04-volume.yaml"
     schematic:
       customization:
         systemExtensions:
