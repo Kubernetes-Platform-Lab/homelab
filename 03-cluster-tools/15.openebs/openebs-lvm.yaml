@@ -5,5 +5,5 @@ metadata:
 parameters:
   storage: "lvm"
   volgroup: "vg_openebs"
-  thinProvision: true
+  thinProvision: "yes"
 provisioner: local.csi.openebs.io
