@@ -4,3 +4,4 @@ resources:
   - helmrepo.yaml
   - helmrelease.yaml
   - namespace.yaml
+  - openebs-lvm.yaml
