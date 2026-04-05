@@ -15,11 +15,7 @@ spec:
 
   chart:
     spec:
-      chart: ztunnel
+      chart: ./charts/ztunnel
       version: "1.29.1"
-      sourceRef:
-        kind: HelmRepository
-        name: istio
-        namespace: flux-system
   values:
     revision: "1-29-1"

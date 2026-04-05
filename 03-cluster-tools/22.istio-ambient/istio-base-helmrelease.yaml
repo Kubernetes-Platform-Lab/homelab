@@ -15,11 +15,7 @@ spec:
 
   chart:
     spec:
-      chart: base
+      chart: ./charts/base
       version: "1.29.1"
-      sourceRef:
-        kind: HelmRepository
-        name: istio
-        namespace: flux-system
   values:
     revision: "1-29-1"
