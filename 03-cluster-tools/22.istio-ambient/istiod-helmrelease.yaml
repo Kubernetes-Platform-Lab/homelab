@@ -27,6 +27,8 @@ spec:
       ambient:
         enabled: true
     pilot:
+      env:
+        PILOT_ENABLE_AMBIENT: "true"
       configSource:
         enabled: true
     readinessProbe:
