@@ -7,3 +7,4 @@ resources:
   - istiod-helmrelease.yaml
   - istio-cni-helmrelease.yaml
   - ztunnel-helmrelease.yaml
+  - net-policy.yaml
