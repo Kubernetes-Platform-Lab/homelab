@@ -30,3 +30,5 @@ spec:
     env:
       - name: ZTUNNEL_WORKER_THREADS
         value: "1"
+      - name: ENABLE_CLUSTER_TRUST_BUNDLE_API
+        value: "1"
