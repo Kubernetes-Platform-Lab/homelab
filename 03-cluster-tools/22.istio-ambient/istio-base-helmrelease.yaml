@@ -18,8 +18,8 @@ spec:
       chart: base
       version: "1.29.1"
       sourceRef:
-        kind: OCIRepository
-        name: istio-base
+        kind: HelmRepository
+        name: istio
         namespace: flux-system
   values:
     revision: "1-29-1"

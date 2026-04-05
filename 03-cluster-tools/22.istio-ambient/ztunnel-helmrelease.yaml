@@ -18,8 +18,8 @@ spec:
       chart: ztunnel
       version: "1.29.1"
       sourceRef:
-        kind: OCIRepository
-        name: istio-ztunnel
+        kind: HelmRepository
+        name: istio
         namespace: flux-system
   values:
     revision: "1-29-1"

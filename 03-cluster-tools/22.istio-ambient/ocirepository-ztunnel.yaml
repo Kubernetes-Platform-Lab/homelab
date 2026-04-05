@@ -1,8 +1,0 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
-metadata:
-  name: istio-ztunnel
-  namespace: flux-system
-spec:
-  url: oci://ghcr.io/istio-release/charts/ztunnel
-  interval: 4h
