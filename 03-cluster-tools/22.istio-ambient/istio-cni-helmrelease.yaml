@@ -25,4 +25,8 @@ spec:
     profile: ambient
     cni:
       exclusive: false
+      repair:
+        enabled: true
+        labelPods: false
+        deletePods: true
     revision: "1-29-1"

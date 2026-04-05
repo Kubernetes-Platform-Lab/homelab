@@ -23,3 +23,10 @@ spec:
         namespace: flux-system
   values:
     revision: "1-29-1"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    env:
+      - name: ZTUNNEL_WORKER_THREADS
+        value: "1"

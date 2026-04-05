@@ -29,3 +29,5 @@ spec:
     pilot:
       configSource:
         enabled: true
+    readinessProbe:
+      enabled: true
