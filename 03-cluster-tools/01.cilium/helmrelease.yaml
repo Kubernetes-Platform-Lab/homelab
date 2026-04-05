@@ -21,6 +21,8 @@ spec:
       retries: 3
 
   values:
+    cni:
+      exclusive: false
     ipam:
       mode: kubernetes
 
