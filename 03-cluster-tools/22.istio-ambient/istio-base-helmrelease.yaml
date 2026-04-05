@@ -15,11 +15,11 @@ spec:
 
   chart:
     spec:
-      chart: ./charts/base
+      chart: base
       version: "1.29.1"
       sourceRef:
-        kind: GitRepository
-        name: flux-system
+        kind: HelmRepository
+        name: istio
         namespace: flux-system
   values:
     revision: "1-29-1"
