@@ -15,7 +15,7 @@ spec:
 
   chart:
     spec:
-      chart: istio-cni
+      chart: cni
       version: "1.29.1"
       sourceRef:
         kind: HelmRepository
