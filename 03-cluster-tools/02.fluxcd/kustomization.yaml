@@ -20,4 +20,5 @@ resources:
   #- velero-kustomization.yaml
   #- kuma-mesh-kustomization.yaml
   - kyverno-kustomization.yaml
+  - istio-ambient-kustomization.yaml
   #- csi-secrets-kustomization.yaml
