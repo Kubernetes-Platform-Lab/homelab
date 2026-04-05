@@ -16,10 +16,10 @@ spec:
   chart:
     spec:
       chart: base
-      version: ">=1.25.0-0"
+      version: "1.29.1"
       sourceRef:
-        kind: HelmRepository
-        name: istio
+        kind: OCIRepository
+        name: istio-base
         namespace: flux-system
   values:
-    revision: "1-25-0"
+    revision: "1-29-1"

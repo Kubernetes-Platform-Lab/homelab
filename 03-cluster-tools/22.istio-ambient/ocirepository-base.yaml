@@ -1,0 +1,8 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: istio-base
+  namespace: flux-system
+spec:
+  url: oci://ghcr.io/istio-release/charts/base
+  interval: 4h
