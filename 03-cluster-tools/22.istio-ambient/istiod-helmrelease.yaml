@@ -27,6 +27,8 @@ spec:
       ambient:
         enabled: true
     pilot:
+      env:
+        ENABLE_CLUSTER_TRUST_BUNDLE_API: "false"
       configSource:
         enabled: true
     readinessProbe:
