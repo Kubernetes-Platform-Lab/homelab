@@ -17,6 +17,10 @@ spec:
     spec:
       chart: ./charts/istio-control/istio-discovery
       version: "1.29.1"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
   values:
     revision: "1-29-1"
     global:
