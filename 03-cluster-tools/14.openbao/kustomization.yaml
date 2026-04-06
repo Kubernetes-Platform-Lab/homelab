@@ -8,4 +8,3 @@ resources:
   - openbao-ca-issuer.yaml
   - server-certificate.yaml
   - helmrelease.yaml
-  - httproute.yaml
