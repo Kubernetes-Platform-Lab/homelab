@@ -3,5 +3,9 @@ kind: Kustomization
 resources:
   - helmrepo.yaml
   - namespace.yaml
+  - selfsigned-issuer.yaml
+  - ca-certificate.yaml
+  - openbao-ca-issuer.yaml
+  - server-certificate.yaml
   - helmrelease.yaml
   - httproute.yaml

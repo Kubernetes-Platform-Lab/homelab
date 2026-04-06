@@ -1,0 +1,30 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openbao-server
+  namespace: openbao
+spec:
+  secretName: openbao-server-tls
+  duration: 8760h
+  renewBefore: 720h
+  issuerRef:
+    name: openbao-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+  dnsNames:
+    - openbao
+    - openbao.openbao
+    - openbao.openbao.svc
+    - openbao.openbao.svc.cluster.local
+    - openbao-0.openbao-internal
+    - openbao-1.openbao-internal
+    - openbao-2.openbao-internal
+    - localhost
+  ipAddresses:
+    - 127.0.0.1
+  usages:
+    - server auth
+    - client auth
+  privateKey:
+    algorithm: RSA
+    size: 2048

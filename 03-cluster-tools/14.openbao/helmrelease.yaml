@@ -25,7 +25,10 @@ spec:
   values:
     global:
       enabled: true
-      tlsDisable: true
+      tlsDisable: false
+
+    injector:
+      enabled: false
 
     server:
       auditStorage:
@@ -38,26 +41,39 @@ spec:
           config: |
             ui = true
             listener "tcp" {
-              tls_disable = 1
+              tls_disable = 0
               address = "[::]:8200"
               cluster_address = "[::]:8201"
+              tls_cert_file = "/openbao/tls/server.crt"
+              tls_key_file = "/openbao/tls/server.key"
             }
             storage "raft" {
               path = "/openbao/data"
               retry_join {
-                leader_api_addr = "http://openbao-0.openbao-internal:8200"
+                leader_api_addr = "https://openbao-0.openbao-internal:8200"
+                tls_skip_verify = true
               }
               retry_join {
-                leader_api_addr = "http://openbao-1.openbao-internal:8200"
+                leader_api_addr = "https://openbao-1.openbao-internal:8200"
+                tls_skip_verify = true
               }
               retry_join {
-                leader_api_addr = "http://openbao-2.openbao-internal:8200"
+                leader_api_addr = "https://openbao-2.openbao-internal:8200"
+                tls_skip_verify = true
               }
             }
             service_registration "kubernetes" {}
       dataStorage:
         enabled: true
         size: 5Gi
+      extraVolumes:
+        - name: tls
+          type: secret
+          secretName: openbao-server-tls
+      volumeMounts:
+        - name: tls
+          mountPath: /openbao/tls
+          readOnly: true
 
     ui:
       enabled: true

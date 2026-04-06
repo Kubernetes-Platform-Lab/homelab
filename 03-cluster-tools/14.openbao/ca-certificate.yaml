@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openbao-ca
+  namespace: openbao
+spec:
+  isCA: true
+  duration: 87600h
+  renewBefore: 8640h
+  secretName: openbao-ca
+  commonName: openbao-ca
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
