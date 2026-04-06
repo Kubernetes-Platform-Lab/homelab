@@ -9,10 +9,6 @@ spec:
   install:
     createNamespace: true
 
-  upgrade:
-    remediation:
-      retries: 3
-
   chart:
     spec:
       chart: openbao
@@ -28,6 +24,8 @@ spec:
       tlsDisable: true
 
     server:
+      auditStorage:
+        enabled: false
       ha:
         enabled: true
         raft:
