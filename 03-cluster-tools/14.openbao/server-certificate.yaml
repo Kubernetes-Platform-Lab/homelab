@@ -16,6 +16,9 @@ spec:
     - openbao.openbao
     - openbao.openbao.svc
     - openbao.openbao.svc.cluster.local
+    - openbao-active
+    - openbao-active.openbao
+    - openbao-active.openbao.svc
     - openbao-0.openbao-internal
     - openbao-1.openbao-internal
     - openbao-2.openbao-internal
