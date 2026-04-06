@@ -28,21 +28,21 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
+              storageClassName: openebs-lvm
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 6Gi
     alertmanager:
       alertmanagerSpec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
+              storageClassName: openebs-lvm
               resources:
                 requests:
-                  storage: 10Gi
+                  storage: 6Gi
     grafana:
       persistence:
         enabled: true
-        storageClassName: longhorn
-        size: 10Gi
+        storageClassName: openebs-lvm
+        size: 6Gi
