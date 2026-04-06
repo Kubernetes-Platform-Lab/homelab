@@ -6,7 +6,7 @@ resources:
   - cert-mamager-crds.yaml
   - external-secrets-kustomization.yaml
   - gapi-flux-kustomization.yaml
-  - local-path-provisioner-kustomization.yaml
+  #- local-path-provisioner-kustomization.yaml
   #- piraeus-kustomization.yaml
   - sealed-kustomization.yaml
   - kube-state-metrics.yaml
