@@ -33,6 +33,8 @@ spec:
     server:
       auditStorage:
         enabled: false
+      extraEnvironmentVars:
+        BAO_CACERT: /openbao/ca/ca.crt
       ha:
         enabled: true
         raft:
