@@ -44,8 +44,8 @@ spec:
               tls_disable = 0
               address = "[::]:8200"
               cluster_address = "[::]:8201"
-              tls_cert_file = "/openbao/tls/server.crt"
-              tls_key_file = "/openbao/tls/server.key"
+              tls_cert_file = "/openbao/tls/tls.crt"
+              tls_key_file = "/openbao/tls/tls.key"
             }
             storage "raft" {
               path = "/openbao/data"
