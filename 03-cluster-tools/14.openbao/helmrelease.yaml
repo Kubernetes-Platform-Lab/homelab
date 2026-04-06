@@ -46,6 +46,7 @@ spec:
               cluster_address = "[::]:8201"
               tls_cert_file = "/openbao/tls/tls.crt"
               tls_key_file = "/openbao/tls/tls.key"
+              tls_ca_file = "/openbao/ca/ca.crt"
             }
             storage "raft" {
               path = "/openbao/data"
@@ -70,9 +71,15 @@ spec:
         - name: tls
           secret:
             secretName: openbao-server-tls
+        - name: ca
+          secret:
+            secretName: openbao-ca
       volumeMounts:
         - name: tls
           mountPath: /openbao/tls
+          readOnly: true
+        - name: ca
+          mountPath: /openbao/ca
           readOnly: true
 
     ui:
