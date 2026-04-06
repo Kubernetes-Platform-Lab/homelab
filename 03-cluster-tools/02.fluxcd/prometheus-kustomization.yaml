@@ -5,12 +5,8 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  dependsOn:
-    - name: cilium
   sourceRef:
-    kind: Kustomization
-    name: cluster-tools
-  path: ./08.prometheus
+    kind: GitRepository
+    name: flux-system
+  path: ./03-cluster-tools/08.prometheus
   prune: true
-  wait: true
-  timeout: 5m
