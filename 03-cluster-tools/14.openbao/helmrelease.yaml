@@ -32,9 +32,6 @@ spec:
 
     server:
       enabled: true
-      image:
-        repository: docker.io/openbao/openbao
-        tag: "0.26.2"
       ha:
         enabled: true
         raft:
