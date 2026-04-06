@@ -2,7 +2,7 @@ apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
   name: kiali
-  namespace: istio-system
+  namespace: kiali-operator
   annotations:
     external-dns.alpha.kubernetes.io/hostname: kiali.akna.one.pl
 spec:
