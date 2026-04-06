@@ -66,10 +66,10 @@ spec:
       dataStorage:
         enabled: true
         size: 5Gi
-      extraVolumes:
+      volumes:
         - name: tls
-          type: secret
-          secretName: openbao-server-tls
+          secret:
+            secretName: openbao-server-tls
       volumeMounts:
         - name: tls
           mountPath: /openbao/tls
