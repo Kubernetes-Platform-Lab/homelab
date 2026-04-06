@@ -43,7 +43,7 @@ spec:
               cluster_address = "[::]:8201"
             }
             storage "raft" {
-              path = "/vault/data"
+              path = "/openbao/data"
               retry_join {
                 leader_api_addr = "http://openbao-0.openbao-internal:8200"
               }
