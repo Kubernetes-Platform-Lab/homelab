@@ -19,6 +19,9 @@ spec:
     - openbao-active
     - openbao-active.openbao
     - openbao-active.openbao.svc
+    - openbao-internal
+    - openbao-internal.openbao
+    - openbao-internal.openbao.svc
     - openbao-0.openbao-internal
     - openbao-1.openbao-internal
     - openbao-2.openbao-internal
