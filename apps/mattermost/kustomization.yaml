@@ -18,8 +18,8 @@ resources:
   - ../config/httproute.yaml
 
 # Common labels for all resources
-commonMetadata:
-  labels:
-    app.kubernetes.io/name: mattermost
-    app.kubernetes.io/managed-by: argocd
-    app.kubernetes.io/version: "9.5.2"
+#commonMetadata:
+#  labels:
+#    app.kubernetes.io/name: mattermost
+#    app.kubernetes.io/managed-by: argocd
+#    app.kubernetes.io/version: "9.5.2"
