@@ -9,8 +9,8 @@ spec:
   project: default
 
   source:
-    repoURL: https://mattermost.github.io/mattermost-helm
-    targetRevision: 4.5.0
+    repoURL: https://helm.mattermost.com
+    targetRevision: 1.0.5
     chart: mattermost-operator
     helm:
       valuesObject:
