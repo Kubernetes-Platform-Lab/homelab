@@ -1,0 +1,135 @@
+---
+# Mattermost Custom Resource for the Operator
+# Defines the Mattermost installation with external PostgreSQL
+apiVersion: installation.mattermost.com/v1beta1
+kind: Mattermost
+metadata:
+  name: mattermost
+  namespace: mattermost
+spec:
+  # Version of Mattermost to deploy
+  version: "9.5.2"
+
+  # Number of replicas for high availability
+  replicas: 2
+
+  # External PostgreSQL database configuration
+  database:
+    external:
+      # Reference to the secret containing DB_CONNECTION_STRING
+      secret: mattermost-postgres-secret
+
+  # Mattermost instance configuration
+  mattermostEnv:
+    - name: MM_SERVICESETTINGS_SITEURL
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-service-config
+          key: site.url
+
+    - name: MM_SERVICESETTINGS_WEBSOCKETURL
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-service-config
+          key: websocket.url
+
+    - name: MM_SERVICESETTINGS_SITENAME
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-service-config
+          key: site.name
+
+    - name: MM_BRANDINGSETTINGS_COMPANYNAMETEXT
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-service-config
+          key: company.name
+
+    - name: MM_SQLSETTINGS_MAXOPENCONNS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-database-config
+          key: max.open.connections
+
+    - name: MM_SQLSETTINGS_MAXIDLECONNS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-database-config
+          key: max.idle.connections
+
+    - name: MM_SQLSETTINGS_CONNMAXLIFETIMEMINUTES
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-database-config
+          key: conn.max.lifetime.minutes
+
+    # Feature flags
+    - name: MM_SERVICESETTINGS_ENABLESLASHCOMMANDS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-features-config
+          key: enable.slash.commands
+
+    - name: MM_INTEGRATIONSSETTINGS_ENABLEINCOMINGWEBHOOKS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-features-config
+          key: enable.incoming.webhooks
+
+    - name: MM_INTEGRATIONSSETTINGS_ENABLEOUTGOINGWEBHOOKS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-features-config
+          key: enable.outgoing.webhooks
+
+  # File storage (local for now, can be S3 later)
+  fileStore:
+    local:
+      enabled: true
+      # Size of persistent volume for file storage
+      storage: 5Gi
+
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 8065
+
+  # No Ingress - we use Gateway API instead
+  # Ingress will be managed by our HTTPRoute
+
+  # Resource constraints
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+  # Health checks
+  livenessProbe:
+    httpGet:
+      path: /api/v4/system/ping
+      port: 8065
+    initialDelaySeconds: 30
+    periodSeconds: 10
+
+  readinessProbe:
+    httpGet:
+      path: /api/v4/system/ping
+      port: 8065
+    initialDelaySeconds: 10
+    periodSeconds: 5
+
+  # Pod security context
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 2000
+    fsGroup: 2000
+
+  # Update strategy for rolling updates
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0

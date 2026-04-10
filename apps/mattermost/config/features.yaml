@@ -1,0 +1,41 @@
+---
+# Features Configuration Object
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mattermost-features-config
+  namespace: mattermost
+data:
+  # Core Features
+  enable.slash.commands: "true"
+
+  # Webhooks - Required for Robusta.dev and Kubewatch integrations
+  # Enable these to send alerts from monitoring tools to Mattermost
+  enable.incoming.webhooks: "true"
+  enable.outgoing.webhooks: "true"
+
+  # Projects
+  enable.projects: "false"
+
+  # Email
+  enable.email.notifications: "false"
+  send.email.on.signup: "false"
+
+  # File uploads
+  max.file.size: "100M"
+
+  # Search
+  enable.elasticsearch: "false"
+
+  # Public links
+  enable.public.links: "true"
+
+  # Guest accounts
+  enable.guest.accounts: "false"
+
+  # LDAP/OAuth
+  enable.ldap: "false"
+  enable.oauth: "false"
+
+  # Video/Calls
+  enable.video.calls: "false"

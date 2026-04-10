@@ -1,0 +1,64 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: mattermost-postgres
+  namespace: mattermost
+
+spec:
+  instances: 2
+  enableSuperuserAccess: true
+  imageName: ghcr.io/cloudnative-pg/postgresql:17-system-trixie
+
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
+
+  #plugins:
+  #  - name: barman-cloud.cloudnative-pg.io
+  #    isWALArchiver: false
+  #    parameters:
+  #      barmanObjectName: cloudnative-backup-store
+  managed:
+    roles:
+      - name: mattermost
+        ensure: present
+        login: true
+        createdb: true
+        connectionLimit: -1
+        inherit: true
+        inRoles:
+          - pg_read_all_data
+          - pg_write_all_data
+    services:
+      disabledDefaultServices: ["ro", "r"]
+
+  bootstrap:
+    initdb:
+      database: mattermost
+      owner: mattermost
+
+  storage:
+    size: 5Gi
+    storageClass: "openebs-lvm"
+    resizeInUseVolumes: False
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "1Gi"
+#---
+#apiVersion: postgresql.cnpg.io/v1
+#kind: ScheduledBackup
+#metadata:
+#  name: mm-engine-doge-import-tmp
+#  namespace: mm-engine
+#spec:
+#  schedule: "0 05 21 * * *"
+#  backupOwnerReference: cluster
+#  method: plugin
+#  pluginConfiguration:
+#    name: barman-cloud.cloudnative-pg.io
+#  cluster:
+#    name: mm-engine-doge-import-tmp

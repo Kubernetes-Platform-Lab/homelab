@@ -1,0 +1,57 @@
+---
+# ArgoCD Application for Mattermost Operator
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mattermost-operator
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://mattermost.github.io/mattermost-helm
+    targetRevision: 4.5.0
+    chart: mattermost-operator
+    helm:
+      valuesObject:
+        # Operator deployment settings
+        replicaCount: 1
+
+        image:
+          repository: mattermost/mattermost-operator
+          tag: "1.16.0"
+          pullPolicy: IfNotPresent
+
+        # RBAC
+        serviceAccount:
+          create: true
+          name: mattermost-operator
+
+        # Operator resource limits
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+
+        # Logging
+        logLevel: info
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mattermost-operator
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

@@ -1,0 +1,16 @@
+---
+# Database Configuration Object
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mattermost-database-config
+  namespace: mattermost
+data:
+  # Database connection pooling
+  max.open.connections: "20"
+  max.idle.connections: "10"
+  conn.max.lifetime.minutes: "15"
+
+  # Database type
+  db.type: "postgres"
+  db.charset: "utf8mb4"

@@ -1,0 +1,14 @@
+---
+# Service Configuration Object
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mattermost-service-config
+  namespace: mattermost
+data:
+  service.type: "ClusterIP"
+  service.port: "8065"
+  site.url: "https://mattermost.akna.one.pl"
+  websocket.url: "wss://mattermost.akna.one.pl"
+  site.name: "Family Mattermost"
+  company.name: "Akna Family"
