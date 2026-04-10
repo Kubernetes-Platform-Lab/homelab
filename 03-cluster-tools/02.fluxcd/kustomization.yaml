@@ -6,7 +6,7 @@ resources:
   - cert-mamager-crds.yaml
   - external-secrets-kustomization.yaml
   - gapi-flux-kustomization.yaml
-  - prometheus-kustomization.yaml
+  #- prometheus-kustomization.yaml
   #- local-path-provisioner-kustomization.yaml
   #- piraeus-kustomization.yaml
   - sealed-kustomization.yaml
@@ -22,5 +22,5 @@ resources:
   #- kuma-mesh-kustomization.yaml
   - kyverno-kustomization.yaml
   - istio-ambient-kustomization.yaml
-  - openbao-kustomization.yaml
+  #- openbao-kustomization.yaml
   #- csi-secrets-kustomization.yaml
