@@ -13,7 +13,7 @@ data:
   memory.requests: "256Mi"
 
   # Replicas
-  replicas: "2"
+  replicas: "1"
 
   # Storage
   storage.size: "10Gi"
