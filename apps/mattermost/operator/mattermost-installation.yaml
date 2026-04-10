@@ -22,8 +22,9 @@ spec:
   fileStore:
     local:
       enabled: true
-      # Size of persistent volume for file storage
-      storage: 2Gi
+      accessModes:
+        - ReadWriteOnce
+      storageSize: 2Gi
 
   ingress:
     enabled: false
