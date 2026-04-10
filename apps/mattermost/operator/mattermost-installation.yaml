@@ -18,6 +18,9 @@ spec:
     external:
       # Reference to the secret containing DB_CONNECTION_STRING
       secret: mattermost-postgres-secret
+      
+  ingress:
+    enabled: false
 
   # Mattermost instance configuration
   mattermostEnv:
