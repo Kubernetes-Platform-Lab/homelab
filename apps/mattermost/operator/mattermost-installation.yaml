@@ -18,7 +18,13 @@ spec:
     external:
       # Reference to the secret containing DB_CONNECTION_STRING
       secret: mattermost-postgres-secret
-      
+
+  fileStore:
+    local:
+      enabled: true
+      # Size of persistent volume for file storage
+      storage: 2Gi
+
   ingress:
     enabled: false
 
