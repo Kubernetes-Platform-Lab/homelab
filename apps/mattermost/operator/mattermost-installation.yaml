@@ -25,10 +25,9 @@ spec:
       accessModes:
         - ReadWriteOnce
       storageSize: 2Gi
-    
-  service:
-    annotations:
-      io.cilium.proxy.http2.enabled: "false"
+  
+  serviceAnnotations:
+    io.cilium.proxy.http2.enabled: "false"  
 
   ingress:
     enabled: false
