@@ -8,7 +8,6 @@ metadata:
   name: mattermost
   namespace: mattermost
   annotations:
-    io.cilium.proxy.http2.enabled: "false"
     external-dns.alpha.kubernetes.io/hostname: mattermost.akna.one.pl
 spec:
   parentRefs:
