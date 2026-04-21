@@ -26,8 +26,8 @@ spec:
     global:
       ambient:
         enabled: true
-    proxy:
-       clusterDomain: "merida.cluster"
+      proxy:
+        clusterDomain: "merida.cluster"
     pilot:
       env:
         PILOT_ENABLE_AMBIENT: "true"
