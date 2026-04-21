@@ -28,6 +28,6 @@ spec:
         cpu: 100m
         memory: 256Mi
     env:
-      ENABLE_CLUSTER_TRUST_BUNDLE_API: "false"
+      ENABLE_CLUSTER_TRUST_BUNDLE_API: false
       #- name: ZTUNNEL_WORKER_THREADS
       #  value: "1"
