@@ -16,16 +16,16 @@ spec:
         - path:
             type: PathPrefix
             value: /
-      filters:
-        - type: RequestHeaderModifier
-          requestHeaderModifier:
-            set:
-              - name: X-Forwarded-Proto
-                value: https
-              - name: X-Forwarded-Host
-                value: argocd.akna.one.pl
-              - name: X-Forwarded-Port
-                value: "443"
+      #filters:
+      #  - type: RequestHeaderModifier
+      #    requestHeaderModifier:
+      #      set:
+      #        - name: X-Forwarded-Proto
+      #          value: https
+      #        - name: X-Forwarded-Host
+      #          value: argocd.akna.one.pl
+      #        - name: X-Forwarded-Port
+      3          value: "443"
       backendRefs:
         - name: argocd-server
           port: 443
