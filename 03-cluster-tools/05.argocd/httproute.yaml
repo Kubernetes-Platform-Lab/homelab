@@ -13,15 +13,15 @@ spec:
     - argocd.akna.one.pl
   rules:
     - matches:
-        filters:
-          - type: RequestHeaderModifier
-            requestHeaderModifier:
-              set:
-                - name: X-Forwarded-Proto
-                  value: https
-          - path:
-              type: PathPrefix
-              value: /
+        - path:
+            type: PathPrefix
+            value: /
+      filters:
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
+            set:
+              - name: X-Forwarded-Proto
+                value: https
       backendRefs:
         - name: argocd-server
           port: 443
