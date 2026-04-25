@@ -18,7 +18,7 @@ spec:
         namespaces:
           from: All
     - name: https
-      hostname: "*.akna.one.pl"
+      #hostname: "*.akna.one.pl"
       protocol: HTTPS
       port: 443
       allowedRoutes:
