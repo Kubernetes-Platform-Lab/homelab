@@ -25,3 +25,5 @@ spec:
     server:
       # Allow HTTP (port 80) without redirect to HTTPS
       insecure: false
+      config:
+        url: https://argocd.akna.one.pl
