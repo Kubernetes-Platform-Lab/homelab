@@ -6,4 +6,4 @@ resources:
   - namespace.yaml
   - service.yaml
   - httproute.yaml
-  - grpcroute.yaml
+  #- grpcroute.yaml
