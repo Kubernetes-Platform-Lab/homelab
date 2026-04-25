@@ -11,7 +11,7 @@ spec:
   version: "11.4.3"
 
   # Number of replicas for high availability
-  replicas: 1
+  replicas: 0
 
   # External PostgreSQL database configuration
   database:
