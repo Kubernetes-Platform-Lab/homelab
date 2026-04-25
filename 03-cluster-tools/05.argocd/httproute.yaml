@@ -22,6 +22,8 @@ spec:
             set:
               - name: X-Forwarded-Proto
                 value: https
+              - name: X-Forwarded-Host
+                value: argocd.akna.one.pl
       backendRefs:
         - name: argocd-server
           port: 443
