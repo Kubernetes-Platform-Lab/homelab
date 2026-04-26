@@ -27,7 +27,7 @@ spec:
     #  storageSize: 2Gi
     operatorManaged:
       replicas: 0
-    external_volume:
+    externalVolume:
       volumeClaimName: mattermost
 
   serviceAnnotations:
