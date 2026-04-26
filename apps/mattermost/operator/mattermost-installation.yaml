@@ -25,6 +25,8 @@ spec:
     #  accessModes:
     #    - ReadWriteOnce
     #  storageSize: 2Gi
+    operatorManaged:
+      replicas: 0
     external_volume:
       volumeClaimName: mattermost
 
