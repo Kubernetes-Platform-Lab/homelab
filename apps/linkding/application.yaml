@@ -24,8 +24,8 @@ spec:
             enabled: true
             volumes:
               - name: "data"
-                storageClassName: "openebs-lvm" # leave empty if you want to use default
-                size: "5Gi"
+                #storageClassName: "openebs-lvm" # leave empty if you want to use default
+                pvcClaim: "linkding-data"
                 containerMount: "/etc/linkding/data"
   destination:
     server: https://kubernetes.default.svc
