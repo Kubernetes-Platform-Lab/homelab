@@ -19,7 +19,7 @@ spec:
             nonSecret:
               USER_UID: "1000"
               USER_GID: "1000"
-              TZ: Europe/Berlin
+              TZ: Europe/Warsaw
           persistence:
             enabled: true
             volumes:
