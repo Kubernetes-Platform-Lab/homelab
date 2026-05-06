@@ -1,0 +1,49 @@
+---
+# Kubernetes Gateway API Configuration for Ente Photos
+# This uses the Gateway API standard instead of Ingress
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ente-photos
+  namespace: ente
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: photos.ente.akna.one.pl
+spec:
+  parentRefs:
+    - name: internal-gateway
+      namespace: gateway-api
+  hostnames:
+    - photos.ente.akna.one.pl
+  rules:
+    - backendRefs:
+        - name: ente-photos
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ente-auth
+  namespace: ente
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: auth.ente.akna.one.pl
+spec:
+  parentRefs:
+    - name: internal-gateway
+      namespace: gateway-api
+  hostnames:
+    - auth.ente.akna.one.pl
+  rules:
+    - backendRefs:
+        - name: ente-auth
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

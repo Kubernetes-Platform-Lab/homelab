@@ -1,0 +1,45 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ente-postgres
+  namespace: ente
+spec:
+  instances: 2
+  enableSuperuserAccess: true
+  imageName: ghcr.io/cloudnative-pg/postgresql:17-system-trixie
+
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
+
+  managed:
+    roles:
+      - name: ente
+        ensure: present
+        login: true
+        createdb: true
+        connectionLimit: -1
+        inherit: true
+    databases:
+      ente_db:
+        owner: ente
+    services:
+      disabledDefaultServices: ["ro", "r"]
+
+  bootstrap:
+    initdb:
+      database: ente_db
+      owner: ente
+
+  storage:
+    size: 5Gi
+    storageClass: "openebs-lvm"
+    resizeInUseVolumes: False
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"

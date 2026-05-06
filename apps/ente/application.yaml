@@ -1,0 +1,130 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ente
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://l4gdev.github.io/helm-charts
+    chart: ente-photos
+    targetRevision: 0.1.1
+    helm:
+      releaseName: ente
+      valuesObject:
+        museum:
+          replicaCount: 1
+          config:
+            s3:
+              areLocalBuckets: true
+              usePathStyleUrls: true
+            apps:
+              publicAlbums: "http://albums.ente.svc.cluster.local"
+              accounts: "http://accounts.ente.svc.cluster.local"
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          persistence:
+            data:
+              enabled: true
+              storageClass: "openebs-lvm"
+              accessModes:
+                - ReadWriteOnce
+              size: 5Gi
+        credentials:
+          existingSecret: "ente-credentials"
+          s3:
+            primaryBucketName: "ente-photos"
+            primary:
+              endpoint: "http://10.10.0.77:8333"
+              region: "us-east-1"
+              bucket: "ente"
+            derived:
+              enabled: false
+              endpoint: "http://10.10.0.77:8333"
+              region: "us-east-1"
+              bucket: "ente-derived"
+              areLocalBuckets: true
+        externalDatabase:
+          host: "ente-postgres-rw.ente.svc.cluster.local"
+          port: 5432
+          database: "ente_db"
+          user: "ente"
+          existingSecret:
+            enabled: true
+            secretName: "ente-postgres-app"
+            passwordKey: "password"
+        web:
+          photos:
+            enabled: true
+            replicaCount: 1
+            config:
+              albumsEndpoint: "http://albums.ente.svc.cluster.local"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            ingress:
+              enabled: false
+          auth:
+            enabled: true
+            replicaCount: 1
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            ingress:
+              enabled: false
+          accounts:
+            enabled: true
+            replicaCount: 1
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            ingress:
+              enabled: false
+          albums:
+            enabled: true
+            replicaCount: 1
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            ingress:
+              enabled: false
+          share:
+            enabled: false
+          cast:
+            enabled: false
+        metrics:
+          enabled: false
+          serviceMonitor:
+            enabled: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ente
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    #automated:
+    #  prune: true
+    #  selfHeal: true
