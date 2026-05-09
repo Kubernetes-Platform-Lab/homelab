@@ -20,6 +20,9 @@ spec:
             s3:
               areLocalBuckets: true
               usePathStyleUrls: true
+            http:
+              port: 8080
+              useTls: true
           resources:
             requests:
               cpu: 200m
