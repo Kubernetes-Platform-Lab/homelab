@@ -20,9 +20,6 @@ spec:
             s3:
               areLocalBuckets: true
               usePathStyleUrls: true
-            apps:
-              publicAlbums: "http://albums.ente.svc.cluster.local"
-              accounts: "http://accounts.ente.svc.cluster.local"
           resources:
             requests:
               cpu: 200m
