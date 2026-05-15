@@ -24,12 +24,11 @@ spec:
           s3:
             b2-eu-cen:
               #primaryBucketName: "ente-photos"
-              primary:
-                endpoint: "http://10.10.0.77:8333"
-                region: "us-east-1"
-                bucket: "ente"
-                key: "REMOVED_S3_KEY"
-                secret: "REMOVED_S3_SECRET"
+              endpoint: "http://10.10.0.77:8333"
+              region: "us-east-1"
+              bucket: "ente"
+              key: "REMOVED_S3_KEY"
+              secret: "REMOVED_S3_SECRET"
         externalDatabase:
           host: "ente-postgres-rw.ente.svc.cluster.local"
           port: 5432
