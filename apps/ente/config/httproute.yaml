@@ -8,13 +8,13 @@ metadata:
   name: ente-photos
   namespace: ente
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: photos.ente.akna.one.pl
+    external-dns.alpha.kubernetes.io/hostname: photos.akna.one.pl
 spec:
   parentRefs:
     - name: internal-gateway
       namespace: gateway-api
   hostnames:
-    - photos.ente.akna.one.pl
+    - photos.akna.one.pl
   rules:
     - backendRefs:
         - name: ente-ente-photos-web-photos
@@ -31,13 +31,13 @@ metadata:
   name: ente-auth
   namespace: ente
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: auth.ente.akna.one.pl
+    external-dns.alpha.kubernetes.io/hostname: ente-auth.akna.one.pl
 spec:
   parentRefs:
     - name: internal-gateway
       namespace: gateway-api
   hostnames:
-    - auth.ente.akna.one.pl
+    - ente-auth.akna.one.pl
   rules:
     - backendRefs:
         - name: ente-ente-photos-web-auth
