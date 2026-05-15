@@ -16,19 +16,28 @@ spec:
       valuesObject:
         museum:
           config:
+            extraConfig: |
+              s3:
+                are_local_buckets: true
+                use_path_style_urls: true
+                b2-eu-cen:
+                  key: "REMOVED_S3_KEY"
+                  secret: "REMOVED_S3_SECRET"
+                  endpoint: "http://10.10.0.77:8333"
+                  region: "us-east-1"
+                  bucket: "ente"
             jobs:
               cron:
                 skip: true
         credentials:
           #existingSecret: "ente-credentials"
           s3:
-            primaryBucketName: "b2-eu-cen"
             primary:
-              endpoint: "http://10.10.0.77:8333"
-              region: "us-east-1"
-              bucket: "ente"
-              key: "REMOVED_S3_KEY"
-              secret: "REMOVED_S3_SECRET"
+              endpoint: ""
+              region: ""
+              bucket: ""
+              key: ""
+              secret: ""
         externalDatabase:
           host: "ente-postgres-rw.ente.svc.cluster.local"
           port: 5432
