@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://l4gdev.github.io/helm-charts
     chart: ente-photos
-    targetRevision: 0.1.1
+    targetRevision: 0.2.0
     helm:
       releaseName: ente
       valuesObject:
