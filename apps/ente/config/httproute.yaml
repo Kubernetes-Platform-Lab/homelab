@@ -40,7 +40,7 @@ spec:
     - auth.ente.akna.one.pl
   rules:
     - backendRefs:
-        - name: ente-ente-photos-ente-auth
+        - name: ente-ente-photos-web-auth
           port: 80
           weight: 1
       matches:
