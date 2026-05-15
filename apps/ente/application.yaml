@@ -22,8 +22,8 @@ spec:
         credentials:
           #existingSecret: "ente-credentials"
           s3:
-            b2-eu-cen:
-              #primaryBucketName: "ente-photos"
+            primaryBucketName: "b2-eu-cen"
+            primary:
               endpoint: "http://10.10.0.77:8333"
               region: "us-east-1"
               bucket: "ente"
