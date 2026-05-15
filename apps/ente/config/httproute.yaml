@@ -17,7 +17,7 @@ spec:
     - photos.ente.akna.one.pl
   rules:
     - backendRefs:
-        - name: ente-photos
+        - name: ente-ente-photos-web-photos
           port: 80
           weight: 1
       matches:
@@ -40,7 +40,7 @@ spec:
     - auth.ente.akna.one.pl
   rules:
     - backendRefs:
-        - name: ente-auth
+        - name: ente-ente-photos-ente-auth
           port: 80
           weight: 1
       matches:
