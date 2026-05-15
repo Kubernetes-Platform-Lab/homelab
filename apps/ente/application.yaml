@@ -33,12 +33,12 @@ spec:
             enabled: true
             secretName: "ente-postgres-app"
             passwordKey: "password"
-          destination:
-            server: https://kubernetes.default.svc
-            namespace: ente
-          syncPolicy:
-            syncOptions:
-              - CreateNamespace=true
-            #automated:
-            #  prune: true
-            #  selfHeal: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ente
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    #automated:
+    #  prune: true
+    #  selfHeal: true
