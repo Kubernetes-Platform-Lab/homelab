@@ -64,7 +64,7 @@ spec:
     - api-ente.akna.one.pl
   rules:
     - backendRefs:
-        - name: #nazwa serwisu museum
+        - name: ente-ente-photos-museum
           port: 80
           weight: 1
       matches:
