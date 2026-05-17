@@ -19,7 +19,7 @@ spec:
     sources:
       - gateway-httproute
     provider:
-      name: webhook-desec
+      name: webhook
       webhook:
         service:
           port: 8080
