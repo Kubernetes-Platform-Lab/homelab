@@ -16,6 +16,8 @@ spec:
   install:
     createNamespace: true
   values:
+    extraArgs:
+      - --webhook-provider-url=http://localhost:8080
     sources:
       - gateway-httproute
     provider:
