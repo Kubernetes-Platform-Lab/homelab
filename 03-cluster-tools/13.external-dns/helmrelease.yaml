@@ -19,8 +19,10 @@ spec:
     sources:
       - gateway-httproute
     provider:
-      name: webhook
+      name: webhook-desec
       webhook:
+        service:
+          port: 8080
         image:
           repository: ghcr.io/michelangelomo/external-dns-desec-provider
           tag: latest
