@@ -1,4 +1,5 @@
-apps/ente/ente-credentials-secret-unsealed.yaml
+apps/ente/ente-credentials-secret.yaml
+apps/ente/credentials.yaml
 apps/ente/ente-credentials-secret-base64.yaml
 apps/ente/new-creds
 apps/ente/sealed.sh
