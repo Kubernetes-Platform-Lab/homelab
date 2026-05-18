@@ -33,30 +33,8 @@ spec:
                 NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
         networkPolicy:
            enabled: false        
-        museum:
-          config:
-            extraConfig: |
-              s3:
-                are_local_buckets: true
-                use_path_style_urls: true
-                b2-eu-cen:
-                  key: "REMOVED_S3_KEY"
-                  secret: "REMOVED_S3_SECRET"
-                  endpoint: "http://10.10.0.77:8333"
-                  region: "us-east-1"
-                  bucket: "ente"
-            jobs:
-              cron:
-                skip: true
         credentials:
-          #existingSecret: "ente-credentials"
-          s3:
-            primary:
-              endpoint: ""
-              region: ""
-              bucket: ""
-              key: ""
-              secret: ""
+          existingSecret: "ente-credentials"
         externalDatabase:
           host: "ente-postgres-rw.ente.svc.cluster.local"
           port: 5432
