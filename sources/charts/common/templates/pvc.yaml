@@ -1,0 +1,24 @@
+{{- if (.Values.persistence.enabled) }}
+{{- $dot := . }}
+  {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
+  {{- range $volumes }} 
+    {{- if not (.pvcClaim) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: {{ $dot.Values.name }} 
+  name: {{ $dot.Values.name }}-{{ .name }}
+spec:
+      {{- if (.storageClassName) }}
+  storageClassName: {{ .storageClassName }}
+      {{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .size }}
+    {{- end }}
+  {{- end }}
+{{- end }}

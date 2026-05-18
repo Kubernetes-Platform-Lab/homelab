@@ -1,0 +1,199 @@
+{{- $dot := . }}
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app: {{ .Values.name }}
+  {{- if .Values.deployment.annotations }}
+  annotations:
+    {{- toYaml .Values.deployment.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.deployment.minReplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  strategy:
+  {{- toYaml .Values.deployment.strategy | nindent 4 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+        {{- if .Values.deployment.annotations }}
+      annotations:
+        {{- toYaml .Values.deployment.annotations | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- if .Values.image.repositorySettings.isPrivate }}
+      imagePullSecrets:
+        - name: "{{ .Values.image.repositorySettings.secretName }}"
+      {{- end }}
+      {{- if .Values.deployment.initContainers }}
+      initContainers:
+        {{- with .Values.deployment.initContainers }}
+          {{- toYaml . | nindent 8 }}
+        {{ end }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.name }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- if .Values.deployment.port }}
+          ports:
+          - containerPort: {{ .Values.deployment.port }}
+          {{- end }}
+          {{- if .Values.deployment.args }}
+          args:
+            {{- range .Values.deployment.args }}
+            - "{{ . }}"
+            {{- end }}
+          {{- end }}
+          resources:
+            requests:
+              {{- if .Values.deployment.memoryRequest }}
+              memory: "{{ .Values.deployment.memoryRequest }}"
+              {{- end }}
+              {{- if .Values.deployment.cpuRequest }}
+              cpu: "{{ .Values.deployment.cpuRequest }}"
+              {{- end }}
+            limits:
+              {{- if .Values.deployment.memoryLimit }}
+              memory: "{{ .Values.deployment.memoryLimit }}"
+              {{- end }}
+              {{- if .Values.deployment.cpuLimit }}
+              cpu: "{{ .Values.deployment.cpuLimit }}"
+              {{- end }}
+          {{- if .Values.variables.configMap.existingConfigMap }}
+          envFrom:
+            {{- range .Values.variables.configMap.existingConfigMap }}
+            - configMapRef:
+                name: {{ . }}
+            {{- end }}
+          {{- end }}
+          {{- if or (.Values.variables.nonSecret) (.Values.variables.secret.data) (.Values.variables.secret.existingSecret) (.Values.variables.secret.extraExistingSecrets) }}
+          env:
+            {{- if .Values.variables.nonSecret }}
+              {{- range $index, $value := .Values.variables.nonSecret }}
+          - name: {{ $index }}
+            value: {{ $value | toString | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if .Values.variables.secret }}
+              {{- range $index, $value := .Values.variables.secret.data }}
+          - name: {{ $index }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $dot.Values.name }}-{{ $index | lower | replace "_" "-" }}
+                key: secret
+              {{- end }}
+            {{- end }}
+            {{- if and (.Values.variables.secret.existingSecret) (.Values.variables.secret.extraExistingSecrets) }}
+              {{- $secrets := concat .Values.variables.secret.existingSecret .Values.variables.secret.extraExistingSecrets }}
+              {{- range $index, $value := $secrets  }}
+          - name: {{ $value.envName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $value.name }}
+                key: {{ $value.key }}
+              {{- end }}
+            {{- else if (.Values.variables.secret.existingSecret) -}}
+              {{- range $index, $value := .Values.variables.secret.existingSecret }}
+          - name: {{ $value.envName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $value.name }}
+                key: {{ $value.key }}
+              {{- end }}
+
+            {{- else if (.Values.variables.secret.extraExistingSecrets) -}}
+              {{- range $index, $value := .Values.variables.secret.extraExistingSecrets }}
+          - name: {{ $value.envName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $value.name }}
+                key: {{ $value.key }}
+              {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.service.enabled }}
+          {{- end }}
+          {{- if .Values.startupProbeEnabled }}
+          startupProbe:
+{{ toYaml .Values.startupProbe | indent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbeEnabled }}
+          readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbeEnabled }}
+          livenessProbe:
+{{ toYaml .Values.readinessProbe | indent 12 }}
+          {{- end }}
+{{- if or .Values.persistence.enabled .Values.deployment.emptyDir .Values.configMap.existingConfigMap }}
+  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled  .Values.configMap.existingConfigMap }}
+          volumeMounts:
+    {{ range .Values.configMap.existingConfigMap }}
+            - mountPath: {{ .mountPath }}
+              name: {{ .name }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+              {{- end }}
+    {{- end }}
+    {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
+    {{- range $volumes }}
+            - mountPath: {{ .containerMount }}
+              name: {{ .name }}
+    {{- end }}
+    {{- if .Values.deployment.emptyDir }}
+    {{- range .Values.deployment.emptyDir }}
+            - mountPath: {{ .containerMount }}
+              name: {{ .name }}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.configMap.enabled }}
+    {{- range .Values.configMap.data }}
+            - mountPath: {{ .mountPath }}
+              name: {{ $dot.Values.name }}-{{ .name }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+      {{- if .Values.deployment.additionalContainers }}
+        {{- with .Values.deployment.additionalContainers }}
+          {{- toYaml . | nindent 8 }}
+        {{ end }}
+      {{- end }}
+
+  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled .Values.configMap.existingConfigMap }}
+      volumes:
+    {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
+    {{- range $volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+           {{- if (.pvcClaim) }}
+            claimName: {{ .pvcClaim }}
+           {{ else }}
+            claimName: {{ $dot.Values.name }}-{{ .name }}
+           {{- end }}
+    {{- end }}
+    {{ range .Values.configMap.existingConfigMap }}
+        - name: {{ .name }}
+          configMap:
+            name: {{ .name }}
+    {{- end }}
+  {{- end }}
+    {{- if .Values.deployment.emptyDir }}
+    {{- range .Values.deployment.emptyDir }}
+        - name: {{ .name }}
+          emptyDir: {}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.configMap.enabled }}
+    {{- range .Values.configMap.data }}
+        - name: {{ $dot.Values.name }}-{{ .name }}
+          configMap:
+            defaultMode: {{ .defaultMode | default 0644 }}
+            name: {{ $dot.Values.name }}-{{ .name }}
+    {{- end }}
+    {{- end }}
+{{- end }}
