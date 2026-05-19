@@ -1,93 +1,117 @@
-# 05-argo-apps
+# Homelab Applications
 
+ArgoCD-managed application deployments for the Homelab Kubernetes platform. Uses the App-of-Apps pattern -- a single root Application discovers and deploys everything in `apps/`.
 
+**Built by:** [Waldemar Kubica](https://gitlab.com/ebi-droid) and [Jakub Kubica](https://gitlab.com/beraton)
+**Infrastructure repo:** [1-Infra](https://gitlab.com/homelab-dev/1-Infra)
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-* [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## Architecture
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/homelab-dev/05-argo-apps.git
-git branch -M main
-git push -uf origin main
+ArgoCD (deployed by FluxCD in 1-Infra)
+  └─► app-of-apps.yaml (root Application, recursive discovery)
+       ├── cloudnativepg/    PostgreSQL operator (foundation for app databases)
+       ├── ente/             End-to-end encrypted photo backup
+       ├── mattermost/       Team chat with operator pattern
+       ├── linkding/         Bookmark manager
+       ├── alloy/            Telemetry collector → VictoriaMetrics
+       ├── diagnostic-app/   Test workloads (kuard + podinfo)
+       └── nginx/            Minimal test deployment
 ```
 
-## Integrate with your tools
+## Deployed Applications
 
-* [Set up project integrations](https://gitlab.com/homelab-dev/05-argo-apps/-/settings/integrations)
+### CloudNativePG -- PostgreSQL Operator
 
-## Collaborate with your team
+| | |
+|---|---|
+| **Chart** | cloudnative-pg v0.22.0 |
+| **Purpose** | Manages PostgreSQL clusters as Kubernetes-native resources |
 
-* [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+Foundation dependency. Both Ente and Mattermost use CloudNativePG `Cluster` CRs for their databases: 2-instance PostgreSQL 17 clusters with pod anti-affinity, `openebs-lvm` storage, and automatic failover.
 
-## Test and Deploy
+### Ente Photos -- Encrypted Photo Backup
 
-Use the built-in continuous integration in GitLab.
+| | |
+|---|---|
+| **Chart** | ente-photos v0.2.0 |
+| **Routes** | `photos.akna.one.pl`, `ente-auth.akna.one.pl`, `api-ente.akna.one.pl` |
+| **Database** | CloudNativePG cluster (2 instances, 5Gi) |
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Self-hosted, end-to-end encrypted photo/video storage. Deploys three web frontends (photos, auth, accounts) and a backend API server (museum). External database via CNPG.
 
-***
+### Mattermost -- Team Chat
 
-# Editing this README
+| | |
+|---|---|
+| **Operator** | mattermost-operator v1.0.5, Mattermost v11.4.3 |
+| **Route** | `mattermost.akna.one.pl` |
+| **Database** | CloudNativePG cluster (2 instances, 5Gi) |
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Deployed via the Mattermost Kubernetes Operator. Includes the operator, CRDs (from upstream GitHub), and a `Mattermost` CR. File storage on a 2Gi `openebs-lvm` PVC. Webhooks enabled for Robusta/Kubewatch integration.
 
-## Suggestions for a good README
+### Linkding -- Bookmark Manager
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+| | |
+|---|---|
+| **Chart** | linkding v1.1.20 |
+| **Route** | `linkding.akna.one.pl` |
+| **Storage** | 5Gi PVC on `openebs-lvm` |
 
-## Name
-Choose a self-explaining name for your project.
+Self-hosted bookmark manager with tagging and search.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### Grafana Alloy -- Telemetry Collector
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+| | |
+|---|---|
+| **Chart** | alloy v1.5.0 |
+| **Namespace** | monitoring |
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Collects metrics from CloudNativePG, node-exporter, and kube-state-metrics via Kubernetes service discovery. Writes to VictoriaMetrics (`vmsingle-vm.monitoring.svc`).
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### Diagnostic App and Nginx -- Test Workloads
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Custom Helm chart deploying kuard + podinfo for cluster validation. Nginx deployment with Grafana Beyla annotation for eBPF-based auto-instrumentation.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## Repository Structure
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+```
+2-Apps/
+├── app-of-apps.yaml          # Root ArgoCD Application (recursive discovery)
+├── apps/
+│   ├── alloy/                # Grafana Alloy telemetry collector
+│   ├── cloudnativepg/        # PostgreSQL operator
+│   ├── diagnostic-app/       # Test workloads (custom chart)
+│   ├── ente/                 # Ente Photos + CNPG database + HTTPRoutes
+│   ├── linkding/             # Bookmark manager + PVC + HTTPRoute
+│   ├── mattermost/           # Operator + CRDs + installation + CNPG database
+│   └── nginx/                # Minimal test deployment
+├── sources/
+│   └── charts/
+│       ├── diagnostic-app/   # Custom Helm chart (kuard + podinfo)
+│       └── common/           # Reusable generic Helm chart library
+└── devbox.json
+```
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## Patterns
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+| Pattern | Implementation |
+|---------|---------------|
+| **Routing** | Gateway API HTTPRoutes via `internal-gateway`, domain `*.akna.one.pl` |
+| **DNS** | External-DNS annotations on HTTPRoutes for automatic record creation |
+| **Databases** | CloudNativePG clusters (PostgreSQL 17, 2 instances, anti-affinity) |
+| **Storage** | `openebs-lvm` StorageClass for all persistent data |
+| **Secrets** | SealedSecrets (Bitnami) for credentials in git |
+| **Monitoring** | Alloy scrapes → VictoriaMetrics, Beyla eBPF instrumentation on nginx |
+| **Sync policy** | Infrastructure apps: automated. User-facing apps: manual sync |
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## Adding a New Application
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+1. Create `apps/<app-name>/application.yaml` with ArgoCD Application spec
+2. Add supporting manifests (CNPG database, HTTPRoute, PVC) alongside it
+3. Push to git -- the root app-of-apps discovers it automatically (recursive)
+4. Sync manually in ArgoCD (or enable automated sync in the Application spec)
 
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+See [2-Apps/AGENTS.md](AGENTS.md) for detailed structural conventions.
