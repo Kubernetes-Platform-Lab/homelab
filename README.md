@@ -115,3 +115,8 @@ Custom Helm chart deploying kuard + podinfo for cluster validation. Nginx deploy
 4. Sync manually in ArgoCD (or enable automated sync in the Application spec)
 
 See [2-Apps/AGENTS.md](AGENTS.md) for detailed structural conventions.
+
+## Contributors
+
+- **Waldemar Kubica** ([@ebi-droid](https://gitlab.com/ebi-droid)) -- Observability stack (Alloy, VictoriaMetrics, Grafana, Beyla), CloudNativePG operator, Mattermost configuration and operations, Ente Photos networking (HTTPRoutes, domains), app-of-apps structure
+- **Jakub Kubica** ([@beraton](https://gitlab.com/beraton)) -- Ente Photos deployment (initial setup, credentials, database), Linkding deployment, Mattermost operator setup, diagnostic app and common Helm chart (authored from scratch), nginx test app
