@@ -137,3 +137,8 @@ devbox shell
 - All secrets encrypted with SOPS+age. Decrypted only to `/dev/shm` (tmpfs), never to persistent disk.
 - Sealed Secrets for Kubernetes secrets committed to git.
 - No plaintext credentials in the repository.
+
+## Contributors
+
+- **Waldemar Kubica** ([@ebi-droid](https://gitlab.com/ebi-droid)) -- Architecture and design, NixOS hypervisors (deploy-rs, OVS, libvirt), Talos cluster, PXE boot, FluxCD orchestration, Cilium CNI + BGP peering, Gateway API, cert-manager (Let's Encrypt/deSEC), ArgoCD, Istio Ambient mesh, Kyverno, External DNS, Sealed Secrets, observability stack (Alloy, VictoriaMetrics, Hubble), network architecture (VLANs, eBGP)
+- **Jakub Kubica** ([@beraton](https://gitlab.com/beraton)) -- Democratic-CSI storage (ZFS/iSCSI driver configuration, sealed secrets, storage classes), OpenEBS LVM (setup, storage class, Talos kernel module patches), diagnostic tooling and testing
