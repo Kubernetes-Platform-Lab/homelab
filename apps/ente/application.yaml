@@ -12,7 +12,7 @@ spec:
       kind: Ingress
       name: ente-ente-photos-museum
       namespace: ente
-      jqPathExpressions:
+      jqPointers:
         - /spec
         - /metadata/annotations
         - /metadata/labels
