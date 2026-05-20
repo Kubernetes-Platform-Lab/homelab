@@ -17,16 +17,16 @@ spec:
         web:
           photos:
             env:
-              NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
+              - NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
           auth:
             env:
-              NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
+              - NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
           accounts:
             env:
-              NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
+              - NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
           albums:
             env:
-              NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
+              - NEXT_PUBLIC_ENTE_ENDPOINT: "https://api-ente.akna.one.pl"
         networkPolicy:
            enabled: false        
         credentials:
