@@ -16,7 +16,14 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
-  syncPolicy:
+  ignoreDifferences:
+    - group: networking.k8s.io
+      kind: Ingress
+      name: ente-ente-photos-museum
+      namespace: ente
+      jqPathExpressions:
+        - .
+  #syncPolicy:
     #automated:
     #  prune: true
     #  selfHeal: true
