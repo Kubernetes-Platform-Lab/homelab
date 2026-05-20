@@ -17,19 +17,19 @@ spec:
         web:
           photos:
             env:
-              - name: NEXT_PUBLIC_ENTE_ENDPOINT
+              - name: ENTE_API_ORIGIN
                 value: "https://api-ente.akna.one.pl"
           auth:
             env:
-              - name: NEXT_PUBLIC_ENTE_ENDPOINT
+              - name: ENTE_API_ORIGIN
                 value: "https://api-ente.akna.one.pl"
           accounts:
             env:
-              - name: NEXT_PUBLIC_ENTE_ENDPOINT
+              - name: ENTE_API_ORIGIN
                 value: "https://api-ente.akna.one.pl"
           albums:
             env:
-              - name: NEXT_PUBLIC_ENTE_ENDPOINT
+              - name: ENTE_API_ORIGIN
                 value: "https://api-ente.akna.one.pl"
         networkPolicy:
            enabled: false        
