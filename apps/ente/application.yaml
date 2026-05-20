@@ -16,6 +16,9 @@ spec:
       valuesObject:
         museum:
           ingress:
+            annotations:
+              argocd.argoproj.io/compare-options: IgnoreExtraneous
+              argocd.argoproj.io/sync-options: Prune=false
             enabled: true
             hosts:
               - host: api-ente.akna.one.pl
