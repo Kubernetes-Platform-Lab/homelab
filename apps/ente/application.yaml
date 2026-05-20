@@ -19,6 +19,9 @@ spec:
             enabled: true
             hosts:
               - host: api-ente.akna.one.pl
+                paths:
+                  - path: /
+                    pathType: Prefix
         web:
           photos:
             env:
