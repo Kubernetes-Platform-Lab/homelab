@@ -13,7 +13,9 @@ spec:
       name: ente-ente-photos-museum
       namespace: ente
       jqPathExpressions:
-        - .
+        - /spec
+        - /metadata/annotations
+        - /metadata/labels
   source:
     repoURL: https://l4gdev.github.io/helm-charts
     chart: ente-photos
