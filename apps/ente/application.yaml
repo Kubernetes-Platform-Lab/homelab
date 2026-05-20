@@ -7,6 +7,13 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
+  ignoreDifferences:
+    - group: networking.k8s.io
+      kind: Ingress
+      name: ente-ente-photos-museum
+      namespace: ente
+      jqPathExpressions:
+        - .
   source:
     repoURL: https://l4gdev.github.io/helm-charts
     chart: ente-photos
