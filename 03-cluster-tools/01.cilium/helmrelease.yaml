@@ -69,9 +69,14 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
-    tlsCertProvider: spiffe
-    spiffe:
-      spireAgentSocketPath: /run/spire/agent-sockets/spire-agent.sock
+    authentication:
+      mutual:
+        spire:
+          enabled: true
+          install:
+            enabled: false
+          trustDomain: merida.akna.lan
+          adminSocketPath: /run/spire/agent-sockets/spire-agent.sock
 
     hubble:
       enabled: true
