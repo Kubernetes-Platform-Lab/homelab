@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: spire
-  namespace: spire-mgmt
+  namespace: spire-server
 spec:
   interval: 5m
   chart:
@@ -25,11 +25,11 @@ spec:
           create: true
         ingressControllerType: ""
         clusterName: spife-cluster
-        trustDomain: akna.lan
+        trustDomain: merida.akna.lan
         caSubject:
           country: PL
           organization: AknaLab
-          commonName: akna.lan
+          commonName: merida.akna.lan
     server:
       replicas: 1
       logLevel: DEBUG
@@ -37,9 +37,9 @@ spec:
       replicas: 1
       logLevel: DEBUG
     database:
-      type: postgres
-      host: my-postgres-host
-      port: 5432
-      user: spire
-      passwordSecret: spire-db-password
+      type: sqlite3
+      #host: my-postgres-host
+      #port: 5432
+      #user: spire
+      #passwordSecret: spire-db-password
 
