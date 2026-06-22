@@ -22,12 +22,13 @@ spec:
         generateExisting: true
         namespace: "{{ request.object.metadata.name }}"
         data:
-          helper.conf: |
-            agent_address = "/var/run/secrets/workload-spiffe-credentials/spire-agent.sock"
-            cert_dir = "/var/run/secrets/spiffe-certs"
-            svid_file_name = "svid.pem"
-            svid_key_file_name = "svid_key.pem"
-            svid_bundle_file_name = "bundle.pem"
+          data:
+            helper.conf: |
+              agent_address = "/var/run/secrets/workload-spiffe-credentials/spire-agent.sock"
+              cert_dir = "/var/run/secrets/spiffe-certs"
+              svid_file_name = "svid.pem"
+              svid_key_file_name = "svid_key.pem"
+              svid_bundle_file_name = "bundle.pem"
     - name: add-spiffe-resources
       match:
         any:
