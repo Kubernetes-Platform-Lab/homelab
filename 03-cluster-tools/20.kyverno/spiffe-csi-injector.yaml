@@ -28,7 +28,7 @@ spec:
             svid_file_name = "svid.pem"
             svid_key_file_name = "svid_key.pem"
             svid_bundle_file_name = "bundle.pem"
-    - name: add-csi-volume
+    - name: add-spiffe-resources
       match:
         any:
           - resources:
@@ -37,22 +37,38 @@ spec:
               namespaceSelector:
                 matchLabels:
                   spiffe: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.volumes[].name || '' }}"
-            operator: AnyNotIn
-            value:
-              - spiffe-socket
       mutate:
-        patchesJson6902: |-
-          - op: add
-            path: /spec/volumes/-
-            value:
-              name: spiffe-socket
-              csi:
-                driver: csi.spiffe.io
-                readOnly: true
-    - name: add-csi-volume-mount
+        patchStrategicMerge:
+          spec:
+            volumes:
+              - name: spiffe-socket
+                csi:
+                  driver: csi.spiffe.io
+                  readOnly: true
+              - name: spiffe-certs
+                emptyDir: {}
+              - name: helper-config
+                configMap:
+                  name: spiffe-helper-config
+            containers:
+              - name: spiffe-helper
+                image: ghcr.io/spiffe/spiffe-helper:latest
+                imagePullPolicy: IfNotPresent
+                command:
+                  - /spiffe-helper
+                args:
+                  - -config
+                  - /etc/spiffe-helper/helper.conf
+                volumeMounts:
+                  - name: spiffe-socket
+                    mountPath: /var/run/secrets/workload-spiffe-credentials
+                    readOnly: true
+                  - name: spiffe-certs
+                    mountPath: /var/run/secrets/spiffe-certs
+                  - name: helper-config
+                    mountPath: /etc/spiffe-helper
+                    readOnly: true
+    - name: add-mounts
       match:
         any:
           - resources:
@@ -64,111 +80,14 @@ spec:
       mutate:
         foreach:
           - list: "request.object.spec.containers"
-            patchesJson6902: |-
-              - op: add
-                path: "/spec/containers/{{ elementIndex }}/volumeMounts/-"
-                value:
-                  name: spiffe-socket
-                  mountPath: /var/run/secrets/workload-spiffe-credentials
-                  readOnly: true
-    - name: add-spiffe-certs-volume
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchLabels:
-                  spiffe: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.volumes[].name || '' }}"
-            operator: AnyNotIn
-            value:
-              - spiffe-certs
-      mutate:
-        patchesJson6902: |-
-          - op: add
-            path: /spec/volumes/-
-            value:
-              name: spiffe-certs
-              emptyDir: {}
-    - name: mount-spiffe-certs
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchLabels:
-                  spiffe: "true"
-      mutate:
-        foreach:
-          - list: "request.object.spec.containers"
-            patchesJson6902: |-
-              - op: add
-                path: "/spec/containers/{{ elementIndex }}/volumeMounts/-"
-                value:
-                  name: spiffe-certs
-                  mountPath: /var/run/secrets/spiffe-certs
-                  readOnly: true
-    - name: add-helper-config-volume
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchLabels:
-                  spiffe: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.volumes[].name || '' }}"
-            operator: AnyNotIn
-            value:
-              - helper-config
-      mutate:
-        patchesJson6902: |-
-          - op: add
-            path: /spec/volumes/-
-            value:
-              name: helper-config
-              configMap:
-                name: spiffe-helper-config
-    - name: add-spiffe-helper
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchLabels:
-                  spiffe: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.containers[].name || '' }}"
-            operator: AnyNotIn
-            value:
-              - spiffe-helper
-      mutate:
-        patchesJson6902: |-
-          - op: add
-            path: /spec/containers/-
-            value:
-              name: spiffe-helper
-              image: ghcr.io/spiffe/spiffe-helper:latest
-              imagePullPolicy: IfNotPresent
-              command:
-                - /spiffe-helper
-              args:
-                - -config
-                - /etc/spiffe-helper/helper.conf
-              volumeMounts:
-                - name: spiffe-socket
-                  mountPath: /var/run/secrets/workload-spiffe-credentials
-                  readOnly: true
-                - name: spiffe-certs
-                  mountPath: /var/run/secrets/spiffe-certs
-                - name: helper-config
-                  mountPath: /etc/spiffe-helper
-                  readOnly: true
+            patchStrategicMerge:
+              spec:
+                containers:
+                  - name: "{{ element.name }}"
+                    volumeMounts:
+                      - name: spiffe-socket
+                        mountPath: /var/run/secrets/workload-spiffe-credentials
+                        readOnly: true
+                      - name: spiffe-certs
+                        mountPath: /var/run/secrets/spiffe-certs
+                        readOnly: true
