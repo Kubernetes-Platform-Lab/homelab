@@ -52,7 +52,7 @@ spec:
                   name: spiffe-helper-config
             containers:
               - name: spiffe-helper
-                image: ghcr.io/spiffe/spiffe-helper:latest
+                image: ghcr.io/spiffe/spiffe-helper:0.11.0
                 imagePullPolicy: IfNotPresent
                 command:
                   - /spiffe-helper
