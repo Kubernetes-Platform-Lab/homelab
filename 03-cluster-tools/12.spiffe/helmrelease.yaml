@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: spire
-  namespace: spire-server
+  namespace: spire-mgmt
 spec:
   interval: 5m
   chart:
