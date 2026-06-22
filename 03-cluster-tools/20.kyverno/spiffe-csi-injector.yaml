@@ -5,7 +5,7 @@ metadata:
 spec:
   background: false
   rules:
-    - name: inject-csi-volume
+    - name: add-csi-volume
       match:
         any:
           - resources:
@@ -16,21 +16,35 @@ spec:
                   spiffe: "true"
       preconditions:
         all:
-          - key: "{{ request.object.spec.volumes[] || '' }}"
+          - key: "{{ request.object.spec.volumes[].name || '' }}"
             operator: AnyNotIn
             value:
-              - name: spiffe-socket
+              - spiffe-socket
       mutate:
-        patchStrategicMerge:
-          spec:
-            volumes:
-              - name: spiffe-socket
-                csi:
-                  driver: csi.spiffe.io
+        patchesJson6902: |-
+          - op: add
+            path: /spec/volumes/-
+            value:
+              name: spiffe-socket
+              csi:
+                driver: csi.spiffe.io
+                readOnly: true
+    - name: add-csi-volume-mount
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaceSelector:
+                matchLabels:
+                  spiffe: "true"
+      mutate:
+        foreach:
+          - list: "request.object.spec.containers"
+            patchesJson6902: |-
+              - op: add
+                path: "/spec/containers/{{ elementIndex }}/volumeMounts/-"
+                value:
+                  name: spiffe-socket
+                  mountPath: /var/run/secrets/workload-spiffe-credentials
                   readOnly: true
-            containers:
-              - name: "*"
-                volumeMounts:
-                  - name: spiffe-socket
-                    mountPath: /var/run/secrets/workload-spiffe-credentials
-                    readOnly: true
