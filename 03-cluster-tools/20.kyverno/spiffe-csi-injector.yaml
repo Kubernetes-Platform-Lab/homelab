@@ -1,0 +1,36 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: inject-spiffe-csi
+spec:
+  background: false
+  rules:
+    - name: inject-csi-volume
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaceSelector:
+                matchLabels:
+                  spiffe: "true"
+      preconditions:
+        all:
+          - key: "{{ request.object.spec.volumes[] || '' }}"
+            operator: AnyNotIn
+            value:
+              - name: spiffe-socket
+      mutate:
+        patchStrategicMerge:
+          spec:
+            volumes:
+              - name: spiffe-socket
+                csi:
+                  driver: csi.spiffe.io
+                  readOnly: true
+            containers:
+              - name: "*"
+                volumeMounts:
+                  - name: spiffe-socket
+                    mountPath: /var/run/secrets/workload-spiffe-credentials
+                    readOnly: true
