@@ -1,3 +1,7 @@
+tlsCertProvider: spiffe
+spiffe:
+  spireAgentSocketPath: /run/spire/agent-sockets/spire-agent.sock
+
 ipam:
   mode: kubernetes
 

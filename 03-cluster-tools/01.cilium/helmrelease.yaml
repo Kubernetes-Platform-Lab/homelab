@@ -69,6 +69,10 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
+    tlsCertProvider: spiffe
+    spiffe:
+      spireAgentSocketPath: /run/spire/agent-sockets/spire-agent.sock
+
     hubble:
       enabled: true
       metrics:
