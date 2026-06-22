@@ -25,11 +25,11 @@ spec:
           create: true
         ingressControllerType: ""
         clusterName: spife-cluster
-        trustDomain: akna.lan
+        trustDomain: merida.akna.lan
         caSubject:
           country: PL
           organization: AknaLab
-          commonName: akna.lan
+          commonName: merida.akna.lan
     server:
       replicas: 1
       logLevel: DEBUG
@@ -42,3 +42,4 @@ spec:
       port: 5432
       user: spire
       passwordSecret: spire-db-password
+
