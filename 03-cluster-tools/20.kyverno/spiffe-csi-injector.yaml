@@ -66,6 +66,7 @@ spec:
                     readOnly: true
                   - name: spiffe-certs
                     mountPath: /var/run/secrets/spiffe-certs
+                    readOnly: false
                   - name: helper-config
                     mountPath: /etc/spiffe-helper
                     readOnly: true
