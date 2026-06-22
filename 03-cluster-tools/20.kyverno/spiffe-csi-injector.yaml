@@ -29,6 +29,8 @@ spec:
               svid_file_name = "svid.pem"
               svid_key_file_name = "svid_key.pem"
               svid_bundle_file_name = "bundle.pem"
+              jwt_svids = [{jwt_audience = "merida.akna.lan", jwt_svid_file_name = "jwt_svid.token"}]
+              jwt_bundle_file_name = "jwt_bundle.json"
     - name: add-spiffe-resources
       match:
         any:
