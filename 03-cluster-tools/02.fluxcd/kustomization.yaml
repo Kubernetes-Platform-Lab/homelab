@@ -12,7 +12,7 @@ resources:
   - sealed-kustomization.yaml
   - kube-state-metrics.yaml
   - democratic-csi-kustomization.yaml
-  - spiffe.yaml
+  #- spiffe.yaml
   - external-dns.yaml
   - cilium.yaml
   - openebs-kustomization.yaml
