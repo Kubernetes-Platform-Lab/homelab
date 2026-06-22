@@ -80,7 +80,7 @@ spec:
                   spiffe: "true"
       mutate:
         foreach:
-          - list: "request.object.spec.containers"
+          - list: "request.object.spec.containers[?name != 'spiffe-helper']"
             patchStrategicMerge:
               spec:
                 containers:
