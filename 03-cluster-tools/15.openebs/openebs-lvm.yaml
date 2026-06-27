@@ -9,5 +9,6 @@ parameters:
   volgroup: "vg_openebs"
   thinProvision: "yes"
 provisioner: local.csi.openebs.io
+allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Retain
