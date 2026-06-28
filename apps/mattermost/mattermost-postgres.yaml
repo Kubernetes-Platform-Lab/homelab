@@ -39,7 +39,7 @@ spec:
       owner: mattermost
 
   storage:
-    size: 5Gi
+    size: 8Gi
     storageClass: "openebs-lvm"
     resizeInUseVolumes: False
   resources:
