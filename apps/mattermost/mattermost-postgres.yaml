@@ -4,7 +4,7 @@ metadata:
   name: mattermost-postgres
   namespace: mattermost
   annotations:
-    cnpg.io/hibernation: "on"
+    cnpg.io/hibernation: "off"
 
 spec:
   instances: 1
