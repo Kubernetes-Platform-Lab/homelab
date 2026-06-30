@@ -49,6 +49,7 @@ spec:
 
   values:
     providers:
+      default: anthropic
       anthropic:
         provider: Anthropic
         model: "claude-haiku-4-5"
