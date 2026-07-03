@@ -1,11 +1,10 @@
-| Field | Value |
-|---|---|---|
-| ADR Title | CI/CD Tooling - GitOps Strategy |
-| ADR Number | 0001 |
-| Status | Accepted |
-| Decision Date | 25/04/2026 |
-| Domain | Continuous Delivery |
-| Impact Level | High |
+---
+adr: 1 
+date: 2026-04-25
+title: CI/CD Tooling - GitOps Strategy
+status: Accepted
+type: CI/CD
+---
 
 ## Context and Problem Statement
 
