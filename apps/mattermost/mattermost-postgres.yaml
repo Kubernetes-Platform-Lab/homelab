@@ -7,7 +7,7 @@ metadata:
     cnpg.io/hibernation: "off"
 
 spec:
-  instances: 1
+  instances: 2
   enableSuperuserAccess: true
   imageName: ghcr.io/cloudnative-pg/postgresql:17-system-trixie
 
