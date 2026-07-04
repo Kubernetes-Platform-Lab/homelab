@@ -54,7 +54,7 @@ spec:
               path = "/openbao/data"
               retry_join {
                 leader_api_addr = "https://openbao-active:8200"
-                tls_skip_verify = true
+                leader_ca_cert_file = "/openbao/ca/ca.crt"
               }
             }
             service_registration "kubernetes" {}
