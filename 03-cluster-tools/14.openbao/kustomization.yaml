@@ -8,3 +8,4 @@ resources:
   - openbao-ca-issuer.yaml
   - server-certificate.yaml
   - helmrelease.yaml
+  - openbao-supervisor-role.yaml
