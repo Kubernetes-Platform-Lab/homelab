@@ -5,24 +5,63 @@ Bare-metal Kubernetes platform built from scratch -- from PXE boot to production
 **Built by:** [Waldemar Kubica](https://gitlab.com/ebi-droid) and [Jakub Kubica](https://gitlab.com/beraton)
 **Applications repo:** [2-Apps](https://gitlab.com/homelab-dev/2-Apps)
 
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.34.0-326CE5?style=flat-square&logo=kubernetes)](https://kubernetes.io)
+[![Talos](https://img.shields.io/badge/Talos-v1.12.4-FF7300?style=flat-square&logo=linux)](https://www.talos.dev)
+[![Nodes](https://img.shields.io/badge/Nodes-4%20VMs-085041?style=flat-square)](#02-talos--kubernetes-cluster)
+[![Hypervisors](https://img.shields.io/badge/Hypervisors-4%20NixOS-7EB42C?style=flat-square&logo=nixos)](#01-nixos-servers--hypervisor-hosts)
+[![CNI](https://img.shields.io/badge/CNI-Cilium-1D9E75?style=flat-square)](#03-cluster-tools--platform-tooling-fluxcd)
+[![Mesh](https://img.shields.io/badge/Mesh-Istio%20Ambient-1D9E75?style=flat-square)](#03-cluster-tools--platform-tooling-fluxcd)
+[![GitOps](https://img.shields.io/badge/GitOps-FluxCD+ArgoCD-1D9E75?style=flat-square)](#key-design-decisions)
+[![VLANs](https://img.shields.io/badge/VLANs-4%20Segments-085041?style=flat-square)](#network)
+
 ---
 
 ## Architecture
 
-```
-PXE Boot (k0s + Matchbox)
-  └─► NixOS Hypervisors (4x bare-metal, OVS, libvirt/KVM)
-       └─► Talos Linux VMs (Kubernetes v1.34, 3 control-plane + 1 worker)
-            └─► Platform Tools (FluxCD GitOps)
-                 ├── Cilium CNI (eBGP, kube-proxy replacement, Hubble)
-                 ├── Gateway API (Cilium GatewayClass, wildcard TLS)
-                 ├── cert-manager (Let's Encrypt, DNS-01 via deSEC)
-                 ├── Istio Ambient Mesh (sidecar-less, ztunnel)
-                 ├── Storage: OpenEBS LVM (local) + Democratic-CSI (ZFS/iSCSI)
-                 ├── Secrets: Sealed Secrets + External Secrets + SOPS/age
-                 ├── Policy: Kyverno
-                 ├── DNS: External DNS (deSEC webhook)
-                 └── ArgoCD (deploys applications from 2-Apps repo)
+```mermaid
+graph TB
+    subgraph Provisioning["Provisioning Layer"]
+        PXE["k0s + Matchbox<br/>PXE Boot Server"]
+    end
+
+    subgraph Hypervisors["Hypervisor Layer — NixOS (4x bare-metal)"]
+        hyp01["hyp01 · 10.20.0.30"]
+        hyp02["hyp02 · 10.20.0.31"]
+        hyp03["hyp03 · 10.20.0.32"]
+        hyp04["hyp04 · 10.20.0.33"]
+    end
+
+    subgraph Kubernetes["Kubernetes Layer — Talos Linux · K8s v1.34"]
+        cp1["cp-node01<br/>Control Plane"]
+        cp2["cp-node02<br/>Control Plane"]
+        cp3["cp-node03<br/>Control Plane"]
+        w4["w-node04<br/>Worker"]
+    end
+
+    subgraph GitOps["GitOps Layer"]
+        flux["FluxCD<br/>Infrastructure"]
+        argocd["ArgoCD<br/>Applications"]
+    end
+
+    subgraph Platform["Platform Tooling"]
+        cilium["Cilium CNI<br/>eBGP · Hubble · kube-proxy replacement"]
+        gw["Gateway API<br/>Cilium GatewayClass · wildcard TLS"]
+        istio["Istio Ambient Mesh<br/>ztunnel · sidecar-less"]
+        cert["cert-manager<br/>Let's Encrypt · deSEC DNS-01"]
+        dns["External DNS<br/>deSEC webhook"]
+        storage["OpenEBS LVM + Democratic-CSI<br/>Local + ZFS/iSCSI"]
+        secrets["Sealed Secrets · External Secrets<br/>SOPS/age"]
+        kyverno["Kyverno<br/>Policy Engine"]
+    end
+
+    PXE --> hyp01 & hyp02 & hyp03 & hyp04
+    hyp01 --> cp1
+    hyp02 --> cp2
+    hyp03 --> cp3
+    hyp04 --> w4
+    cp1 & cp2 & cp3 & w4 --> flux
+    flux --> cilium & gw & istio & cert & dns & storage & secrets & kyverno
+    flux --> argocd
 ```
 
 ## Network
@@ -117,8 +156,6 @@ All cluster tools are managed by FluxCD using HelmReleases. Each tool follows a 
 - **Why dual GitOps (FluxCD + ArgoCD):** FluxCD manages platform tools (infrastructure concern), ArgoCD manages applications (developer concern). Different lifecycles, different blast radii.
 - **Why NixOS for hypervisors:** Reproducible host configuration, atomic upgrades/rollbacks, declarative VM and network definitions.
 - **Why Gateway API over Ingress:** Role-oriented API (infra team manages Gateways, app teams manage HTTPRoutes), multi-protocol support, portable across implementations.
-
-*Detailed Architecture Decision Records: coming soon*
 
 ## Tools Required
 
