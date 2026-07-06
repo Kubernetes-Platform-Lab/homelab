@@ -7,14 +7,22 @@ Bare-metal Kubernetes platform built from scratch -- from PXE boot to production
 
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.34.0-326CE5?style=flat-square&logo=kubernetes)](https://kubernetes.io)
 [![Talos](https://img.shields.io/badge/Talos-v1.12.4-FF7300?style=flat-square&logo=linux)](https://www.talos.dev)
-[![Nodes](https://img.shields.io/badge/Nodes-4%20VMs-085041?style=flat-square)](#02-talos--kubernetes-cluster)
-[![Hypervisors](https://img.shields.io/badge/Hypervisors-4%20NixOS-7EB42C?style=flat-square&logo=nixos)](#01-nixos-servers--hypervisor-hosts)
-[![CNI](https://img.shields.io/badge/CNI-Cilium-1D9E75?style=flat-square)](#03-cluster-tools--platform-tooling-fluxcd)
-[![Mesh](https://img.shields.io/badge/Mesh-Istio%20Ambient-1D9E75?style=flat-square)](#03-cluster-tools--platform-tooling-fluxcd)
+[![Hypervisors](https://img.shields.io/badge/Hypervisors-4%20NixOS-7EB42C?style=flat-square&logo=nixos)](#nixos-hypervisor-hosts)
+[![Nodes](https://img.shields.io/badge/Nodes-4%20VMs-085041?style=flat-square)](#kubernetes-cluster)
+[![CNI](https://img.shields.io/badge/CNI-Cilium-1D9E75?style=flat-square)](#platform-tooling-fluxcd)
+[![Mesh](https://img.shields.io/badge/Mesh-Istio%20Ambient-1D9E75?style=flat-square)](#platform-tooling-fluxcd)
 [![GitOps](https://img.shields.io/badge/GitOps-FluxCD+ArgoCD-1D9E75?style=flat-square)](#key-design-decisions)
 [![VLANs](https://img.shields.io/badge/VLANs-4%20Segments-085041?style=flat-square)](#network)
 
 ---
+
+## Why is this lab build?
+
+Both of us ([@ebi-droid](https://gitlab.com/ebi-droid) and [@beraton](https://gitlab.com/beraton)) are true Cloud Infrastructure and GitOps enthusiasts and are professionally associated with Cloud Engineering. This branch of IT is during constant evolution as more and more new technologies emerge on the market, especially after ubiquitous implemetation of AI solutions.
+
+At some point we realized that we lack a place to test and verify those technologies/tools. This was the main reason behind building this lab was - to create a place for education and learning DevOps/GitOps craft in a most possible and affordable production-grade setup.
+
+GitOps approach includes creating reproducible, declarative and reliable systems - from start to finish. This is why our hardware is build on the basis on NixOS combined with Talos. Both of those technologies allow us to deploy our hardware and set up underlying OS for k8s clusters in a reliable, standarized way, with great documentation and very active community. 
 
 ## Architecture
 
@@ -87,7 +95,7 @@ graph TB
 └── 03-cluster-tools/     # FluxCD-managed platform tools (Cilium, ArgoCD, etc.)
 ```
 
-### 00-pxeboot -- PXE Boot Server
+### PXE Boot Server
 
 Single-node k0s cluster hosting a [Matchbox](https://matchbox.psdn.io/) PXE server for network booting bare-metal machines.
 
@@ -95,7 +103,7 @@ Single-node k0s cluster hosting a [Matchbox](https://matchbox.psdn.io/) PXE serv
 - Matchbox v0.11.0 in hostNetwork mode
 - SOPS+age encrypted kubeconfig
 
-### 01-nixos-servers -- Hypervisor Hosts
+### NixOS Hypervisor Hosts
 
 4 NixOS bare-metal hypervisors managed declaratively with Nix Flakes and deployed remotely via deploy-rs.
 
@@ -113,7 +121,7 @@ Key capabilities:
 - **Secrets:** sops-nix for encrypted passwords
 - **Monitoring:** Cockpit web UI
 
-### 02-talos -- Kubernetes Cluster
+### Kubernetes Cluster
 
 Talos Linux cluster managed with [talhelper](https://budimanjojo.github.io/talhelper/). Dual-homed nodes with separate cluster and service networks.
 
@@ -130,7 +138,7 @@ Talos Linux cluster managed with [talhelper](https://budimanjojo.github.io/talhe
 - **Pod CIDR:** 10.244.0.0/16 | **Service CIDR:** 10.96.0.0/12
 - **Extensions:** qemu-guest-agent, iscsi-tools, CPU microcode
 
-### 03-cluster-tools -- Platform Tooling (FluxCD)
+### Platform Tooling (FluxCD)
 
 All cluster tools are managed by FluxCD using HelmReleases. Each tool follows a consistent pattern: `helmrepo.yaml` + `helmrelease.yaml` + `namespace.yaml` + `kustomization.yaml`.
 
