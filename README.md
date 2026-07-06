@@ -49,7 +49,7 @@ graph TB
         istio["Istio Ambient Mesh<br/>ztunnel · sidecar-less"]
         cert["cert-manager<br/>Let's Encrypt · deSEC DNS-01"]
         dns["External DNS<br/>deSEC webhook"]
-        storage["OpenEBS LVM + Democratic-CSI<br/>Local + ZFS/iSCSI"]
+        storage["OpenEBS LVM<br/>Local Storage"]
         secrets["Sealed Secrets · External Secrets<br/>SOPS/age"]
         kyverno["Kyverno<br/>Policy Engine"]
     end
@@ -142,7 +142,6 @@ All cluster tools are managed by FluxCD using HelmReleases. Each tool follows a 
 | Gateway API | -- | Internal (`*.akna.one.pl`) + external gateways |
 | Istio Ambient | 1.29.1 | Sidecar-less service mesh (ztunnel) |
 | OpenEBS | 4.0.0 | LVM-based local storage |
-| Democratic-CSI | 0.15.1 | ZFS-over-iSCSI from NAS (10.11.1.5) |
 | Sealed Secrets | 2.18.0 | Encrypted secrets in git |
 | External Secrets | >=1.15.0 | External secrets operator |
 | External DNS | 1.20.0 | Automatic DNS (deSEC webhook, Gateway API HTTPRoutes) |
