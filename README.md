@@ -1,44 +1,48 @@
-# Homelab
-
-Bare-metal Kubernetes platform built from scratch -- from PXE boot to production-grade cluster tooling, with ArgoCD-managed application deployments.
-
-**Built by:** [Waldemar Kubica](https://gitlab.com/ebi-droid) and [Jakub Kubica](https://gitlab.com/beraton)
+# Homelab — Bare-Metal Kubernetes Platform
 
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.34.0-326CE5?style=flat-square&logo=kubernetes)](https://kubernetes.io)
 [![Talos](https://img.shields.io/badge/Talos-v1.12.4-FF7300?style=flat-square&logo=linux)](https://www.talos.dev)
-[![Hypervisors](https://img.shields.io/badge/Hypervisors-4%20NixOS-7EB42C?style=flat-square&logo=nixos)](#nixos-hypervisor-hosts)
-[![Nodes](https://img.shields.io/badge/Nodes-4%20VMs-085041?style=flat-square)](#kubernetes-cluster)
-[![CNI](https://img.shields.io/badge/CNI-Cilium-1D9E75?style=flat-square)](#platform-tooling-fluxcd)
-[![Mesh](https://img.shields.io/badge/Mesh-Istio%20Ambient-1D9E75?style=flat-square)](#platform-tooling-fluxcd)
-[![GitOps](https://img.shields.io/badge/GitOps-FluxCD+ArgoCD-1D9E75?style=flat-square)](#key-design-decisions)
-[![VLANs](https://img.shields.io/badge/VLANs-4%20Segments-085041?style=flat-square)](#network)
+[![NixOS](https://img.shields.io/badge/Hypervisors-4%C3%97%20NixOS-7EB42C?style=flat-square&logo=nixos)](./01-virtualization/)
+[![CNI](https://img.shields.io/badge/CNI-Cilium-1D9E75?style=flat-square)](./03-flux-apps/01.cilium/)
+[![Mesh](https://img.shields.io/badge/Mesh-Istio%20Ambient-1D9E75?style=flat-square)](./03-flux-apps/22.istio-ambient/)
+[![GitOps](https://img.shields.io/badge/GitOps-FluxCD%20%2B%20ArgoCD-1D9E75?style=flat-square)](./docs/adr/ADR-3-dual-gitops.md)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
 ---
 
-## Why is this lab build?
+An **over-engineered, production-grade Kubernetes homelab** built entirely from scratch. From PXE-booting bare metal to running real applications behind a service mesh — everything is declarative, version-controlled, and GitOps-driven.
 
-Both of us ([@ebi-droid](https://gitlab.com/ebi-droid) and [@beraton](https://gitlab.com/beraton)) are true Cloud Infrastructure and GitOps enthusiasts and are professionally associated with Cloud Engineering. This branch of IT is during constant evolution as more and more new technologies emerge on the market, especially after ubiquitous implementation of AI solutions.
+**Built by:** [Waldemar Kubica](https://github.com/ebi-droid) · [Jakub Kubica (Beraton)](https://github.com/beraton)
 
-At some point we realized that we lack a place to test and verify those technologies/tools. This was the main reason behind building this lab was - to create a place for education and learning DevOps/GitOps craft in a most possible and affordable production-grade setup.
+---
 
-GitOps approach includes creating reproducible, declarative and reliable systems - from start to finish. This is why our hardware is build on the basis on NixOS combined with Talos. Both of those technologies allow us to deploy our hardware and set up underlying OS for k8s clusters in a reliable, standardized way, with great documentation and very active community.
+## Why This Lab Exists
+
+> *"We don't have a place to break things safely."*
+
+We are cloud infrastructure engineers who need a realistic sandbox to practice, experiment, and stay current. This lab exists to:
+
+1. **Test production-grade patterns** — Cilium eBGP, Istio Ambient Mesh, Gateway API, dual GitOps — without risking a real production environment.
+2. **Learn by doing** — Every tool here was chosen because we wanted to understand it deeply, not because it was the easiest option.
+3. **Build a portfolio** — This repository is a live artifact showing real engineering decisions, real debugging, and real operational work.
+4. **Collaborate** — Two engineers sharing a codebase, reviewing each others' changes, and growing together.
 
 ## Architecture
 
 ```mermaid
 graph TB
-    subgraph Provisioning["Provisioning Layer"]
+    subgraph Provisioning["00 · PXE Bootstrap"]
         PXE["k0s + Matchbox<br/>PXE Boot Server"]
     end
 
-    subgraph Hypervisors["Hypervisor Layer — NixOS (4x bare-metal)"]
+    subgraph Hypervisors["01 · Virtualization — NixOS (4x bare-metal)"]
         hyp01["hyp01 · 10.20.0.30"]
         hyp02["hyp02 · 10.20.0.31"]
         hyp03["hyp03 · 10.20.0.32"]
         hyp04["hyp04 · 10.20.0.33"]
     end
 
-    subgraph Kubernetes["Kubernetes Layer — Talos Linux · K8s v1.34"]
+    subgraph Kubernetes["02 · Kubernetes — Talos Linux · K8s v1.34"]
         cp1["cp-node01<br/>Control Plane"]
         cp2["cp-node02<br/>Control Plane"]
         cp3["cp-node03<br/>Control Plane"]
@@ -50,7 +54,7 @@ graph TB
         argocd["ArgoCD<br/>Applications"]
     end
 
-    subgraph Platform["Platform Tooling"]
+    subgraph Platform["03 · Platform Tooling (FluxCD)"]
         cilium["Cilium CNI<br/>eBGP · Hubble · kube-proxy replacement"]
         gw["Gateway API<br/>Cilium GatewayClass · wildcard TLS"]
         istio["Istio Ambient Mesh<br/>ztunnel · sidecar-less"]
@@ -61,12 +65,12 @@ graph TB
         kyverno["Kyverno<br/>Policy Engine"]
     end
 
-    subgraph Applications["Applications Layer — ArgoCD managed"]
+    subgraph Applications["04 · Applications (ArgoCD)"]
         cnpg["CloudNativePG<br/>PostgreSQL Operator"]
         ente["Ente Photos<br/>Encrypted Photo Backup"]
         mattermost["Mattermost<br/>Team Chat"]
         linkding["Linkding<br/>Bookmark Manager"]
-        alloy["Alloy<br/>Telemetry → VictoriaMetrics"]
+        alloy["Alloy<br/>Telemetry Collector"]
     end
 
     PXE --> hyp01 & hyp02 & hyp03 & hyp04
@@ -80,135 +84,124 @@ graph TB
     argocd --> cnpg & ente & mattermost & linkding & alloy
 ```
 
-## Network
+## Network Topology
 
-4 VLANs with Open vSwitch bridging on each hypervisor:
+4 VLANs with **Open vSwitch** bridging on each hypervisor. eBGP between cluster and ToR switch.
 
-| VLAN | Subnet       | Purpose                                 |
-|------|--------------|-----------------------------------------|
-| 10   | 10.10.0.0/16 | PXE boot and provisioning               |
-| 20   | 10.20.0.0/16 | Hypervisor management                   |
-| 30   | 10.30.0.0/16 | Kubernetes cluster (API, etcd, inter-node) |
-| 40   | 10.40.0.0/16 | Services and BGP (LoadBalancer IPs)     |
+| VLAN | Subnet | Purpose | Routing |
+|------|--------|---------|---------|
+| 10 | 10.10.0.0/16 | PXE boot & provisioning | Static |
+| 20 | 10.20.0.0/16 | Hypervisor management | Static |
+| 30 | 10.30.0.0/16 | Kubernetes cluster | Internal |
+| 40 | 10.40.0.0/16 | Services & LoadBalancer IPs | eBGP (ASN 65000 ↔ 65001) |
 
-**BGP peering:** Cluster nodes (ASN 65000) ↔ ToR switch (ASN 65001) on VLAN 40. LoadBalancer IPs (10.40.0.150-160) are advertised via eBGP with ECMP across all nodes.
+**BGP:** 4 nodes advertise 10.40.0.150–160 via eBGP to ToR switch (ASN 65001) with ECMP.
 
-## Repository Structure
+## Repository Layout
 
 ```
 homelab/
-├── 00-pxe-bootstrap/         # Bare-metal provisioning (PXE, Matchbox)
-├── 01-virtualization/    # NixOS hypervisors, libvirt, OVS
-├── 02-kubernetes/        # Talos Linux cluster configs
-├── 03-flux-apps/         # FluxCD-managed platform tools (Cilium, cert-manager, etc.)
-├── 04-argocd-apps/       # ArgoCD-managed application deployments
-│   ├── alloy/            # Grafana Alloy telemetry collector
-│   ├── cloudnativepg/    # PostgreSQL operator
-│   ├── diagnostic-app/   # Test workloads (custom chart)
-│   ├── ente/             # Ente Photos + CNPG + HTTPRoutes
-│   ├── linkding/         # Bookmark manager + PVC + HTTPRoute
-│   ├── mattermost/       # Operator + CRDs + installation + CNPG database
-│   └── nginx/            # Minimal test deployment
-├── docs/
-│   └── adr/              # Architecture Decision Records
-├── sources/              # Custom Helm charts
-│   └── charts/
-│       ├── diagnostic-app/
-│       └── common/
-├── app-of-apps.yaml      # Root ArgoCD Application
-├── devbox.json
+├── 00-pxe-bootstrap/         # PXE boot with Matchbox (k0s cluster)
+├── 01-virtualization/        # NixOS hypervisors, libvirt, OVS
+├── 02-kubernetes/            # Talos Linux cluster (talhelper)
+├── 03-flux-apps/             # FluxCD-managed platform tools
+├── 04-argocd-apps/            # ArgoCD-managed applications
+├── docs/                    # Documentation & ADRs
+│   ├── adr/                  # Architecture Decision Records
+│   ├── architecture/         # Detailed architecture docs
+│   ├── operations/          # Runbooks & procedures
+│   └── platform/            # Platform component guides
+├── sources/                  # Custom Helm charts
+├── app-of-apps.yaml          # Root ArgoCD Application
 └── README.md
 ```
 
-## Infrastructure
+Each layer is independently deployable and version-controlled. See individual READMEs for details.
 
-### PXE Boot Server
+## Infrastructure Stack
 
-Single-node k0s cluster hosting a [Matchbox](https://matchbox.psdn.io/) PXE server for network booting bare-metal machines.
+| Layer | Tech | Nodes | Management |
+|-------|------|-------|------------|
+| Provisioning | k0s + Matchbox PXE | 1 VM | Declarative (k0sctl) |
+| Virtualization | NixOS + libvirt + OVS | 4 bare-metal | Nix flakes, deploy-rs |
+| Kubernetes | Talos Linux | 3 CP + 1 worker | talhelper, talosctl |
+| GitOps (infra) | FluxCD | — | Git push → reconcile |
+| GitOps (apps) | ArgoCD | — | App-of-Apps pattern |
 
-- k0s with Calico CNI (VXLAN)
-- Matchbox v0.11.0 in hostNetwork mode
-- SOPS+age encrypted kubeconfig
+## Platform Tooling
 
-### NixOS Hypervisor Hosts
+| Category | Tool | Version | Purpose |
+|----------|------|---------|---------|
+| CNI | Cilium | 1.18.5 | eBPF datapath, eBGP, Hubble, kube-proxy replacement |
+| Service Mesh | Istio Ambient | 1.29.1 | Sidecar-less mesh (ztunnel) |
+| Ingress | Gateway API | — | Cilium GatewayClass, wildcard TLS |
+| Certificates | cert-manager | 1.19.2 | Let's Encrypt via deSEC DNS-01 |
+| DNS | External DNS | 1.20.0 | Automatic DNS with deSEC webhook |
+| Storage | OpenEBS LVM | 4.0.0 | Local PV via LVM |
+| Storage | Democratic-CSI | — | ZFS/iSCSI block & filesystem |
+| Secrets | Sealed Secrets | 2.18.0 | Encrypted secrets in git |
+| Secrets | External Secrets | ≥1.15.0 | External secrets operator |
+| Policy | Kyverno | 3.7.0 | Kubernetes policy engine |
+| GitOps | FluxCD | — | Infrastructure lifecycle |
+| GitOps | ArgoCD | 9.4.15 | Application lifecycle |
 
-4 NixOS bare-metal hypervisors managed declaratively with Nix Flakes and deployed remotely via deploy-rs.
+## Applications
 
-| Host  | Management IP | Hardware         |
-|-------|---------------|------------------|
-| hyp01 | 10.20.0.30   | NVMe, AMD/Intel  |
-| hyp02 | 10.20.0.31   | NVMe, AMD/Intel  |
-| hyp03 | 10.20.0.32   | NVMe, AMD/Intel  |
-| hyp04 | 10.20.0.33   | NVMe, AMD/Intel  |
+| App | Purpose | Database | Storage |
+|-----|---------|----------|---------|
+| CloudNativePG | PostgreSQL operator | — | openebs-lvm |
+| Ente Photos | Encrypted photo backup | CNPG cluster | openebs-lvm |
+| Mattermost | Team chat | CNPG cluster | openebs-lvm + ZFS |
+| Linkding | Bookmark manager | — | openebs-lvm |
+| Alloy | Telemetry collection | — | — |
 
-### Kubernetes Cluster
+## Key Decisions
 
-Talos Linux cluster managed with [talhelper](https://budimanjojo.github.io/talhelper/). Dual-homed nodes with separate cluster and service networks.
-
-| Node      | VLAN 30 (cluster) | VLAN 40 (services) | Role          |
-|-----------|--------------------|--------------------|---------------|
-| cp-node01 | 10.30.0.29         | 10.40.0.29         | Control Plane |
-| cp-node02 | 10.30.0.31         | 10.40.0.31         | Control Plane |
-| cp-node03 | 10.30.0.32         | 10.40.0.32         | Control Plane |
-| w-node04  | 10.30.0.33         | 10.40.0.33         | Worker        |
-
-- **K8s version:** v1.34.0 | **Talos version:** v1.12.4
-- **API VIP:** 10.30.0.200
-- **Pod CIDR:** 10.244.0.0/16 | **Service CIDR:** 10.96.0.0/12
-
-### Platform Tooling (FluxCD)
-
-| Tool | Version | Purpose |
-|------|---------|---------|
-| Cilium | 1.18.5 | CNI, eBGP, kube-proxy replacement, Gateway API, Hubble |
-| ArgoCD | 9.4.15 | GitOps for applications |
-| cert-manager | 1.19.2 | TLS certificates (Let's Encrypt via deSEC DNS-01) |
-| Gateway API | -- | Internal + external gateways |
-| Istio Ambient | 1.29.1 | Sidecar-less service mesh (ztunnel) |
-| OpenEBS | 4.0.0 | LVM-based local storage |
-| Sealed Secrets | 2.18.0 | Encrypted secrets in git |
-| External Secrets | >=1.15.0 | External secrets operator |
-| External DNS | 1.20.0 | Automatic DNS (deSEC webhook) |
-| Kyverno | 3.7.0 | Kubernetes policy engine |
-
-## Applications (ArgoCD)
-
-ArgoCD is deployed by FluxCD and manages applications via the App-of-Apps pattern. The root `app-of-apps.yaml` discovers everything in `04-argocd-apps/`.
-
-| Application | Purpose |
-|-------------|---------|
-| CloudNativePG | PostgreSQL operator (foundation for app databases) |
-| Ente Photos | End-to-end encrypted photo backup |
-| Mattermost | Team chat with operator pattern |
-| Linkding | Bookmark manager |
-| Alloy | Telemetry collector → VictoriaMetrics |
-
-### Patterns
-
-| Pattern | Implementation |
-|---------|---------------|
-| **Routing** | Gateway API HTTPRoutes via `internal-gateway`, domain `*.akna.one.pl` |
-| **DNS** | External-DNS annotations on HTTPRoutes |
-| **Databases** | CloudNativePG clusters (PostgreSQL 17, 2 instances, anti-affinity) |
-| **Storage** | `openebs-lvm` StorageClass |
-| **Secrets** | SealedSecrets (Bitnami) for credentials in git |
-| **Monitoring** | Alloy scrapes → VictoriaMetrics, Beyla eBPF instrumentation |
-
-## Key Design Decisions
-
-- **Why Talos Linux:** Immutable, API-driven, minimal attack surface. No SSH, no shell, no package manager on nodes.
-- **Why Cilium with BGP:** eBPF-based datapath, native LoadBalancer IP advertisement, kube-proxy replacement, Gateway API.
-- **Why dual GitOps (FluxCD + ArgoCD):** FluxCD manages platform tools (infrastructure), ArgoCD manages applications (developer concern). Different lifecycles, different blast radii.
-- **Why NixOS for hypervisors:** Reproducible host configuration, atomic upgrades/rollbacks, declarative VM and network definitions.
-- **Why Gateway API over Ingress:** Role-oriented API, multi-protocol support, portable across implementations.
+| Decision | Rationale | ADR |
+|----------|-----------|-----|
+| Talos Linux | Immutable, API-driven, no SSH | Planned |
+| Cilium + eBGP | eBPF datapath, native LB IP advertisement | Planned |
+| Dual GitOps | Different lifecycles for infra vs apps | Planned |
+| NixOS for hypervisors | Reproducible, atomic rollbacks, declarative VMs | Planned |
+| Gateway API | Role-oriented, portable across implementations | Planned |
 
 ## Security
 
-- All secrets encrypted with SOPS+age. Decrypted only to `/dev/shm` (tmpfs), never to persistent disk.
-- Sealed Secrets for Kubernetes secrets committed to git.
-- No plaintext credentials in the repository.
+- All secrets encrypted with **SOPS+age**. Decrypted only to `/dev/shm` (tmpfs).
+- **Sealed Secrets** for Kubernetes secrets committed to the repository.
+- **Kyverno** policies enforce security standards.
+- **Istio Ambient** provides mTLS between services.
+- No plaintext credentials, kubeconfigs, or private keys in this repository.
+
+## Documentation
+
+Detailed documentation lives in the [`docs/`](./docs/) directory:
+
+- **[Architecture Decision Records](./docs/adr/)** — Why we chose each technology
+- **Platform guides** — How each component is configured
+- **Operations** — Runbooks and procedures
+
+Full documentation generated from the repository structure is planned.
+
+## Project Status
+
+- [x] PXE boot infrastructure
+- [x] NixOS hypervisors
+- [x] Talos Linux cluster
+- [x] Cilium CNI + eBGP
+- [x] FluxCD platform tools
+- [x] ArgoCD applications
+- [ ] Observability (Grafana, dashboards, alerting)
+- [ ] CI/CD pipeline
+- [ ] Structured logging (Loki)
+- [ ] Automated testing
+- [ ] Full documentation
 
 ## Contributors
 
-- **Waldemar Kubica** ([@ebi-droid](https://gitlab.com/ebi-droid)) -- Architecture and design, NixOS hypervisors, Talos cluster, PXE boot, FluxCD, Cilium CNI + BGP, Gateway API, cert-manager, ArgoCD, Istio Ambient, Kyverno, External DNS, Sealed Secrets, observability stack, network architecture, application operations
-- **Jakub Kubica** ([@beraton](https://gitlab.com/beraton)) -- Democratic-CSI storage, OpenEBS LVM, diagnostic tooling, Ente Photos, Linkding, Mattermost operator setup, custom Helm charts
+- **Waldemar Kubica** ([@ebi-droid](https://github.com/ebi-droid)) — Architecture & design, NixOS, Talos, Cilium, FluxCD, ArgoCD, Istio, Kyverno, networking, observability
+- **Jakub Kubica** ([@beraton](https://github.com/beraton)) — Democratic-CSI, OpenEBS, Ente Photos, Linkding, Mattermost, custom Helm charts, diagnostic tooling
+
+## License
+
+MIT — This project is for educational purposes. Use at your own risk.
