@@ -33,7 +33,7 @@ Each hypervisor runs one Talos Linux VM with:
 ## Directory Structure
 
 ```
-01-nixos-servers/
+01-virtualization/
 ├── flake.nix                   # 4 NixOS configs + deploy-rs targets
 ├── justfile                    # Deployment shortcuts (just hyp01, just hyp02, ...)
 ├── modules/
@@ -74,7 +74,7 @@ Enter the dev environment (provides `just`, `sops`, `kubectl`, `k9s`, `nixfmt`):
 ```bash
 devbox shell
 # or with direnv:
-cd 01-nixos-servers/  # auto-activates via .envrc
+cd 01-virtualization/  # auto-activates via .envrc
 ```
 
 Make sure your age key is at `~/.config/sops/age/keys.txt`.

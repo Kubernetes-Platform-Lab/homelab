@@ -97,18 +97,20 @@ graph TB
 
 ```
 homelab/
-├── 00-pxeboot/           # Bootstrap k0s cluster running Matchbox PXE server
-├── 01-nixos-servers/     # NixOS configs for 4 hypervisors (deploy-rs, disko, OVS)
-├── 02-talos/             # Talos Linux cluster definition (talhelper, 4 nodes)
-├── 03-cluster-tools/     # FluxCD-managed platform tools (Cilium, ArgoCD, etc.)
-├── apps/                 # ArgoCD-managed application deployments
+├── 00-pxe-bootstrap/         # Bare-metal provisioning (PXE, Matchbox)
+├── 01-virtualization/    # NixOS hypervisors, libvirt, OVS
+├── 02-kubernetes/        # Talos Linux cluster configs
+├── 03-flux-apps/         # FluxCD-managed platform tools (Cilium, cert-manager, etc.)
+├── 04-argocd-apps/       # ArgoCD-managed application deployments
 │   ├── alloy/            # Grafana Alloy telemetry collector
 │   ├── cloudnativepg/    # PostgreSQL operator
 │   ├── diagnostic-app/   # Test workloads (custom chart)
-│   ├── ente/             # Ente Photos + CNPG database + HTTPRoutes
+│   ├── ente/             # Ente Photos + CNPG + HTTPRoutes
 │   ├── linkding/         # Bookmark manager + PVC + HTTPRoute
 │   ├── mattermost/       # Operator + CRDs + installation + CNPG database
 │   └── nginx/            # Minimal test deployment
+├── docs/
+│   └── adr/              # Architecture Decision Records
 ├── sources/              # Custom Helm charts
 │   └── charts/
 │       ├── diagnostic-app/
@@ -171,7 +173,7 @@ Talos Linux cluster managed with [talhelper](https://budimanjojo.github.io/talhe
 
 ## Applications (ArgoCD)
 
-ArgoCD is deployed by FluxCD and manages applications via the App-of-Apps pattern. The root `app-of-apps.yaml` discovers everything in `apps/`.
+ArgoCD is deployed by FluxCD and manages applications via the App-of-Apps pattern. The root `app-of-apps.yaml` discovers everything in `04-argocd-apps/`.
 
 | Application | Purpose |
 |-------------|---------|

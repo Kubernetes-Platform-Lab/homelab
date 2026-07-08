@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./03-cluster-tools/08.local-path-provisioner
+  path: ./03-flux-apps/08.local-path-provisioner
   prune: true
   sourceRef:
     kind: GitRepository

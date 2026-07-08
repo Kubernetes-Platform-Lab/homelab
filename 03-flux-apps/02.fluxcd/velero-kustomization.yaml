@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./03-cluster-tools/18.velero
+  path: ./03-flux-apps/18.velero
   prune: true
   sourceRef:
     kind: GitRepository

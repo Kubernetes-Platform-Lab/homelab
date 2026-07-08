@@ -20,7 +20,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./03-cluster-tools/02.fluxcd
+  path: ./03-flux-apps/02.fluxcd
   prune: true
   sourceRef:
     kind: GitRepository

@@ -1,6 +1,6 @@
-02-talos/clusterconfig
-apps/ente/ente-credentials-secret.yaml
-apps/ente/credentials.yaml
-apps/ente/ente-credentials-secret-base64.yaml
-apps/ente/new-creds
-apps/ente/sealed.sh
+02-kubernetes/clusterconfig
+04-argocd-apps/ente/ente-credentials-secret.yaml
+04-argocd-apps/ente/credentials.yaml
+04-argocd-apps/ente/ente-credentials-secret-base64.yaml
+04-argocd-apps/ente/new-creds
+04-argocd-apps/ente/sealed.sh

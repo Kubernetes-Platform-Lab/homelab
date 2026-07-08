@@ -8,5 +8,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./03-cluster-tools/08.prometheus
+  path: ./03-flux-apps/08.prometheus
   prune: true

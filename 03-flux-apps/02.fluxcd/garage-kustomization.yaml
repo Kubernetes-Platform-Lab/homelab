@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./03-cluster-tools/17.garage
+  path: ./03-flux-apps/17.garage
   prune: true
   sourceRef:
     kind: GitRepository

@@ -1,9 +1,9 @@
-# Cluster Tools - 03-cluster-tools
+# Cluster Tools - 03-flux-apps
 
 ## Structure
 
 ```
-03-cluster-tools/
+03-flux-apps/
 ├── 01.cilium/
 ├── 02.fluxcd/                    # FluxCD + Flux Kustomizations for all tools
 │   ├── kustomization.yaml        # Main kustomization (includes all tool kustomizations)

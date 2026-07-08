@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  path: ./03-cluster-tools/04.gateway-api
+  path: ./03-flux-apps/04.gateway-api
   prune: false
   sourceRef:
     kind: GitRepository

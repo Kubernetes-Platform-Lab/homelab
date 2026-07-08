@@ -8,9 +8,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://gitlab.com/homelab-dev/2-Apps.git
+    repoURL: https://github.com/Kubernetes-Platform-Lab/homelab.git
     targetRevision: HEAD
-    path: apps
+    path: 04-argocd-apps
     directory:
       recurse: true
   destination:

@@ -1,59 +1,41 @@
-# ArgoCD Applications - 2-Apps
+# Homelab Monorepo
+
+This is the public monorepo for our bare-metal Kubernetes platform.
 
 ## Structure
 
 ```
-2-Apps/
-├── app-of-apps.yaml          # Root Application (points to apps/)
-├── apps/
-│   ├── cloudnativepg/
-│   │   ├── application.yaml        # ArgoCD Application for CloudNativePG
-│   │   └── application-cluster.yaml # Cluster-scoped resources
-│   ├── victoriametrics/
-│   │   └── application.yaml  # ArgoCD Application for VictoriaMetrics
-│   └── grafana/
-│       ├── application.yaml   # ArgoCD Application for Grafana
-│       ├── dashboards/        # Grafana dashboards (ConfigMaps)
-│       │   └── victoriametrics.yaml
-│       └── datasources/       # Grafana datasources (ConfigMaps)
-│           └── datasources.yaml
+homelab/
+├── 00-pxe-bootstrap/          # PXE boot, Matchbox server
+├── 01-virtualization/    # NixOS hypervisors, libvirt, OVS
+├── 02-kubernetes/        # Talos Linux cluster configs
+├── 03-flux-apps/         # FluxCD-managed platform tools
+├── 04-argocd-apps/       # ArgoCD-managed applications
+├── docs/adr/             # Architecture Decision Records
+├── sources/              # Custom Helm charts
+├── app-of-apps.yaml      # Root ArgoCD Application
 ├── devbox.json
 └── README.md
 ```
 
 ## How It Works
 
-1. **app-of-apps.yaml** - Root ArgoCD Application that discovers all `*/application.yaml` files in `apps/` directory (recurse: true)
-2. Each app directory contains its own ArgoCD Application definition
-3. Grafana includes ConfigMaps for dashboards and datasources (loaded via sidecar)
-4. Some apps have additional manifests (e.g., `application-cluster.yaml`) for cluster-scoped resources
+1. **00-pxe-bootstrap** — PXE provisioning with Matchbox (k0s cluster)
+2. **01-virtualization** — NixOS hypervisors managed with deploy-rs, each running one Talos VM
+3. **02-kubernetes** — Talos Linux cluster defined with talhelper
+4. **03-flux-apps** — FluxCD installs and manages all platform tools
+5. **04-argocd-apps** — ArgoCD manages business applications via App-of-Apps
 
 ## Adding a New Application
 
-1. Create directory: `apps/<app-name>/`
+1. Create directory: `04-argocd-apps/<app-name>/`
 2. Create `application.yaml` with ArgoCD Application spec
-3. Update `repoURL` in app-of-apps.yaml if deploying from a different repo
-
-## Apply Commands
-
-```bash
-# Apply root app-of-apps (recommended)
-kubectl apply -f app-of-apps.yaml
-
-# Or apply all individually
-kubectl apply -f apps/*/application.yaml
-```
+3. The root `app-of-apps.yaml` discovers it automatically (recurse: true)
 
 ## Key Patterns
 
-- Use ArgoCD Applications (not ApplicationSets) for single cluster
-- ApplicationSets only when deploying to multiple clusters
-- Grafana dashboards/datasources: use ConfigMaps with labels `grafana_dashboard: "1"` or `grafana_datasource: "1"`
-- Cluster-scoped resources (CRDs, ClusterRoles): use separate `application-cluster.yaml`
-- Update `repoURL` in app-of-apps.yaml before applying
-
-## Helm Charts
-
-- **cloudnativepg**: https://cloudnative-pg.github.io/charts
-- **victoriametrics**: https://victoriametrics.github.io/helm-charts
-- **grafana**: https://grafana.github.io/helm-charts
+- Infrastructure tools → `03-flux-apps/` (FluxCD)
+- Business applications → `04-argocd-apps/` (ArgoCD)
+- Secrets encrypted with SOPS+age, or SealedSecrets
+- Gateway API HTTPRoutes for all ingress
+- CloudNativePG for all database needs

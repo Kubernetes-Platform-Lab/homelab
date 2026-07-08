@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./03-cluster-tools/10.piraeus
+  path: ./03-flux-apps/10.piraeus
   prune: true
   sourceRef:
     kind: GitRepository

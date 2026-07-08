@@ -1,9 +1,9 @@
-# Talos Linux Cluster - 1-Infra/02-talos
+# Talos Linux Cluster - 02-kubernetes
 
 ## Structure
 
 ```
-02-talos/
+02-kubernetes/
 ├── talconfig.yaml              # Talhelper main config
 ├── talenv.yaml                 # Environment variables
 ├── talsecret.sops.yaml         # Encrypted secrets (SOPS)

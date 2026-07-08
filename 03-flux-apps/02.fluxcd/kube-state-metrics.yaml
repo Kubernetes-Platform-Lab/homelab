@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./03-cluster-tools/11.kube-state-metrics
+  path: ./03-flux-apps/11.kube-state-metrics
   prune: true
   sourceRef:
     kind: GitRepository
