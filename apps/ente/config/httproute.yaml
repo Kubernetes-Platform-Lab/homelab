@@ -1,0 +1,73 @@
+---
+# Kubernetes Gateway API Configuration for Ente Photos
+# This uses the Gateway API standard instead of Ingress
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ente-photos
+  namespace: ente
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: photos.akna.one.pl
+spec:
+  parentRefs:
+    - name: internal-gateway
+      namespace: gateway-api
+  hostnames:
+    - photos.akna.one.pl
+  rules:
+    - backendRefs:
+        - name: ente-ente-photos-web-photos
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ente-auth
+  namespace: ente
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: ente-auth.akna.one.pl
+spec:
+  parentRefs:
+    - name: internal-gateway
+      namespace: gateway-api
+  hostnames:
+    - ente-auth.akna.one.pl
+  rules:
+    - backendRefs:
+        - name: ente-ente-photos-web-auth
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: museum-api
+  namespace: ente
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: api-ente.akna.one.pl
+spec:
+  parentRefs:
+    - name: internal-gateway
+      namespace: gateway-api
+  hostnames:
+    - api-ente.akna.one.pl
+  rules:
+    - backendRefs:
+        - name: ente-ente-photos-museum
+          port: 8080
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

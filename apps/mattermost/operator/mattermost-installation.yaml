@@ -1,0 +1,100 @@
+---
+# Mattermost Custom Resource for the Operator
+# Defines the Mattermost installation with external PostgreSQL
+apiVersion: installation.mattermost.com/v1beta1
+kind: Mattermost
+metadata:
+  name: mattermost
+  namespace: mattermost
+spec:
+  # Version of Mattermost to deploy
+  version: "11.4.3"
+
+  # Number of replicas for high availability
+  replicas: 1
+
+  # External PostgreSQL database configuration
+  database:
+    external:
+      # Reference to the secret containing DB_CONNECTION_STRING
+      secret: mattermost-postgres-secret
+
+  fileStore:
+    #local:
+    #  enabled: true
+    #  accessModes:
+    #    - ReadWriteOnce
+    #  storageSize: 2Gi
+    operatorManaged:
+      replicas: 0
+    externalVolume:
+      volumeClaimName: mattermost
+
+  serviceAnnotations:
+    io.cilium.proxy.http2.enabled: "false"
+
+  ingress:
+    enabled: false
+
+  # Mattermost instance configuration
+  mattermostEnv:
+    - name: MM_SERVICESETTINGS_SITEURL
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-service-config
+          key: site.url
+
+    - name: MM_SERVICESETTINGS_WEBSOCKETURL
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-service-config
+          key: websocket.url
+
+    - name: MM_SERVICESETTINGS_SITENAME
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-service-config
+          key: site.name
+
+    - name: MM_BRANDINGSETTINGS_COMPANYNAMETEXT
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-service-config
+          key: company.name
+
+    - name: MM_SQLSETTINGS_MAXOPENCONNS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-database-config
+          key: max.open.connections
+
+    - name: MM_SQLSETTINGS_MAXIDLECONNS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-database-config
+          key: max.idle.connections
+
+    - name: MM_SQLSETTINGS_CONNMAXLIFETIMEMINUTES
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-database-config
+          key: conn.max.lifetime.minutes
+
+    # Feature flags
+    - name: MM_SERVICESETTINGS_ENABLESLASHCOMMANDS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-features-config
+          key: enable.slash.commands
+
+    - name: MM_INTEGRATIONSSETTINGS_ENABLEINCOMINGWEBHOOKS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-features-config
+          key: enable.incoming.webhooks
+
+    - name: MM_INTEGRATIONSSETTINGS_ENABLEOUTGOINGWEBHOOKS
+      valueFrom:
+        configMapKeyRef:
+          name: mattermost-features-config
+          key: enable.outgoing.webhooks

@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://gitlab.com/homelab-dev/2-Apps.git
+    targetRevision: HEAD
+    path: apps
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  ignoreDifferences:
+    - group: networking.k8s.io
+      kind: Ingress
+      name: ente-ente-photos-museum
+      namespace: ente
+      jqPathExpressions:
+        - .
+  #syncPolicy:
+    #automated:
+    #  prune: true
+    #  selfHeal: true

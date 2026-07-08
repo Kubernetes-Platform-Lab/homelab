@@ -1,0 +1,88 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alloy
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: alloy
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 1.5.0
+    helm:
+      releaseName: alloy
+      valuesObject:
+        configMap:
+          create: true
+        alloy:
+          configMap:
+            content: |
+              logging {
+                level = "debug"
+                format = "logfmt"
+              }
+
+
+              discovery.kubernetes "test_cluster" {
+              role = "pod"
+                 selectors {
+                 role = "pod"
+                 label = "cnpg.io/cluster=test-cluster"
+               }
+              }
+
+              prometheus.scrape "test_cluster" {
+              targets    = discovery.kubernetes.test_cluster.targets
+              forward_to = [prometheus.remote_write.default.receiver]
+              }
+
+              discovery.kubernetes "pods" {
+              role = "pod"
+                 selectors {
+                 role = "pod"
+                 label = "app.kubernetes.io/name=prometheus-node-exporter"
+               }
+              }
+
+              prometheus.scrape "pods" {
+              targets    = discovery.kubernetes.pods.targets
+              forward_to = [prometheus.remote_write.default.receiver]
+              }
+
+              discovery.kubernetes "kube_state_metrics" {
+                role = "pod"
+                  selectors {
+                  role = "pod"
+                  label = "app.kubernetes.io/name=kube-state-metrics"
+                }
+              }
+
+              prometheus.scrape "kube_state_metrics" {
+                targets    = discovery.kubernetes.kube_state_metrics.targets
+                forward_to = [prometheus.remote_write.default.receiver]
+              }
+
+              prometheus.remote_write "default" {
+                endpoint {
+                  url = "http://vmsingle-vm.monitoring.svc.cluster.local:8429/api/v1/write"
+                }
+              }
+
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

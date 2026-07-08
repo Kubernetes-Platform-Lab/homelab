@@ -1,0 +1,13 @@
+---
+# Ente Photos Resource Configuration
+# This file contains additional resources needed for Ente Photos
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ente-config
+  namespace: ente
+data:
+  # Additional configuration can be added here if needed
+  # This is a placeholder for any additional ConfigMaps
+  info: "Ente Photos self-hosted deployment with self-hosted S3 (MinIO)"

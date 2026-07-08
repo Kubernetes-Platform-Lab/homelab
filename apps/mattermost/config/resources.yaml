@@ -1,0 +1,20 @@
+---
+# Resources Configuration Object
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mattermost-resources-config
+  namespace: mattermost
+data:
+  # Resource limits and requests
+  cpu.limits: "500m"
+  memory.limits: "512Mi"
+  cpu.requests: "250m"
+  memory.requests: "256Mi"
+
+  # Replicas
+  replicas: "1"
+
+  # Storage
+  storage.size: "10Gi"
+  storage.class: "standard"

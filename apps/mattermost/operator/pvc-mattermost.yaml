@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mattermost
+  namespace: mattermost
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: openebs-lvm
+  volumeMode: Filesystem
+  volumeName: pvc-adb47f8e-66b2-4ed0-9cfd-22b73680d04a

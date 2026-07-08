@@ -1,0 +1,35 @@
+{{- if (.Values.tests.classicHttp.enabled) }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-connection-wget-{{ .Values.name }}
+  labels:
+    app: {{ .Values.name }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      command: ['curl', '-v']
+      args: ['{{ .Values.name }}:{{ .Values.service.servicePort }}']
+  restartPolicy: Never
+{{ end }}
+{{- if (.Values.tests.curlHostHeader.enabled) }}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-connection-curl-{{ .Values.name }}
+  labels:
+    app: {{ .Values.name }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl:7.70.0 
+      command: ['curl', '-v']
+      args: ['{{ .Values.name }}:{{ .Values.service.servicePort }}{{ .Values.tests.curlHostHeader.path }}', '-H', '"Host:{{ .Values.ingress.hostName }}:{{ .Values.service.servicePort }}"']
+  restartPolicy: Never
+{{ end }}

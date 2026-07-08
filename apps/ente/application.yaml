@@ -1,0 +1,76 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ente
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  ignoreDifferences:
+    - group: networking.k8s.io
+      kind: Ingress
+      name: ente-ente-photos-museum
+      namespace: ente
+      jqPointers:
+        - /spec
+        - /metadata/annotations
+        - /metadata/labels
+  source:
+    repoURL: https://l4gdev.github.io/helm-charts
+    chart: ente-photos
+    targetRevision: 0.2.0
+    helm:
+      releaseName: ente
+      valuesObject:
+        museum:
+          ingress:
+            enabled: true
+            hosts:
+              - host: api-ente.akna.one.pl
+                paths:
+                  - path: /
+                    pathType: Prefix
+            tls:
+              - hosts:
+                  - api-ente.akna.one.pl
+        web:
+          photos:
+            env:
+              - name: ENTE_API_ORIGIN
+                value: "https://api-ente.akna.one.pl"
+          auth:
+            env:
+              - name: ENTE_API_ORIGIN
+                value: "https://api-ente.akna.one.pl"
+          accounts:
+            env:
+              - name: ENTE_API_ORIGIN
+                value: "https://api-ente.akna.one.pl"
+          albums:
+            env:
+              - name: ENTE_API_ORIGIN
+                value: "https://api-ente.akna.one.pl"
+        networkPolicy:
+           enabled: false        
+        credentials:
+          existingSecret: "ente-credentials"
+        externalDatabase:
+          host: "ente-postgres-rw.ente.svc.cluster.local"
+          port: 5432
+          database: "ente_db"
+          user: "ente"
+          existingSecret:
+            enabled: true
+            secretName: "ente-postgres-app"
+            passwordKey: "password"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ente
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+    #automated:
+    #  prune: true
+    #  selfHeal: true

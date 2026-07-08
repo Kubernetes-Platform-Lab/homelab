@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: linkding
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://rubxkube.github.io/charts/
+    chart: linkding
+    targetRevision: 1.1.20
+    helm:
+      releaseName: linkding
+      valuesObject:
+        common:
+          image:
+            tag: latest-plus
+          variables:
+            nonSecret:
+              USER_UID: "1000"
+              USER_GID: "1000"
+              TZ: Europe/Warsaw
+          persistence:
+            enabled: true
+            volumes:
+              - name: "data"
+                #storageClassName: "openebs-lvm" # leave empty if you want to use default
+                pvcClaim: "linkding-data"
+                containerMount: "/etc/linkding/data"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: linkding
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    #automated:
+    #  prune: true
+    #  selfHeal: true
