@@ -24,10 +24,10 @@ spec:
 
   values:
     cloudflare:
-      #account: ""  # Your Cloudflare account tag
+      account: ""  # Your Cloudflare account tag
       tunnelName: "akna-tunel"  # Tunnel name
-      #tunnelId: ""  # Tunnel UUID
-      # secret: ""  # Tunnel secret (base64-encoded)
+      tunnelId: ""  # Tunnel UUID
+      secret: ""  # Tunnel secret (base64-encoded)
       # Alternatively, use secretName to reference an existing secret
       secretName: cloudflare-tunnel-token
       ingress: 
