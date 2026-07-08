@@ -24,16 +24,14 @@ spec:
 
   values:
     cloudflare:
-      account: ""  # Your Cloudflare account tag
-      tunnelName: "akna-tunel"  # Tunnel name
-      tunnelId: ""  # Tunnel UUID
-      secret: ""  # Tunnel secret (base64-encoded)
-      # Alternatively, use secretName to reference an existing secret
+      account: ""
+      tunnelName: "akna-tunel"
+      tunnelId: ""
+      secret: ""
       secretName: cloudflare-tunnel-token
       ingress: 
         - hostname: chat.orasuno.pl
           service: http://mattermost.mattermost.svc:8065
-
 
     replicaCount: 2
 
