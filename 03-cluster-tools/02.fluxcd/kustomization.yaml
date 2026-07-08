@@ -24,3 +24,4 @@ resources:
   - istio-ambient-kustomization.yaml
   - openbao-kustomization.yaml
   #- csi-secrets-kustomization.yaml
+  - cloudflared-kustomization.yaml
