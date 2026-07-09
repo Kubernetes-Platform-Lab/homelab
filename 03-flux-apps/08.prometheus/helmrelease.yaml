@@ -24,14 +24,14 @@ spec:
   values:
     prometheus:
       prometheusSpec:
-        retention: 15d
+        retention: 5d
         storageSpec:
           volumeClaimTemplate:
             spec:
               storageClassName: openebs-lvm
               resources:
                 requests:
-                  storage: 6Gi
+                  storage: 8Gi
     alertmanager:
       alertmanagerSpec:
         storage:
