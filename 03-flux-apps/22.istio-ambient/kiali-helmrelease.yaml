@@ -36,5 +36,7 @@ spec:
             istio_api_enabled: true
           prometheus:
             url: "http://prometheus:9090"
+          healthz:
+            url: "http://kiali:6789"
         server:
           web_root: "/kiali"
