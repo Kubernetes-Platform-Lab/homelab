@@ -8,7 +8,7 @@ data:
     ingress:
       # Route to a frontend service
       - hostname: chat.orasuno.pl
-        service: http://mattermost.mattermost.cluster.local:8065
+        service: http://mattermost.mattermost.svc.cluster.local:8065
 
       # Required catch-all rule (must be last)
       - service: http_status:404
