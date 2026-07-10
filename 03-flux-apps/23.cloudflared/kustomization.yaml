@@ -4,4 +4,5 @@ resources:
   - deployment.yaml
   - namespace.yaml
   - cloudflare-tunnel-token.json
+  - cloudflare-config.yaml
   #- network-policy.yaml
