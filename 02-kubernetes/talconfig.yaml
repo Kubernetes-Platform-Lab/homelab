@@ -19,6 +19,7 @@ cniConfig:
 patches:
   - "@./patches/machine/enable-discovery-patch.yaml"
   - "@./patches/machine/kernel-modules.yaml"
+  - "@./patches/machine/dns-resolver.yaml"
 nodes:
   - hostname: cp-node01
     ipAddress: 10.30.0.29
