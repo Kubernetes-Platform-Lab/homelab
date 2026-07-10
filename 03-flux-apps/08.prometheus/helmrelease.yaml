@@ -46,3 +46,6 @@ spec:
         enabled: true
         storageClassName: openebs-lvm
         size: 6Gi
+      grafana.ini:
+        server:
+          root_url: https://grafana.akna.one.pl
