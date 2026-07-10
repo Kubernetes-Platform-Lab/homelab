@@ -1,16 +1,28 @@
 default:
-	echo "just genconfig;
-	echo "just encrypt;
-	echo "just decrypt;
+	echo "just genconfig";
+	echo "just encrypt";
+	echo "just decrypt";
 
-generate: genconfig encrypt
+genconfig: createconfig encrypt
 
-genconfig:
+createconfig:
+	mkdir /dev/shm/clusterconfig 2>/dev/null || cp -r /dev/shm/clusterconfig "/dev/shm/clusterconfig_back_$(date +%H%M%S)"
+	ln -sfn /dev/shm/clusterconfig ./clusterconfig;
 	talhelper genconfig ;
 
 encrypt:
+	mkdir -p clusterconfig-enc
 	find /dev/shm/clusterconfig  -type f  \( -name "*.yaml" -o -name "talosconfig" -o -name "kubeconfig" \)  -exec sh -c 'sops -e  "$1" > clusterconfig-enc/$(basename "$1")' _ {} \;
 
 decrypt:
-    find clusterconfig-enc  -type f  \( -name "*.yaml" -o -name "talosconfig" -o -name "kubeconfig" \)  -exec sh -c 'mkdir -p /dev/shm/clusterconfig;  sops -d "$1" > /dev/shm/clusterconfig/$(basename "$1")' _ {} \;
-    ln -s /dev/shm/clusterconfig ./clusterconfig ;
+	find clusterconfig-enc  -type f  \( -name "*.yaml" -o -name "talosconfig" -o -name "kubeconfig" \)  -exec sh -c 'mkdir -p /dev/shm/clusterconfig;  sops -d "$1" > /dev/shm/clusterconfig/$(basename "$1")' _ {} \;
+	ln -sfn /dev/shm/clusterconfig ./clusterconfig
+
+apply-cp01:
+	talosctl apply -n 10.30.0.29 -f ./clusterconfig/merida.akna.lan-cp-node01.yaml
+apply-cp02:
+	talosctl apply -n 10.30.0.31 -f ./clusterconfig/merida.akna.lan-cp-node02.yaml
+apply-cp03:
+	talosctl apply -n 10.30.0.32 -f ./clusterconfig/merida.akna.lan-cp-node03.yaml
+apply-w04:
+	talosctl apply -n 10.30.0.33 -f ./clusterconfig/merida.akna.lan-w-node04.yaml
