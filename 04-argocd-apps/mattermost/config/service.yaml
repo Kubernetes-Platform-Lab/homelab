@@ -8,7 +8,7 @@ metadata:
 data:
   service.type: "ClusterIP"
   service.port: "8065"
-  site.url: "https://mattermost.akna.one.pl"
-  websocket.url: "wss://mattermost.akna.one.pl"
+  site.url: "https://chat.orasuno.pl"
+  websocket.url: "wss://chat.orasuno.pl"
   site.name: "Family Mattermost"
   company.name: "Akna Family"
