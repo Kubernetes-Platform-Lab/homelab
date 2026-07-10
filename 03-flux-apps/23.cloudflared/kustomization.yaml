@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - namespace.yaml
+  - cloudflare-tunnel-token.json
   #- network-policy.yaml
