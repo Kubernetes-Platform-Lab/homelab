@@ -17,7 +17,7 @@ resources:
   - cilium.yaml
   - openebs-kustomization.yaml
   - k8s-agent-kustomization.yaml
-  #- garage-kustomization.yaml
+  - coredns-kustomization.yaml
   #- velero-kustomization.yaml
   #- kuma-mesh-kustomization.yaml
   - kyverno-kustomization.yaml

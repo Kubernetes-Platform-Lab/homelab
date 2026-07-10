@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: garage
+  name: coredns
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./03-flux-apps/17.garage
+  path: ./03-flux-apps/17.coredns
   prune: true
   sourceRef:
     kind: GitRepository
