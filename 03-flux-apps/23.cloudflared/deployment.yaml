@@ -40,6 +40,12 @@ spec:
           readOnlyRootFilesystem: true
           capabilities:
             drop: ["ALL"]
+        env:
+          - name: TUNNEL_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: cloudflare-tunnel-token
+                key: TUNNEL_TOKEN
         resources:
           requests:
             cpu: 10m
