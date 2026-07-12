@@ -26,35 +26,27 @@ driver:
     instance_id:
     httpConnection:
       protocol: http
-      host: 10.11.1.5
+      host: CHANGEME
       port: 80
-      # This is the API key that we generated previously
-      apiKey: 1-fAP3JzEaXXLGyKam8ZnotarealkeyIKJ6nnKUX5ARd5v0pw0cADEkqnH1S079v
+      apiKey: CHANGEME
       username: root
       allowInsecure: true
       apiVersion: 2
     sshConnection:
-      host: 10.11.1.5
+      host: CHANGEME
       port: 22
       username: root
-      # This is the SSH key that we generated for passwordless authentication
-      privateKey: |
-        -----BEGIN RSA PRIVATE KEY-----
-        MIIEogIBAAKCAQEAubs7VBy1PnWA7Y/ttzEBKUbf6L+CWRvqcPWykQm5ASgvGg4c
-        [...]
-        tl4biLpseFQgV3INtM0NNW4+LlTSAnjApDtNzttX/h5HTBLHyoc=
-        -----END RSA PRIVATE KEY-----
+      privateKey: CHANGEME
     zfs:
-      # Make sure to use the storage pool that was created previously
-      datasetParentName: homelab-hdd/k8s/nfs/vols
-      detachedSnapshotsDatasetParentName: homelab-hdd/k8s/nfs/snaps
+      datasetParentName: CHANGEME
+      detachedSnapshotsDatasetParentName: CHANGEME
       datasetEnableQuotas: true
       datasetEnableReservation: false
       datasetPermissionsMode: "0777"
       datasetPermissionsUser: root
       datasetPermissionsGroup: wheel
     nfs:
-      shareHost: 10.11.1.5
+      shareHost: CHANGEME
       shareAlldirs: false
       shareAllowedHosts: []
       shareAllowedNetworks: []
