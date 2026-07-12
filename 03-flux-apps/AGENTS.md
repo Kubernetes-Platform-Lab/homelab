@@ -19,7 +19,6 @@
 ├── 04.gateway-api/
 ├── 05.argocd/
 ├── 06.sealed-secrets/
-├── 07.democratic-csi/
 ├── 08.local-path-provisioner/
 ├── 09.external-secrets/
 │   ├── kustomization.yaml
@@ -71,5 +70,4 @@ flux reconcile kustomization flux-system --with-source
 - **cert-manager**: https://charts.jetstack.io
 - **cilium**: https://helm.cilium.io
 - **gateway-api**: https://kubernetes-sigs.github.io/gateway-api
-- **democratic-csi**: https://democratic-csi.github.io/charts
 - **local-path-provisioner**: https://rancher.github.io/local-path-provisioner

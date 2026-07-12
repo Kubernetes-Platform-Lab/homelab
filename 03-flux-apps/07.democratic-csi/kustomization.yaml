@@ -1,9 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - helmrepo.yaml
-  - helmrelease.yaml
-  - zfs-iscsi-blk-sc.yaml
-  - zfs-iscsi-fs-sc.yaml
-  - namespace.yaml
-  - driver-config-file.json

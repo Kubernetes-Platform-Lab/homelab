@@ -11,7 +11,6 @@ resources:
   #- piraeus-kustomization.yaml
   - sealed-kustomization.yaml
   - kube-state-metrics.yaml
-  #- democratic-csi-kustomization.yaml
   #- spiffe.yaml
   - external-dns.yaml
   - cilium.yaml
