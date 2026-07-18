@@ -9,3 +9,4 @@ resources:
   - server-certificate.yaml
   - helmrelease.yaml
   - openbao-supervisor-role.yaml
+  - httproute.yaml
