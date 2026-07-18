@@ -22,6 +22,10 @@ spec:
     - openbao-internal
     - openbao-internal.openbao
     - openbao-internal.openbao.svc
+    - openbao-ui
+    - openbao-ui.openbao
+    - openbao-ui.openbao.svc
+    - openbao-ui.openbao.svc.cluster.local
     - openbao-0.openbao-internal
     - openbao-1.openbao-internal
     - openbao-2.openbao-internal

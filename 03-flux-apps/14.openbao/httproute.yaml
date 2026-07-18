@@ -19,3 +19,5 @@ spec:
       backendRefs:
         - name: openbao-ui
           port: 8200
+      backendTLS:
+        hostname: openbao-ui.openbao.svc.cluster.local
