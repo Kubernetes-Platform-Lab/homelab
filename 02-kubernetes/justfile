@@ -19,10 +19,10 @@ decrypt:
 	ln -sfn /dev/shm/clusterconfig ./clusterconfig
 
 apply-cp01:
-	talosctl apply -n 10.30.0.29 -f ./clusterconfig/merida.akna.lan-cp-node01.yaml
+	talosctl apply-config -n 10.30.0.29 -f ./clusterconfig/merida.akna.lan-cp-node01.yaml
 apply-cp02:
-	talosctl apply -n 10.30.0.31 -f ./clusterconfig/merida.akna.lan-cp-node02.yaml
+	talosctl apply-config -n 10.30.0.31 -f ./clusterconfig/merida.akna.lan-cp-node02.yaml
 apply-cp03:
-	talosctl apply -n 10.30.0.32 -f ./clusterconfig/merida.akna.lan-cp-node03.yaml
+	talosctl apply-config -n 10.30.0.32 -f ./clusterconfig/merida.akna.lan-cp-node03.yaml
 apply-w04:
-	talosctl apply -n 10.30.0.33 -f ./clusterconfig/merida.akna.lan-w-node04.yaml
+	talosctl apply-config -n 10.30.0.33 -f ./clusterconfig/merida.akna.lan-w-node04.yaml
