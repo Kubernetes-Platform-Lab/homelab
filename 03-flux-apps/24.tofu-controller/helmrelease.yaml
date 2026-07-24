@@ -25,7 +25,7 @@ spec:
     allowCrossNamespaceRefs: true
     watchAllNamespaces: true
     branchPlanner:
-      enabled: true
+      enabled: false
     runner:
       serviceAccount:
         allowedNamespaces:
