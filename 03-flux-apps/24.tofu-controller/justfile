@@ -1,0 +1,6 @@
+default:
+    echo "just pull  - pull Tofu Controller manifests"
+pull TF_CON_VER="v0.15.1":
+    curl -Lvs https://github.com/flux-iac/tofu-controller/releases/download/{{TF_CON_VER}}/tf-controller.crds.yaml > tf-controller.crds.yaml
+    curl -Lvs https://github.com/flux-iac/tofu-controller/releases/download/{{TF_CON_VER}}/tf-controller.rbac.yaml > tf-controller.rbac.yaml
+    curl -Lvs https://github.com/flux-iac/tofu-controller/releases/download/{{TF_CON_VER}}/tf-controller.deployment.yaml > tf-controller.deployment.yaml
