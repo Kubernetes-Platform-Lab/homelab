@@ -24,7 +24,10 @@ spec:
   values:
     allowCrossNamespaceRefs: true
     watchAllNamespaces: true
+    branchPlanner:
+      enabled: true
     runner:
       serviceAccount:
         allowedNamespaces:
           - flux-system
+          - openbao

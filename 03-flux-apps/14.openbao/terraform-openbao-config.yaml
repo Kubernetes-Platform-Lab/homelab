@@ -1,0 +1,15 @@
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: openbao-config
+  namespace: openbao
+spec:
+  interval: 5m
+  approvePlan: auto
+  path: ./03-flux-apps/14.openbao/tofu
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  backendConfig:
+    inClusterConfig: true

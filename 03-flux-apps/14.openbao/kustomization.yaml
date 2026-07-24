@@ -9,4 +9,5 @@ resources:
   - server-certificate.yaml
   - helmrelease.yaml
   - openbao-supervisor-role.yaml
+  - terraform-openbao-config.yaml
   - httproute.yaml
