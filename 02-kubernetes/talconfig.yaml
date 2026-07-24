@@ -20,6 +20,7 @@ patches:
   - "@./patches/machine/enable-discovery-patch.yaml"
   - "@./patches/machine/kernel-modules.yaml"
   - "@./patches/machine/dns-resolver.yaml"
+  - "@./patches/machine/authentication-api-config.yaml"
 nodes:
   - hostname: cp-node01
     ipAddress: 10.30.0.29
@@ -27,8 +28,8 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
-    patches:
-      - "@./patches/nodes/cp-node01-volume.yaml"
+    #patches:
+    #  - "@./patches/nodes/cp-node01-volume.yaml"
     schematic:
       customization:
         systemExtensions:
@@ -61,8 +62,8 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
-    patches:
-      - "@./patches/nodes/cp-node02-volume.yaml"
+    #patches:
+    # - "@./patches/nodes/cp-node02-volume.yaml"
     schematic:
       customization:
         systemExtensions:
@@ -95,8 +96,8 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
-    patches:
-      - "@./patches/nodes/cp-node03-volume.yaml"
+    #patches:
+    #  - "@./patches/nodes/cp-node03-volume.yaml"
     schematic:
       customization:
         systemExtensions:
@@ -129,8 +130,8 @@ nodes:
     nodeLabels:
       bgp: "true"
     installDisk: /dev/vda
-    patches:
-      - "@./patches/nodes/w-node04-volume.yaml"
+    #patches:
+    #  - "@./patches/nodes/w-node04-volume.yaml"
     schematic:
       customization:
         systemExtensions:
