@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-openbao-2
+  namespace: openbao
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: openebs-lvm
+  volumeMode: Filesystem
+  volumeName: pvc-028fbb67-1945-45e3-a11b-c021686f1891
