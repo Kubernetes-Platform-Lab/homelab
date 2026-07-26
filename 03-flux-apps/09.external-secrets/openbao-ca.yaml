@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openbao-ca
+  namespace: external-secrets
+data:
+  ca.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIC+jCCAeKgAwIBAgIUFStRxyFSu8QgGKFvc6bg6AkY1CkwDQYJKoZIhvcNAQEL
+    BQAwFTETMBEGA1UEAxMKb3BlbmJhby1jYTAeFw0yNjA3MjQyMzIzNDNaFw0zNjA3
+    MjEyMzIzNDNaMBUxEzARBgNVBAMTCm9wZW5iYW8tY2EwggEiMA0GCSqGSIb3DQEB
+    AQUAA4IBDwAwggEKAoIBAQCiuQ+zY5TGAMwhjYAgvztGiXHxTsQilEkiTAfUh1xt
+    qBlD/ZiCmRIbawxC52QqzIhajJqe8ynlG7uzEAf8KqQ86EjRa8ahbG4lP8J4k7OE
+    55RDlZkV9gWllWE81FCIz5sYuJZXrlaZBj10LuUMeh7bMjTYk3Arqm4cwsBfr3zZ
+    cCmVCIATJpVj+wxsFLrQpyib9n1sSyp8MlCB69p6QdMum4a4hpvJHU+B2rWDJRTF
+    w9QhwXOcosYrkPcITyLotxZ2/vfvxhc6XUkkCDF84ggJdnRA6qSNUIv6l6GyL5/2
+    59Wo1/AIF7pJnwTjIC4NxAOAQLhlV6P+Jbf2ZdAsi8kVAgMBAAGjQjBAMA4GA1Ud
+    DwEB/wQEAwICpDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBR+p1zAmjC0u3Pz
+    oW6UvJiI888fazANBgkqhkiG9w0BAQsFAAOCAQEAJsLWm8DDCLrTbcZpRtQNeJTB
+    q7fpegnjzjyvehkC582d2uoSdmBNokAN+ohS6EtydpqgiJzQrAp9jWZxKqMRbjS7
+    p8CdKBJliWLGwFR4rX9nuCoEihqlB2oVBe4YSosJewtyFwwbyvoNsiLfCjrE9Raq
+    7HgYpIhtS+Zw1tabBGHx4BAgYRUQ169ekGl3ASqmXpJHVCH7zn+TfEkVliN/iJ0U
+    MiB93oQ+CZym51rDHNYCpm9q1CPsZRlQ+jJg4iffIsAY4e9W18Kr6kDnz1jVpzLR
+    0i4GyAjFURDU8ynPjcasdBXYhuHuEsMJCGVQjrATdezdpQ2GoG+bbv5jUZFFew==
+    -----END CERTIFICATE-----
