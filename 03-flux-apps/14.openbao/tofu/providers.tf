@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     openbao = {
-      source = "opentofu/vault"
-      version = "~> 1.0"
+      source = "hashicorp/vault"
+      version = "~> 5.10.0"
     }
   }
 }
