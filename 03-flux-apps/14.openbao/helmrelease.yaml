@@ -44,7 +44,7 @@ spec:
             ui = true
 
             api_addr     = "https://vault.akna.one.pl"
-            cluster_addr = "https://{{ GetPrivateIP }}:8201"
+            cluster_addr = "https://{{ "{{ GetPrivateIP }}" }}:8201"
 
             listener "tcp" {
             address         = "[::]:8200"
