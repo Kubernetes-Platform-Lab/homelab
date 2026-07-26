@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     openbao = {
-      source = "openbao/vault"
+      source = "opentofu/vault"
       version = "~> 1.0"
     }
   }
