@@ -1,4 +1,4 @@
-resource "openbao_policy" "secret_reader" {
+resource "vault_policy" "secret_reader" {
   name = "secret-reader"
   policy = <<EOT
 path "secret/data/*" {
@@ -11,7 +11,7 @@ path "secret/metadata/*" {
 EOT
 }
 
-resource "openbao_policy" "terraform_admin" {
+resource "vault_policy" "terraform_admin" {
   name = "terraform-admin"
   policy = <<EOT
 path "*" {

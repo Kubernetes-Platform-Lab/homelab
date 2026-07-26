@@ -1,15 +1,15 @@
-resource "openbao_auth_backend" "kubernetes" {
+resource "vault_auth_backend" "kubernetes" {
   type = "kubernetes"
   path = "kubernetes"
 }
 
-resource "openbao_kubernetes_auth_backend_config" "config" {
-  backend         = openbao_auth_backend.kubernetes.path
+resource "vault_kubernetes_auth_backend_config" "config" {
+  backend         = vault_auth_backend.kubernetes.path
   kubernetes_host = "https://kubernetes.default.svc.cluster.local"
 }
 
-resource "openbao_kubernetes_auth_backend_role" "tofu_runner" {
-  backend                          = openbao_auth_backend.kubernetes.path
+resource "vault_kubernetes_auth_backend_role" "tofu_runner" {
+  backend                          = vault_auth_backend.kubernetes.path
   role_name                        = "tofu-runner"
   bound_service_account_names      = ["*"]
   bound_service_account_namespaces = ["openbao"]
