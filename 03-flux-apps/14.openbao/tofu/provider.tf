@@ -6,7 +6,7 @@ locals {
 
 provider "vault" {
   address          = var.openbao_address
-  ca_cert_file     = var.openbao_ca_cert_file
+  ca_cert_file     = "${path.module}/openbao-ca.crt"
   skip_child_token = true
 
   auth_login {
