@@ -5,7 +5,7 @@ OPENBAO_NAMESPACE="${OPENBAO_NAMESPACE:-openbao}"
 OPENBAO_POD="${OPENBAO_POD:-openbao-0}"
 OPENBAO_SERVICE_ACCOUNT="${OPENBAO_SERVICE_ACCOUNT:-openbao}"
 
-RUNNER_NAMESPACE="${RUNNER_NAMESPACE:-terraform-runners}"
+RUNNER_NAMESPACE="${RUNNER_NAMESPACE:-tofu-runners}"
 RUNNER_SERVICE_ACCOUNT="${RUNNER_SERVICE_ACCOUNT:-tf-runner}"
 
 OPENBAO_ADDR="${OPENBAO_ADDR:-https://openbao-active.openbao.svc:8200}"
@@ -31,7 +31,7 @@ bao() {
 
 echo "Configuring Kubernetes TokenReview RBAC..."
 
-kubectl create namespace terraform-runners
+kubectl create namespace ${RUNNER_NAMESPACE}
 
 # Allow the OpenBao ServiceAccount to validate Kubernetes
 # ServiceAccount JWT tokens through the TokenReview API.
