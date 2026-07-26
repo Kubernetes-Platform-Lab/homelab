@@ -13,5 +13,6 @@ spec:
     namespace: flux-system
   backendConfig:
     inClusterConfig: true
+    secretSuffix: openbao-config
     labels:
       app.kubernetes.io/name: openbao
