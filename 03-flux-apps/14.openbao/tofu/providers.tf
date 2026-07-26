@@ -8,7 +8,6 @@ terraform {
 }
 
 provider "openbao" {
-  skip_verify = true
   auth_login {
     path = "auth/kubernetes/login"
     parameters = {
