@@ -8,7 +8,7 @@ OPENBAO_SERVICE_ACCOUNT="${OPENBAO_SERVICE_ACCOUNT:-openbao}"
 RUNNER_NAMESPACE="${RUNNER_NAMESPACE:-terraform-infra-runners}"
 RUNNER_SERVICE_ACCOUNT="${RUNNER_SERVICE_ACCOUNT:-tf-runner}"
 
-OPENBAO_ADDR="${OPENBAO_ADDR:-https://openbao-active.openbao.svc.cluster.local:8200}"
+OPENBAO_ADDR="${OPENBAO_ADDR:-https://openbao-active.openbao.svc:8200}"
 OPENBAO_CACERT="${OPENBAO_CACERT:-/openbao/ca/ca.crt}"
 
 # Read the OpenBao root token without storing it in shell history.
