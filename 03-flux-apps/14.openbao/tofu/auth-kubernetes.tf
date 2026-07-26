@@ -14,7 +14,6 @@ resource "vault_kubernetes_auth_backend_role" "tofu_runner" {
   bound_service_account_names      = ["*"]
   bound_service_account_namespaces = ["openbao"]
   token_policies                   = ["terraform-admin"]
-  ttl                              = 21600
 }
 
 resource "vault_kubernetes_auth_backend_role" "external_secrets" {
