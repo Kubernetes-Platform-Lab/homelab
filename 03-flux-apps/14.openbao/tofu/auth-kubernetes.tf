@@ -17,8 +17,8 @@ resource "vault_kubernetes_auth_backend_role" "tofu_runner" {
   ttl                              = 21600
 }
 
-resource "openbao_kubernetes_auth_backend_role" "external_secrets" {
-  backend                          = openbao_auth_backend.kubernetes.path
+resource "vault_kubernetes_auth_backend_role" "external_secrets" {
+  backend                          = vault_auth_backend.kubernetes.path
   role_name                        = "external-secrets"
   bound_service_account_names      = ["external-secrets"]
   bound_service_account_namespaces = ["external-secrets"]
