@@ -31,4 +31,4 @@ spec:
         create: true
         allowedNamespaces:
           - flux-system
-          - openbao
+          - terraform-runners
