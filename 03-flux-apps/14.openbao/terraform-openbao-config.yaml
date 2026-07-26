@@ -11,15 +11,13 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-    vars:
-      - name: openbao_address
-        value: https://openbao-active.openbao.svc:8200
-
-      - name: external_secrets_service_account
-        value: external-secrets
-
-      - name: external_secrets_namespace
-        value: external-secrets
+  vars:
+    - name: openbao_address
+      value: https://openbao-active.openbao.svc:8200
+    - name: external_secrets_service_account
+      value: external-secrets
+    - name: external_secrets_namespace
+      value: external-secrets
   backendConfig:
     inClusterConfig: true
     secretSuffix: openbao-config
