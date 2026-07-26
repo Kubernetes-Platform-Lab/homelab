@@ -2,7 +2,7 @@ apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
   name: openbao-config
-  namespace: terraform-runners
+  namespace: tofu-runners
 spec:
   interval: 5m
   approvePlan: auto
