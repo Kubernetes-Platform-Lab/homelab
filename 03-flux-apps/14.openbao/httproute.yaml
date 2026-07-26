@@ -9,13 +9,15 @@ spec:
   parentRefs:
     - name: internal-gateway
       namespace: gateway-api
+
   hostnames:
     - vault.akna.one.pl
+
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: openbao-ui
-          port: 8200
+        - name: openbao-ui-http
+          port: 8202

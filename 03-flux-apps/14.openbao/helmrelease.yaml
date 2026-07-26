@@ -42,20 +42,33 @@ spec:
           setNodeId: true
           config: |
             ui = true
+
+            api_addr     = "https://vault.akna.one.pl"
+            cluster_addr = "https://{{ GetPrivateIP }}:8201"
+
             listener "tcp" {
-              tls_disable = 0
-              address = "[::]:8200"
-              cluster_address = "[::]:8201"
-              tls_cert_file = "/openbao/tls/tls.crt"
-              tls_key_file = "/openbao/tls/tls.key"
-              #tls_ca_file = "/openbao/ca/ca.crt"
+            address         = "[::]:8200"
+            cluster_address = "[::]:8201"
+
+            tls_disable   = 0
+            tls_cert_file = "/openbao/tls/tls.crt"
+            tls_key_file  = "/openbao/tls/tls.key"
             }
+
+            listener "tcp" {
+            address         = "[::]:8202"
+            cluster_address = "127.0.0.1:8203"
+
+            tls_disable = 1
+            }
+
             storage "raft" {
-              path = "/openbao/data"
-              retry_join {
-                leader_api_addr = "https://openbao-active:8200"
-                leader_ca_cert_file = "/openbao/ca/ca.crt"
-              }
+            path = "/openbao/data"
+
+            retry_join {
+            leader_api_addr     = "https://openbao-active:8200"
+            leader_ca_cert_file = "/openbao/ca/ca.crt"
+               }
             }
             service_registration "kubernetes" {}
       dataStorage:

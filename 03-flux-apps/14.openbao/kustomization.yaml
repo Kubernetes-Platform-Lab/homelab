@@ -14,3 +14,4 @@ resources:
   - data-openbao-0.yaml
   - data-openbao-1.yaml
   - data-openbao-2.yaml
+  - openbao-ui-service.yaml
