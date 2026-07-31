@@ -9,6 +9,7 @@ resources:
   - server-certificate.yaml
   - helmrelease.yaml
   - openbao-supervisor-role.yaml
+  - gitrepository-homelab-infra.yaml
   - terraform-openbao-config.yaml
   - httproute.yaml
   - data-openbao-0.yaml

@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: homelab-infra
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: https://github.com/Kubernetes-Platform-Lab/homelab-infra.git
+  ref:
+    branch: main
