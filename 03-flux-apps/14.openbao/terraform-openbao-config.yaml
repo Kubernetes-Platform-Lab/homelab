@@ -7,6 +7,10 @@ spec:
   interval: 5m
   approvePlan: auto
   path: ./openbao
+  branchPlanner:
+    enablePathScope: true
+  plan:
+    lock: false
   tfVarsFiles:
     - ./openbao/config/prod.tfvars
   sourceRef:

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: branch-planner
+  namespace: tofu-controller
+data:
+  secretName: branch-planner-token
+  resources: |
+    - namespace: tofu-runners
