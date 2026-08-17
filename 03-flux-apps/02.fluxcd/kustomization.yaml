@@ -20,7 +20,7 @@ resources:
   #- velero-kustomization.yaml
   #- kuma-mesh-kustomization.yaml
   - kyverno-kustomization.yaml
-  - istio-ambient-kustomization.yaml
+  #- istio-ambient-kustomization.yaml
   - openbao-kustomization.yaml
   #- csi-secrets-kustomization.yaml
   - tofu-controller-kustomization.yaml
