@@ -46,6 +46,10 @@ spec:
     bpf:
       masquerade: true
 
+    tunnel:
+      vxlanPort: 4789
+      mtu: 1450
+
     cgroup:
       autoMount:
         enabled: false
