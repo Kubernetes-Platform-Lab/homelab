@@ -44,17 +44,23 @@
       # Ensure bridge exists
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-br br-int
 
-      # Add physical port and bring it up
+      # Add physical port and bring it up with MTU 1550
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int enp9s0f0
-      ${pkgs.iproute2}/bin/ip link set enp9s0f0 up
+      ${pkgs.iproute2}/bin/ip link set enp9s0f0 mtu 1550 up
 
-      # Create internal ports and bring them up
+      # Set MTU on OVS bridge and internal port
+      ${pkgs.openvswitch}/bin/ovs-vsctl set Interface br-int mtu_request=1550
+      ${pkgs.iproute2}/bin/ip link set br-int mtu 1550 up
+
+      # Create internal ports and bring them up with MTU 1550
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int pxe-net -- set interface pxe-net type=internal
-      ${pkgs.iproute2}/bin/ip link set pxe-net up
+      ${pkgs.openvswitch}/bin/ovs-vsctl set Interface pxe-net mtu_request=1550
+      ${pkgs.iproute2}/bin/ip link set pxe-net mtu 1550 up
 
       # Create mgmt port with correct tag syntax and bring it up
       ${pkgs.openvswitch}/bin/ovs-vsctl --may-exist add-port br-int mgmt20 tag=20 -- set interface mgmt20 type=internal
-      ${pkgs.iproute2}/bin/ip link set mgmt20 up
+      ${pkgs.openvswitch}/bin/ovs-vsctl set Interface mgmt20 mtu_request=1550
+      ${pkgs.iproute2}/bin/ip link set mgmt20 mtu 1550 up
     '';
   };
 

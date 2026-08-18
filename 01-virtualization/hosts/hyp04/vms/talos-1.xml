@@ -60,6 +60,7 @@
       </vlan>
       <model type='virtio' />
       <mac address='44:54:00:12:34:30' />
+      <mtu size='1550' />
     </interface>
 
     <!-- Network Interface 4: VLAN 40 on br-int -->
@@ -71,6 +72,7 @@
       </vlan>
       <model type='virtio' />
       <mac address='44:54:00:12:34:40' />
+      <mtu size='1550' />
     </interface>
 
     <!-- Serial console for remote access -->
