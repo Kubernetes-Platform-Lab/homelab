@@ -45,7 +45,7 @@ nodes:
           hardwareAddr: 52:54:00:12:34:30
         addresses:
           - 10.30.0.29/16
-        mtu: 1500
+        mtu: 1550
         routes:
           - network: 0.0.0.0/0
             gateway: 10.30.0.1
@@ -55,7 +55,7 @@ nodes:
           hardwareAddr: 52:54:00:12:34:40
         addresses:
           - 10.40.0.29/16
-        mtu: 1500
+        mtu: 1550
   - hostname: cp-node02
     ipAddress: 10.30.0.31
     controlPlane: true
@@ -79,7 +79,7 @@ nodes:
           hardwareAddr: 06:54:00:12:34:30
         addresses:
           - 10.30.0.31/16
-        mtu: 1500
+        mtu: 1550
         routes:
           - network: 0.0.0.0/0
             gateway: 10.30.0.1
@@ -89,7 +89,7 @@ nodes:
           hardwareAddr: 06:54:00:12:34:40
         addresses:
           - 10.40.0.31/16
-        mtu: 1500
+        mtu: 1550
   - hostname: cp-node03
     ipAddress: 10.30.0.32
     controlPlane: true
@@ -113,7 +113,7 @@ nodes:
           hardwareAddr: 32:54:00:12:34:30
         addresses:
           - 10.30.0.32/16
-        mtu: 1500
+        mtu: 1550
         routes:
           - network: 0.0.0.0/0
             gateway: 10.30.0.1
@@ -123,7 +123,7 @@ nodes:
           hardwareAddr: 32:54:00:12:34:40
         addresses:
           - 10.40.0.32/16
-        mtu: 1500
+        mtu: 1550
   - hostname: w-node04
     ipAddress: 10.30.0.33
     controlPlane: false
@@ -147,7 +147,7 @@ nodes:
           hardwareAddr: 44:54:00:12:34:30
         addresses:
           - 10.30.0.33/16
-        mtu: 1500
+        mtu: 1550
         routes:
           - network: 0.0.0.0/0
             gateway: 10.30.0.1
@@ -155,7 +155,7 @@ nodes:
           hardwareAddr: 44:54:00:12:34:40
         addresses:
           - 10.40.0.33/16
-        mtu: 1500
+        mtu: 1550
 controlPlane:
   patches:
     - "@./patches/machine/cluster-proxy-disabled.yaml"
