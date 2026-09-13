@@ -17,7 +17,7 @@ resources:
   - openebs-kustomization.yaml
   - k8s-agent-kustomization.yaml
   - coredns-kustomization.yaml
-  #- velero-kustomization.yaml
+  - volsync-kustomization.yaml
   #- kuma-mesh-kustomization.yaml
   - kyverno-kustomization.yaml
   #- istio-ambient-kustomization.yaml
