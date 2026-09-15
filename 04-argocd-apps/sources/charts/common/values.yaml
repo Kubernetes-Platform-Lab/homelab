@@ -1,0 +1,198 @@
+define: &containerPort 80
+
+# Name of the application
+# Since this chart is a template, you can change the name of the application
+# by changing the value of the name variable
+name: "my-app"
+
+service:
+  type: ClusterIP
+  enabled: true
+  servicePort: 80
+  containerPort: *containerPort
+  extraLabels: {}
+  protocol: TCP
+  annotations: {}
+deployment:
+  memoryRequest: null
+  cpuRequest: null
+  memoryLimit: null
+  cpuLimit: null
+  port: *containerPort
+  minReplicas: 1
+  args: []
+  strategy:
+    type: Recreate
+    # rollingUpdate:
+    # maxUnavailable: 25%
+    # maxSurge: 25%
+  initContainers: []
+  additionalContainers: []
+  # - name: "sidecar-container"
+  #   image: "nginx:alpine"
+  #   imagePullPolicy: "IfNotPresent"
+  #   ports:
+  #     - containerPort: 8080
+  #   env:
+  #     - name: "ENV_VAR"
+  #       value: "value"
+  #   resources:
+  #     requests:
+  #       memory: "64Mi"
+  #       cpu: "250m"
+  #     limits:
+  #       memory: "128Mi"
+  #       cpu: "500m"
+  #   volumeMounts:
+  #     - name: "shared-data"
+  #       mountPath: "/shared"
+  emptyDir:
+    []
+    # - name: "cache"
+    #   containerMount: "/cache"
+  annotations: {}
+image:
+  repositorySettings:
+    isPrivate: false
+    secretName: null
+  repository: nginx
+  tag: latest
+  pullPolicy: Always
+
+ingress:
+  enabled: false
+  hostName: toto.lan
+  extraLabels: {}
+  annotations: {}
+  tls:
+    enabled: true
+    secretName: ""
+  ingressClassName: ""
+
+configMap:
+  enabled: false
+  existingConfigMap:
+    []
+    # - name: "configmap"
+    #   mountPath: "/etc/config.yaml"
+    #   subPath: "config.yaml"
+  data:
+    []
+    # - name: "init"
+    #   mountPath: "/etc/toto"
+    #   defaultMode: 0777
+    #   data:
+    #     - content:
+    #         init.sh: |
+    #           #!/bin/bash
+    #           echo "Hello World"
+    # - name: "bye"
+    #   mountPath: "/etc/bye"
+    #   data:
+    #     - content:
+    #         bye.sh: |
+    #           #!/bin/bash
+    #           echo "Goodbye World"
+
+extraConfigMaps: []
+
+# Environment variables
+variables:
+  configMap:
+    existingConfigMap:
+      []
+      # - "existing-configmap-name"
+      # - "another-existing-configmap-name"
+  secret:
+    data: {}
+    # user: "username"
+    # password: "hugepassword"
+    existingSecret:
+      []
+      # - name: "existing-secret-name"
+      #   key: "key"
+      #   envName: "ENV_NAME"
+      # - name: another-existing-secret
+      #   key: key2
+      #   envName: ENV2_NAME
+    extraExistingSecrets:
+      []
+      # - name: "existing-secret-name"
+      #   key: "key"
+      #   envName: "ENV_NAME"
+      # - name: another-existing-secret
+      #   key: key2
+      #   envName: ENV2_NAME
+  nonSecret: {}
+#    author: name
+#    app: 1
+
+# horizontal autoscaler
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 2
+  avgCpuUtilization: 50
+
+# startupProbe
+startupProbeEnabled: false
+startupProbe: {}
+# httpGet:
+#   path: "/"
+#   port: *containerPort
+# periodSeconds: 10
+# failureThreshold: 20
+# timeoutSeconds: 1
+
+# readinessProbe
+readinessProbeEnabled: false
+readinessProbe: {}
+# httpGet:
+#   path: "/"
+#   port: *containerPort
+# initialDelaySeconds: 20
+# periodSeconds: 30
+# failureThreshold: 2
+# timeoutSeconds: 3
+
+# livenessProbe
+livenessProbeEnabled: false
+livenessProbe: {}
+# enabled: true
+# httpGet:
+#   path: "/"
+#   port: *containerPort
+# initialDelaySeconds: 20
+# periodSeconds: 60
+# failureThreshold: 1
+# timeoutSeconds: 3
+
+persistence:
+  enabled: true
+  volumes: []
+  # - name: "data"
+  #   storageClassName: "longhorn" # leave empty if you want to use default
+  #   size: "5Gi" # We recommend to allocate a minimum of 1GB if you do not use attachments
+  #   pvcClaim: "" # leave empty unless if you want to use an existing PVC
+  #   containerMount: "/data"
+  # - name: "logs"
+  #   storageClassName: "" # leave empty if you want to use default
+  #   size: "1Gi" # We recommend to allocate a minimum of 1GB if you do not use attachments
+  #   pvcClaim: "" # leave empty unless if you want to use an existing PVC
+  #   containerMount: "/var/log"
+  # - name: "temp"
+  #   pvcClaim: "existing" # leave empty unless if you want to use an existing PVC
+  #   containerMount: "/testest"
+  extraVolumes: []
+  # - name: "config"
+  #   storageClassName: "longhorn"
+  #   size: "5Gi"
+  #   pvcClaim: ""
+  #   containerMount: "/config"
+
+tests:
+  classicHttp: # default helm test method
+    enabled: false
+  curlHostHeader: # curl using ingress.hostName as Host in header
+    enabled: false
+    path: ""

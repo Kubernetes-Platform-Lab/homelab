@@ -1,0 +1,10 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: ente-postgres-backup
+  namespace: ente
+spec:
+  schedule: "0 22 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: ente-postgres

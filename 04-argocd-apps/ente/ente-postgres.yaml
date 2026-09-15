@@ -43,3 +43,20 @@ spec:
     limits:
       memory: "2Gi"
       cpu: "1000m"
+
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://ente-s3-backups/"
+      endpointURL: "http://seaweed.akna.lan:8333"
+      s3Credentials:
+        accessKeyId:
+          name: ente-s3-backup
+          key: accessKeyId
+        secretAccessKey:
+          name: ente-s3-backup
+          key: secretAccessKey
+      wal:
+        compression: gzip
+      data:
+        compression: gzip
+    retentionPolicy: "30d"

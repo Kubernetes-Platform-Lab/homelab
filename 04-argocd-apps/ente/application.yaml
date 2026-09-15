@@ -24,6 +24,10 @@ spec:
       releaseName: ente
       valuesObject:
         museum:
+          image:
+            repository: ghcr.io/ente/server
+            tag: "0472c929b6070e61fecaf2013d47efce2dcda462"
+            pullPolicy: IfNotPresent
           ingress:
             enabled: true
             hosts:
@@ -35,6 +39,10 @@ spec:
               - hosts:
                   - api-ente.akna.one.pl
         web:
+          image:
+            repository: ghcr.io/ente/web
+            tag: "a0374add988ad4fc5c6dcf11cc083dfe7d746602"
+            pullPolicy: IfNotPresent
           photos:
             env:
               - name: ENTE_API_ORIGIN
