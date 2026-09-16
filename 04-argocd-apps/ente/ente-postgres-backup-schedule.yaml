@@ -4,7 +4,7 @@ metadata:
   name: ente-postgres-backup
   namespace: ente
 spec:
-  schedule: "0 22 * * *"
+  schedule: "0 0 22 * * *" # sec/min/hr/day/month/day_of_week
   backupOwnerReference: self
   cluster:
     name: ente-postgres
