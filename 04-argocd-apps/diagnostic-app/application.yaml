@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Kubernetes-Platform-Lab/homelab.git
-    path: sources/charts/diagnostic-app
+    path: ../05-helm/sources/charts/diagnostic-app
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
