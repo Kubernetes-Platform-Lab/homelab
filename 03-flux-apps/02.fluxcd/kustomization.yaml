@@ -15,7 +15,7 @@ resources:
   - external-dns.yaml
   - cilium.yaml
   - openebs-kustomization.yaml
-  - k8s-agent-kustomization.yaml
+  #- k8s-agent-kustomization.yaml
   - coredns-kustomization.yaml
   - volsync-kustomization.yaml
   #- kuma-mesh-kustomization.yaml
