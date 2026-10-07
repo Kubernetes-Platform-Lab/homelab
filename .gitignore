@@ -1,5 +1,5 @@
 02-kubernetes/clusterconfig
-02-flux-apps/16.k8s-agent/*secret.yaml
+03-flux-apps/16.k8s-agent/*secret.yaml
 04-argocd-apps/ente/ente-credentials-secret.yaml
 04-argocd-apps/ente/credentials.yaml
 04-argocd-apps/ente/ente-credentials-secret-base64.yaml
