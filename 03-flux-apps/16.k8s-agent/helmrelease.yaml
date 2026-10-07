@@ -49,10 +49,12 @@ spec:
 
   values:
     providers:
-      default: anthropic
-      anthropic:
-        provider: Anthropic
-        model: "nvidia/nemotron-3-ultra-550b-a55b:free"
-        apiKeySecretRef: kagent-anthropic
-        apiKeySecretKey: ANTHROPIC-API-KEY
-         
+      default: openAI
+      openAI:
+        provider: OpenAI
+        model: "qwen/qwen-2.5-7b-instruct"
+        apiKeySecretRef: openrouter-api-key
+        apiKeySecretKey: OPENROUTER-API-KEY
+        config:
+          baseUrl: "https://openrouter.ai"
+
