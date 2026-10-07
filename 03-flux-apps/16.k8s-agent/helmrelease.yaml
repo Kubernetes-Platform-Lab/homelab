@@ -56,5 +56,5 @@ spec:
         apiKeySecretRef: openrouter-api-key
         apiKeySecretKey: OPENROUTER-API-KEY
         config:
-          baseUrl: "https://openrouter.ai"
+          baseUrl: "https://openrouter.ai/api/v1"
 
