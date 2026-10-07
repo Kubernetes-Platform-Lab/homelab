@@ -5,3 +5,4 @@ resources:
   - helmrelease.yaml
   - namespace.yaml
   - kagent-anthropic-secret.json
+  - openrouter-model-sealed-secret.json
