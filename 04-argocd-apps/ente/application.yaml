@@ -12,7 +12,7 @@ spec:
       kind: Ingress
       name: ente-ente-photos-museum
       namespace: ente
-      jqPointers:
+      jsonPointers:
         - /spec
         - /metadata/annotations
         - /metadata/labels
@@ -64,13 +64,13 @@ spec:
         credentials:
           existingSecret: "ente-credentials"
         externalDatabase:
-          host: "ente-postgres-rw.ente.svc.cluster.local"
+          host: "ente-postgres-restore-rw.ente.svc.cluster.local"
           port: 5432
           database: "ente_db"
           user: "ente"
           existingSecret:
             enabled: true
-            secretName: "ente-postgres-app"
+            secretName: "ente-postgres-restore-app"
             passwordKey: "password"
   destination:
     server: https://kubernetes.default.svc
