@@ -12,10 +12,10 @@ docs/
 │   ├── ADR-002-why-cilium-bgp.md
 │   ├── ADR-003-why-dual-gitops.md
 │   ├── ADR-004-why-nixos.md
-│   ├── ADR-1-cicd-tooling.md
-│   ├── ADR-2-local-storage.md
-│   ├── ADR-3-object-storage.md
-│   └── external-secrets.md
+│   ├── ADR-005-cicd-tooling.md
+│   ├── ADR-006-local-storage.md
+│   ├── ADR-007-object-storage.md
+│   └── ADR-008-external-secrets.md
 ├── architecture/            # Detailed architecture documentation
 │   ├── gitops-flow.md
 │   └── network-topology.md  # VLANs, BGP, OVS
