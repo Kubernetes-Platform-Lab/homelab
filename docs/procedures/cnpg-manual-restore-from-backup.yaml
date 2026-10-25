@@ -1,0 +1,109 @@
+---
+# =============================================================================
+# Sample: restore a PostgreSQL database from a CloudNativePG backup
+# =============================================================================
+# CloudNativePG (CNPG) physical backups cannot be restored into a running
+# instance. Recovery always bootstraps a NEW cluster from a base backup
+# (barmanObjectStore -> base.tar) and then replays the WAL archive, so the
+# whole cluster is restored, not a single database.
+#
+# Requires CNPG >= 1.21 (spec.bootstrap.recovery.backup). This template was
+# verified against the operator version running in this homelab (1.24.0).
+#
+# IMPORTANT: keep this file OUTSIDE 04-argocd-apps/. The root ArgoCD
+# Application (app-of-apps.yaml) syncs that directory with recurse: true and
+# would apply this manifest automatically, creating the restore cluster
+# without anybody asking for it.
+#
+# Apply manually:
+#   kubectl apply -f cnpg-restore-from-backup.yaml
+#   kubectl -n <NAMESPACE> get cluster <RESTORE_CLUSTER_NAME> -w
+#
+# Clean up:
+#   kubectl delete -f cnpg-restore-from-backup.yaml
+#   kubectl -n <NAMESPACE> delete pvc -l cnpg.io/cluster=<RESTORE_CLUSTER_NAME>
+# -----------------------------------------------------------------------------
+
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  # New cluster name. The source cluster keeps running untouched.
+  name: ente-postgres-restore # e.g. ente-postgres-restore
+  # The namespace must contain the Backup object referenced below.
+  namespace: ente
+spec:
+  instances: 1
+  # Same major version as the source cluster.
+  imageName: ghcr.io/cloudnative-pg/postgresql:17-system-trixie
+  enableSuperuserAccess: true
+
+  bootstrap:
+    recovery:
+      # Name of the CNPG Backup object (kind: Backup) in the same namespace.
+      # The operator takes the object store coordinates (endpoint URL,
+      # destination path, S3 credentials) from that Backup's status, and
+      # fetches the base backup plus the WAL archive from there.
+      backup:
+        name: ente-postgres-backup-20261013220000
+      # Application database and its owner in the restored cluster. When both
+      # are set, the operator creates a "<RESTORE_CLUSTER_NAME>-app" secret
+      # with a random password and applies it to the role once the recovery
+      # has completed.
+      database: ente_db # e.g. ente_db
+      owner: ente # e.g. ente
+      # Optional: reuse the credentials of the source cluster instead of
+      # letting the operator generate a new secret. The secret must already
+      # exist in the namespace.
+      # secret:
+      #   name: <APP_SECRET> # e.g. ente-postgres-app
+      #
+      # Optional: point in time recovery. Without recoveryTarget the operator
+      # replays every archived WAL file, i.e. the cluster ends up at the
+      # latest available state. Only one target may be set.
+      # recoveryTarget:
+      #   targetTime: "2026-10-20T21:00:00Z"
+      #   # backupID: 20261020T220001
+
+  storage:
+    size: 5Gi
+    storageClass: openebs-lvm
+    resizeInUseVolumes: false
+
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 500m
+    limits:
+      memory: 2Gi
+      cpu: 1000m
+
+  # No "backup" section on purpose: the restored cluster must not archive
+  # into the folder of the source cluster
+  # (s3://<BUCKET>/<SOURCE_CLUSTER>/). To give the restored cluster its own
+  # archive, add a "backup" block with a different serverName:
+  #
+  # backup:
+  #   barmanObjectStore:
+  #     destinationPath: "s3://<BUCKET>/"
+  #     endpointURL: "http://<S3_ENDPOINT>:8333"
+  #     serverName: <RESTORE_CLUSTER_NAME>
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: <S3_SECRET> # e.g. ente-s3-backup
+  #         key: accessKeyId
+  #       secretAccessKey:
+  #         name: <S3_SECRET>
+  #         key: secretAccessKey
+  #   retentionPolicy: "30d"
+  #
+  # To take a fresh backup before restoring, create a Backup object:
+  #
+  # apiVersion: postgresql.cnpg.io/v1
+  # kind: Backup
+  # metadata:
+  #   name: <BACKUP_NAME>
+  #   namespace: <NAMESPACE>
+  # spec:
+  #   method: barmanObjectStore
+  #   cluster:
+  #     name: <SOURCE_CLUSTER>
