@@ -26,7 +26,7 @@ spec:
         museum:
           image:
             repository: ghcr.io/ente/server
-            tag: "0472c929b6070e61fecaf2013d47efce2dcda462"
+            tag: "163f45c26f130090abed03649530f53d2d976565"
             pullPolicy: IfNotPresent
           ingress:
             enabled: true
