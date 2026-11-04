@@ -33,7 +33,7 @@ spec:
       owner: ente
 
   storage:
-    size: 5Gi
+    size: 10Gi
     storageClass: "openebs-lvm"
     resizeInUseVolumes: False
   resources:
