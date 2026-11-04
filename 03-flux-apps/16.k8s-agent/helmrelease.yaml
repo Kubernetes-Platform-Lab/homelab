@@ -52,7 +52,7 @@ spec:
       default: openAI
       openAI:
         provider: OpenAI
-        model: "qwen/qwen-2.5-7b-instruct"
+        model: "deepseek/deepseek-v4.1-flash"
         apiKeySecretRef: openrouter-api-key
         apiKeySecretKey: OPENROUTER-API-KEY
         config:
