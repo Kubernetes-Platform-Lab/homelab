@@ -7,9 +7,9 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 80
+      targetPort: http-pod
       protocol: TCP
-      name: http
+      name: http-svc
   selector:
     {{- include "app1.selectorLabels" . | nindent 4 }}

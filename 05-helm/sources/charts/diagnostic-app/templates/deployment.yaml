@@ -41,7 +41,7 @@ spec:
           image: "{{ .Values.podinfo.image.repository }}:{{ .Values.podinfo.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.podinfo.image.pullPolicy }}
           ports:
-            - name: http
+            - name: http-pod
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           {{- /*
