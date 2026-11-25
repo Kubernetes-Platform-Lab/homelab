@@ -11,6 +11,10 @@ spec:
     repoURL: https://github.com/Kubernetes-Platform-Lab/homelab.git
     path: 05-helm/sources/charts/diagnostic-app
     targetRevision: HEAD
+    helm:
+      valuesObject:
+        podinfo:
+          targetPort: 9898
   destination:
     server: https://kubernetes.default.svc
     namespace: default
