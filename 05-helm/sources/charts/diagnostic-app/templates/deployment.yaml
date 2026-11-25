@@ -42,7 +42,7 @@ spec:
           imagePullPolicy: {{ .Values.podinfo.image.pullPolicy }}
           ports:
             - name: http-pod
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.podinfo.targetPort }}
               protocol: TCP
           {{- /*
           {{- with .Values.livenessProbe }}

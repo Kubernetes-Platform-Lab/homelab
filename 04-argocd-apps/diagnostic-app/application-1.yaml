@@ -13,8 +13,8 @@ spec:
     targetRevision: HEAD
     helm:
       valuesObject:
-        service:
-          port: 9898
+        podinfo:
+          targetPort: 9898
   destination:
     server: https://kubernetes.default.svc
     namespace: default
